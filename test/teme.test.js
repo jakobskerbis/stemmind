@@ -190,12 +190,36 @@ test("every history chat look and column set is styled in ui.css, readable and s
       }
       if (e.arch) for (const k of ["cap", "shaft", "base"]) assert.match(c.vars[`--arch-${k}`] + c.vars[`--arch-${k}-m`], /^url\("data:image\/svg\+xml,.*url\("data:image\/svg\+xml,/, `${id} ${mode}: --arch-${k}`);
     }
+    const simple = (body, what) => assert.ok(!/<(?!\/?(path|rect|circle|ellipse|line|polyline|polygon)\b)/.test(body) && !/\son\w+=|href|url\(|style=|fill="#|stroke="#/i.test(body), `${id}: ${what} samo osnovne oblike, barve iz ui.css`);
     for (const [k, part] of Object.entries(e.arch || {})) {
-      assert.ok(["cap", "shaft", "base", "top"].includes(k), `${id}: neznan del arch.${k}`);
+      assert.ok(["cap", "shaft", "base", "temple"].includes(k), `${id}: neznan del arch.${k}`);
+      if (k === "temple") continue;
       const [w, h, body] = part;
       assert.ok(w > 0 && h > 0 && w <= 400 && h <= 60 && body.length < 1200, `${id}: arch.${k} mere`);
-      assert.ok(!/<(?!\/?(path|rect|circle|ellipse|line|polyline|polygon)\b)/.test(body) && !/\son\w+=|href|url\(/i.test(body), `${id}: arch.${k} samo osnovne oblike`);
+      simple(body, `arch.${k}`);
     }
+    // Pročelje (arch.temple): zatrep 1 : 4 do 1 : 7, entablatura in stopnice široke, steber [kapitel, deblo, baza];
+    // temple() iz tega sestavi zgornji (zatrep, entablatura) in spodnji del (4 stebri, stopnice), vse aria-hidden.
+    const tp = e.arch && e.arch.temple;
+    if (tp) {
+      assert.deepEqual(Object.keys(tp).sort(), ["column", "entablature", "pediment", "stylobate"], `${id}: deli pročelja`);
+      const parts = { pediment: tp.pediment, entablature: tp.entablature, stylobate: tp.stylobate, cap: tp.column[0], shaft: tp.column[1], base: tp.column[2] };
+      for (const [k, [w, h, body]] of Object.entries(parts)) {
+        assert.ok(w > 0 && h > 0 && w <= 600 && h <= 200 && body.length < 2000, `${id}: temple.${k} mere`);
+        simple(body, `temple.${k}`);
+        assert.ok(!/class="(?![ftlsdvn ]+")/.test(body), `${id}: temple.${k} samo razredi f t l s d v n`);
+      }
+      const [pw, ph] = tp.pediment;
+      assert.ok(pw / ph >= 4 && pw / ph <= 7, `${id}: zatrep ${pw}:${ph}`);
+      assert.ok(tp.column[0][0] >= tp.column[1][0] * 1.6 && tp.column[2][0] > tp.column[1][0], `${id}: kapitel in baza širša od debla`);
+      const html = T.temple(id);
+      assert.ok(html && /class="t-part t-roof"/.test(html.top) && /t-ent/.test(html.top), `${id}: temple().top`);
+      assert.equal((html.bottom.match(/class="t-part t-col/g) || []).length, 4, `${id}: štirje stebri`);
+      assert.ok(/t-steps/.test(html.bottom), `${id}: temple().bottom`);
+      assert.ok([html.top, html.bottom].every((s) => (s.match(/<svg/g) || []).length === (s.match(/aria-hidden="true"/g) || []).length - (s.match(/<div/g) || []).length), `${id}: deli pročelja so aria-hidden`);
+      for (const k of ["t-roof", "t-ent", "t-col", "t-steps"]) assert.ok(css.includes(`.${k}`), `${id}: ui.css nima .${k}`);
+    } else assert.equal(T.temple(id), null, `${id}: brez pročelja`);
+    if (e.chat && e.chat.frame === "stebri") assert.ok(tp, `${id}: stebri potrebujejo arch.temple`);
   }
   assert.ok(T.PAPER > 0 && T.PAPER <= 0.15, "PAPER (vlakna papirusa)");
 });

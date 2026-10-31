@@ -551,13 +551,15 @@ function renderConversationList() {
 function renderEmptyChat() {
   $("#chat-title").textContent = t("chat.new");
   const ideas = [t("chat.idea1"), t("chat.idea2"), t("chat.idea3")];
-  // .empty-hall: okvir pozdrava (v slogu z ERAS[…].chat.frame stebri in zatrep, ui.css → »Klepet obdobja«).
+  // .empty-hall: okvir pozdrava (v slogu s chat.frame »stebri« pročelje templa iz ERAS[…].arch.temple, ui.css →
+  // »Klepet obdobja«; templeParts doda dele, ob menjavi sloga jih zamenja).
   $("#messages").innerHTML = `<div class="empty"><div class="empty-hall">
     <div class="tutor-avatar big" aria-hidden="true">${icon("sparkles")}</div>
     <p class="big">${t("chat.hello", { name: escapeHtml(state.student.name) })}</p>
     <p>${t("chat.intro")}</p>
     <div class="ideas">${ideas.map((t) => `<button type="button" class="idea" data-idea="${escapeHtml(t)}">${escapeHtml(t)}</button>`).join("")}</div></div>
     ${greekFactHtml("gr-chat")}</div>`;
+  templeParts();
   wireGreekFacts($("#messages"));
   $("#messages").querySelectorAll("[data-idea]").forEach((b) =>
     b.addEventListener("click", () => {
@@ -567,6 +569,17 @@ function renderEmptyChat() {
   );
   renderState(null);
 }
+
+function templeParts() {
+  const hall = $("#messages .empty-hall");
+  if (!hall) return;
+  hall.querySelectorAll(".t-part").forEach((e) => e.remove());
+  const t = window.STEMTheme?.temple?.(document.documentElement.dataset.era);
+  if (!t) return;
+  hall.insertAdjacentHTML("afterbegin", t.top);
+  hall.insertAdjacentHTML("beforeend", t.bottom);
+}
+window.addEventListener("evklid:era", templeParts);
 
 function renderState(convState) {
   const s = state.student.settings;

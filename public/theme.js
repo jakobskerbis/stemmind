@@ -52,8 +52,9 @@
   //     light/dark.wood). Barve paper in wood preveri check() (besedilo 7:1 tudi na vlaknih, okvir 3:1).
   //   arch (neobvezno; ui.css → »Arhitektura«): steber kot nosilni del okvirja (seznam pogovorov, rob klepeta, stranski
   //     stolpec Učne poti, kapitel na okencih). Deli so notranjost SVG ([širina, višina, oznake]; S = barva črte,
-  //     F = polnilo): cap (kapitel), shaft (ploščica debla, ponavlja se navpično), base (baza), top (zatrep nad
-  //     pozdravom, raztegne se po širini). theme.js jih obarva za ozadje (--arch-*) in za meni (--arch-*-m).
+  //     F = polnilo): cap (kapitel), shaft (ploščica debla, ponavlja se navpično), base (baza); theme.js jih obarva za
+  //     ozadje (--arch-*) in za meni (--arch-*-m). temple: pročelje ob pozdravu praznega klepeta (pediment, entablature,
+  //     column = [kapitel, deblo, baza], stylobate), glej temple() spodaj.
   const ERAS = {
     antik: {
       light: { bg: "#f5f0e8", surface: "#fffcf7", menu: "#efe2d2", text: "#241c15", accent: "#973f1c", bar: "#f6ece0", banner: "#f6e2d1", paper: "#f4e6cb", wood: "#8a5b36" },
@@ -63,12 +64,18 @@
       motifs: ["dorski-steber", "amfora", "sova", "konstrukcija", "jonski-steber", "lovor", "valj-krogla", "pitagora"],
       facts: ["greek", 11], icons: "ikone",
       chat: { tutor: "papirus", user: "ostrakon", frame: "stebri", composer: "vosek" },
-      // Vitek jonski steber (20 px): abak in voluti, kanelure, atiška baza; zatrep s timpanonom nad pozdravom (v timpanonu ikona inštruktorja).
+      // Vitek jonski steber (20 px): abak in voluti, kanelure, atiška baza. Pročelje ob pozdravu: zatrep 1 : 5,8 z akroteriji
+      // in timpanonom (v njem ikona inštruktorja), zobci, friz z meandrom, arhitrav s fascijami, jonski stebri, tri stopnice.
       arch: {
         cap: [20, 13, '<path fill="F" d="M1 1h18v2.2H1z"/><path fill="F" d="M2.4 3.2h15.2c.6 1.5-.2 3.3-1.9 3.6-1.6.3-2.7-.8-2.6-2H6.9c.1 1.2-1 2.3-2.6 2-1.7-.3-2.5-2.1-1.9-3.6z"/><circle cx="4.4" cy="4.9" r=".75" fill="S" stroke="none"/><circle cx="15.6" cy="4.9" r=".75" fill="S" stroke="none"/><path d="M7 6.3c1.8 1.4 4.2 1.4 6 0"/><path fill="F" d="M4.5 9.5h11v1.8h-11z"/><path d="M5 11.3V13M15 11.3V13"/>'],
         shaft: [20, 8, '<path fill="F" stroke="none" d="M5 0h10v8H5z"/><path d="M5 0v8M15 0v8"/><path stroke-opacity=".5" d="M7.5 0v8M10 0v8M12.5 0v8"/>'],
         base: [20, 10, '<path d="M5 0v1.2M15 0v1.2"/><rect fill="F" x="4" y="1.2" width="12" height="2.4" rx="1.2"/><path d="M4.8 3.6c.8.7.8 1.3 0 2h10.4c-.8-.7-.8-1.3 0-2"/><rect fill="F" x="3" y="5.6" width="14" height="2.2" rx="1.1"/><path fill="F" d="M1.5 7.8h17v1.9h-17z"/>'],
-        top: [300, 40, '<path fill="F" d="M6 31 150 2.5 294 31z"/><path stroke-opacity=".55" d="M26 28.6 150 5.3 274 28.6z"/><path fill="F" d="M1 31h298v3.2H1z"/><path fill="F" d="M5 34.2h290v5H5z"/><path stroke-opacity=".55" d="M5 36.7h290"/>'],
+        temple: {
+          pediment: [600, 126, '<path class="f" d="M300 15c-5-4-6-9 0-13c6 4 5 9 0 13z"/><path class="f" d="M297 15c-6 1-11-2-12-7 5-1 9 2 12 7zM303 15c6 1 11-2 12-7-5-1-9 2-12 7z"/><path class="f" d="M2 118c0-6 3-11 9-13 0 6-3 10-9 13zM598 118c0-6-3-11-9-13 0 6 3 10 9 13z"/><path class="f" d="M0 118 300 14l300 104z"/><path class="t" d="M27.4 118 300 23.5 572.5 118z"/><path class="l" d="M10.6 118 300 17.7 589.3 118"/><path class="f" d="M0 118h600v8H0z"/><path class="l" d="M0 121h600"/>'],
+          entablature: [600, 28, '<path class="d" d="M3 2.6h594"/><path class="f" d="M.75 5.5h598.5v12H.75z"/><path class="f" d="M.75 17.5h598.5v9.75H.75z"/><path class="l" d="M.75 21h598.5M.75 24.25h598.5"/>'],
+          column: [[50, 22, '<path class="f n" d="M15.5 13h19v6h-19z"/><path d="M15.5 13v6M34.5 13v6"/><path class="f" d="M6 .75h38v3H6z"/><path class="f" d="M9.5 3.75h31V11Q25 13.4 9.5 11z"/><path class="f" d="M15 11.2c3 6 17 6 20 0Q25 13.4 15 11.2z"/><circle class="f" cx="9.5" cy="10" r="6"/><circle class="f" cx="40.5" cy="10" r="6"/><path class="v" d="M15.6 11A5.6 5.6 0 0 0 9.5 5 4.9 4.9 0 0 0 4.7 10 4.2 4.2 0 0 0 9.5 14.1 3.5 3.5 0 0 0 12.9 10 2.9 2.9 0 0 0 9.5 7.1M34.4 11A5.6 5.6 0 0 1 40.5 5 4.9 4.9 0 0 1 45.3 10 4.2 4.2 0 0 1 40.5 14.1 3.5 3.5 0 0 1 37.1 10 2.9 2.9 0 0 1 40.5 7.1"/><circle class="s" cx="9.5" cy="10" r="1.3"/><circle class="s" cx="40.5" cy="10" r="1.3"/><rect class="f" x="14.5" y="18" width="21" height="3.25" rx="1.6"/>'], [22, 100, '<path class="f" d="M1.5 0h19l.75 100H.75z"/><path class="l" d="M6.25 0 5.9 100M11 0v100M15.75 0l.35 100"/>'], [40, 17, '<rect class="f" x="8" y=".75" width="24" height="4" rx="2"/><path class="f" d="M9.5 4.75q2.5 1.75 0 3.5h21q-2.5-1.75 0-3.5z"/><rect class="f" x="5.5" y="8.25" width="29" height="4.5" rx="2.25"/><path class="f" d="M4 12.75h32v3.5H4z"/>']],
+          stylobate: [600, 18, '<path class="f" d="M12 .75h576v5.5H12zM6 6.25h588v5.5H6zM.75 11.75h598.5v5.5H.75z"/>'],
+        },
       },
     },
     renesansa: {
@@ -313,7 +320,7 @@
       const edge = vars["--edge-c"];
       const paint = (on, suffix) => {
         const S = mix(on, edge, dark ? 0.7 : 0.62), F = mix(on, dark ? text : "#ffffff", dark ? 0.05 : 0.55);
-        for (const k of ["cap", "shaft", "base", "top"]) if (era.arch[k] && (k !== "top" || !suffix)) vars[`--arch-${k}${suffix}`] = archUrl(era.arch[k], S, F);
+        for (const k of ["cap", "shaft", "base"]) if (era.arch[k]) vars[`--arch-${k}${suffix}`] = archUrl(era.arch[k], S, F);
       };
       paint(bg, "");
       paint(vars["--menu"] || menu, "-m");
@@ -321,12 +328,28 @@
     return { vars, dark, menu, text, bg, surface, accent, motifBg, chrome, menuMotif, paperBg, era: !!era };
   }
 
-  // Del stebra kot slika: preserveAspectRatio="none" in črta, ki se ne razteguje (zatrep se raztegne po širini).
+  // Del stebra kot slika: preserveAspectRatio="none" in črta, ki se ne razteguje.
   function archUrl([w, h, body], S, F) {
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" fill="none" stroke="${S}" stroke-width="1" stroke-linejoin="round"><style>*{vector-effect:non-scaling-stroke}</style>${body.replace(/"S"/g, `"${S}"`).replace(/"F"/g, `"${F}"`)}</svg>`;
     return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
   }
-  const ARCH_VARS = ["cap", "shaft", "base", "top"].flatMap((k) => [`--arch-${k}`, `--arch-${k}-m`]);
+  // Pročelje (ERAS[…].arch.temple) okrog pozdrava praznega klepeta (app.js, ui.css → »Klepet obdobja«): deli kot
+  // vrstični SVG, barve iz ui.css po razredih (f polnilo, t timpanon, l tanka črta, s pika, d zobci), zato sledijo
+  // načinu in lastnim barvam. Zatrep (pediment) se veča enakomerno s širino, entablatura in stopnice (stylobate) se
+  // raztegnejo po širini, deblo stebra (column[1]) po višini; kapitel in baza ostaneta v naravni velikosti.
+  function temple(id) {
+    const t = ERAS[id] && ERAS[id].arch && ERAS[id].arch.temple;
+    if (!t) return null;
+    const svg = (cls, [w, h, body], fit) =>
+      `<svg class="${cls}" viewBox="0 0 ${w} ${h}" preserveAspectRatio="${fit || "none"}"${fit ? ` width="${w}" height="${h}"` : ""} aria-hidden="true" focusable="false">${body}</svg>`;
+    const [cap, shaft, base] = t.column;
+    const col = (n) => `<div class="t-part t-col t${n}" aria-hidden="true">${svg("t-cap", cap, "xMidYMin")}${svg("t-shaft", shaft)}${svg("t-base", base, "xMidYMax")}</div>`;
+    return {
+      top: svg("t-part t-roof", t.pediment, "xMidYMax") + `<div class="t-part t-ent" aria-hidden="true">${svg("", t.entablature)}</div>`,
+      bottom: [1, 2, 3, 4].map(col).join("") + svg("t-part t-steps", t.stylobate),
+    };
+  }
+  const ARCH_VARS = ["cap", "shaft", "base"].flatMap((k) => [`--arch-${k}`, `--arch-${k}-m`]);
   const ALL_VARS = [...ARCH_VARS, "--paper", "--paper-2", "--paper-fibre", "--wood", "--bg", "--surface", "--text", "--muted", "--surface-2", "--border", "--accent", "--accent-2", "--accent-grad", "--accent-soft", "--accent-text", "--hero-a", "--hero-b", "--user-bubble", "--user-text", "--menu", "--menu-text", "--menu-muted", "--menu-2", "--menu-border", "--menu-accent", "--menu-accent-soft", "--menu-accent-text", "--band-c", "--edge-c", "--bar", "--banner"];
   const ERA_VARS = ["--era-font", "--band", "--band-w", "--band-h", "--edge-w", "--edge-h", "--glyph", "--tapeta"];
   const CHAT_ATTRS = { tutor: "data-tutor-surface", user: "data-user-shape", frame: "data-chat-frame", composer: "data-composer", arch: "data-arch" };
@@ -457,7 +480,7 @@
     return pairs.every(([a, b, m]) => contrast(a, b) >= m - 0.01);
   }
 
-  window.STEMTheme = { load, save, apply, compute, check, contrast, randomAccent, randomPalette, isDarkMode, BASE, BASES, STYLES, ERAS, baseOf, MIN, MOTIF, PAPER, readable, loadFont, iconSet };
+  window.STEMTheme = { load, save, apply, compute, check, contrast, randomAccent, randomPalette, isDarkMode, BASE, BASES, STYLES, ERAS, baseOf, MIN, MOTIF, PAPER, readable, loadFont, iconSet, temple };
   apply();
   mq.addEventListener?.("change", () => apply());
 })();
