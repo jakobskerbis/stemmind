@@ -840,6 +840,31 @@ function autoGrow(stick, again) {
   else if (fullOpen("composer") && (h <= max || !input.value.trim())) closeFull();
 }
 input.addEventListener("input", autoGrow);
+// Ozko polje (telefon): namig se ne odreže sredi besede (»Napiši nalogo a«), ampak za zadnjo celo besedo
+// (»Napiši nalogo …«). Celoten namig ostane v polju, ko je prostora dovolj; nov namig (jezik, način) se izmeri znova.
+{
+  let full = "";
+  let shown = "";
+  const ctx = document.createElement("canvas").getContext("2d");
+  const fit = () => {
+    if (input.placeholder !== shown) full = input.placeholder;
+    const cs = getComputedStyle(input);
+    const room = input.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) - 2;
+    if (!full || !ctx || room <= 0) return;
+    ctx.font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+    let text = full;
+    if (ctx.measureText(full).width > room) {
+      const words = full.replace(/\s*…$/, "").split(/\s+/);
+      while (words.length > 1 && ctx.measureText(`${words.join(" ")} …`).width > room) words.pop();
+      text = `${words.join(" ")} …`;
+    }
+    shown = text;
+    if (input.placeholder !== text) input.placeholder = text;
+  };
+  if (window.ResizeObserver) new ResizeObserver(fit).observe(input);
+  new MutationObserver(() => input.placeholder !== shown && fit()).observe(input, { attributes: true, attributeFilter: ["placeholder"] });
+  document.fonts?.ready.then(fit);
+}
 // Besedilo, vpisano iz kode (predlogi, kalkulator, kotiček, vrnjeno po napaki), tudi poveča polje.
 {
   const desc = Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, "value");

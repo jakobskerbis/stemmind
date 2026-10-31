@@ -500,15 +500,25 @@ html.lite[data-era] .chat-view .sidebar::before { display: none; }
     :root[data-chat-frame="stebri"]:not(.lite) .empty-hall:has(.t-roof) > :is(p, .ideas) { margin-inline: 10px; }
     :root[data-chat-frame="stebri"]:not(.lite) .empty-hall > :is(.t-col.t1, .t-col.t4) { display: flex; }
   }
-  /* Ozko: brez stebrov, samo zatrep, entablatura in stopnice. */
+  /* Ozko (telefon): zatrep, entablatura in stopnice čez vso širino (isti rob kot glava, kartica dejstev in vrstica za
+     pisanje); stebra sta bleda risba v ozadju ob robovih (pod zatrepom do stopnic) in ne ožita vsebine: pozdrav je
+     med njima, predlogi čez vso širino nad njima (rahlo prosojni). Enakomeren ritem: 20 px do pozdrava, 16 px do
+     predlogov, 18 px do stopnic, 16 px do kartice dejstev. */
   @container hram (max-width: 539.98px) {
-    :root[data-chat-frame="stebri"]:not(.lite) .empty-hall:has(.t-roof) { --t-c: 0px; }
-    :root[data-chat-frame="stebri"]:not(.lite) .empty-hall > .t-col, :root[data-chat-frame="stebri"]:not(.lite) .empty-hall:has(.t-roof)::before { display: none; }
-    :root[data-chat-frame="stebri"]:not(.lite) .empty-hall:has(.t-roof) > :is(p, .ideas) { margin-inline: 4px; }
-    :root[data-chat-frame="stebri"]:not(.lite) .empty-hall:has(.t-roof) > p.big { margin-top: 10px; }
-    :root[data-chat-frame="stebri"]:not(.lite) .empty-hall:has(.t-roof) > .ideas { margin-bottom: 10px; }
-    :root[data-chat-frame="stebri"]:not(.lite) .empty-hall:has(.t-roof) .ideas { flex-direction: column; }
-    :root[data-chat-frame="stebri"]:not(.lite) .empty-hall:has(.t-roof) .idea { text-align: start; padding-block: 9px; }
+    :root[data-chat-frame="stebri"]:not(.lite) .empty-hall:has(.t-roof) { --t-c: 0px; grid-template-columns: 0 0 0 0 minmax(0, 1fr) 0 0 0 0; }
+    :root[data-chat-frame="stebri"]:not(.lite) .empty-hall > :is(.t-col.t1, .t-col.t4), :root[data-chat-frame="stebri"]:not(.lite) .empty-hall:has(.t-roof)::before { display: none; }
+    :root[data-chat-frame="stebri"]:not(.lite) .empty-hall > :is(.t-col.t2, .t-col.t3) { grid-column: 5; width: 30px; opacity: 0.45; }
+    :root[data-chat-frame="stebri"]:not(.lite) .empty-hall > .t-col.t2 { justify-self: start; margin-inline-start: 6px; }
+    :root[data-chat-frame="stebri"]:not(.lite) .empty-hall > .t-col.t3 { justify-self: end; margin-inline-end: 6px; }
+    :root[data-chat-frame="stebri"]:not(.lite) .empty-hall > .t-col :is(.t-cap, .t-base) { width: 100%; height: auto; }
+    :root[data-chat-frame="stebri"]:not(.lite) .empty-hall > .t-col .t-shaft { width: 13px; }
+    :root[data-chat-frame="stebri"]:not(.lite) .empty-hall:has(.t-roof) > :is(p, .ideas) { position: relative; z-index: 1; }
+    :root[data-chat-frame="stebri"]:not(.lite) .empty-hall:has(.t-roof) > p { margin-inline: 42px; }
+    :root[data-chat-frame="stebri"]:not(.lite) .empty-hall:has(.t-roof) > p.big { margin-top: 20px; margin-bottom: 6px; }
+    :root[data-chat-frame="stebri"]:not(.lite) .empty-hall:has(.t-roof) > .ideas { margin: 16px 0 18px; gap: 8px; }
+    :root[data-chat-frame="stebri"]:not(.lite) .empty-hall:has(.t-roof) .ideas { flex-flow: column nowrap; }
+    :root[data-chat-frame="stebri"]:not(.lite) .empty-hall:has(.t-roof) .idea { text-align: start; padding-block: 11px; background-color: color-mix(in srgb, var(--surface) 86%, transparent); }
+    :root[data-chat-frame="stebri"]:not(.lite) .empty:has(.t-roof) .gr-chat { margin-top: 16px; }
   }
   :root[data-chat-frame="stebri"] .idea {
     position: relative; border-width: 1px; border-radius: 5px;
@@ -777,10 +787,10 @@ body:has(> #boot-down) > :not(#boot-down) { visibility: hidden; }
   background: var(--surface); color: var(--text); font: inherit; line-height: 1.5;
 }
 
-/* Naslov pogovora na telefonu: do dve vrstici, oznaka predmeta se skrči. */
+/* Naslov pogovora na telefonu: ena vrstica s tropičjem (j, 2026-10-31), oznaka predmeta se skrči. */
 @media (max-width: 760px) {
   .chat-head { gap: 8px; }
-  .chat-head h1 { min-width: 0; font-size: 1rem; line-height: 1.25; white-space: normal; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; overflow-wrap: anywhere; }
+  .chat-head h1 { min-width: 0; font-size: 1rem; line-height: 1.25; }
   .chat-head #chat-state { flex: 0 1 auto; min-width: 0; max-width: 34%; }
   .chat-head #chat-state .chip { min-width: 0; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .chat-head .icon-only { flex: none; }

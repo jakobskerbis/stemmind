@@ -58,3 +58,29 @@
   /* Levi stolpec je na tablici višji od zaslona: pripet bi skril spodnje načine. */
   #view-path > .path-side { position: static; max-height: none; overflow: visible; }
 }
+
+/* ---------- Inštruktor na telefonu in tablici na dotik: glava klepeta na vrhu zaslona (j, 2026-10-31) ----------
+   Zgornja vrstica (logotip, števci, profil) in obvestili »Preizkusni način« / »Testna verzija« so v klepetu skriti
+   (vsi slogi); profil in nastavitve so pod »Jaz«, obvestili ostaneta na drugih zaslonih. Samo ko je klepet glavni
+   pogled (ne v oknu ali listu). Glava dobi odmik za zarezo zaslona (safe-area). Obvestilo »Brez povezave« je samo na
+   Učni poti, klepet ima svoje (#chat-off). */
+@media (max-width: 760px), (max-width: 1240px) and (hover: none) and (pointer: coarse) {
+  body:has(> #view-chat:not([hidden]):not(.in-okno)) > :is(.topbar, #mock-banner, #test-notice) { display: none; }
+  body > #view-chat:not(.in-okno) .chat-head { padding-top: max(10px, env(safe-area-inset-top)); }
+  body > #view-chat:not(.in-okno) .sidebar.open { padding-top: calc(72px + env(safe-area-inset-top)); }
+}
+
+/* Telefon, Inštruktor: enak rob 16 px za glavo, klepet in vrstico za pisanje; gumbi v glavi enako veliki in enako
+   razmaknjeni (meni brez okvirja kot Skeniraj in Kalkulator); manjši razmiki v vrstici za pisanje, da namig ostane
+   berljiv (app.js ga skrajša za zadnjo celo besedo). */
+@media (max-width: 760px) {
+  .chat-head { padding-inline: 16px; gap: 6px; }
+  .chat-head > .icon-only { width: 40px; min-width: 40px; height: 40px; min-height: 40px; display: inline-grid; place-items: center; }
+  .chat-head > #toggle-sidebar { margin-inline-start: -8px; border-color: transparent; background: none; box-shadow: none; }
+  .chat-head > .chat-calc { margin-inline-end: -8px; }
+  .chat-head h1 { white-space: nowrap; text-overflow: ellipsis; }
+  .messages { padding-inline: 16px; }
+  .composer { padding-inline: 16px; }
+  .composer-row { gap: 2px; }
+  .composer-row #input { padding-inline: 6px; }
+}
