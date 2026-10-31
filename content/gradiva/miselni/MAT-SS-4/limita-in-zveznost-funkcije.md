@@ -1,0 +1,26 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Pojem limite
+  - $x$ se bliža $a$, $x \ne a$
+  - $f(a)$ na limito ne vpliva
+  - $\lim\limits_{x \to 0} \frac{\sin x}{x} = 1$
+- Leva in desna limita
+  - limita obstaja, ko sta enaki
+  - skok: limite ni
+- Pravila za računanje
+  - vsota, produkt, količnik limit
+  - polinom: kar vstavi
+- Nedoločeni izrazi
+  - $\frac{0}{0}$: razstavi in okrajšaj
+  - koren: razširi s $\sqrt{x} + 2$
+  - napaka: $\frac{0}{0} = 0$
+- Limita v neskončnosti
+  - deli z najvišjo potenco
+  - $\lim\limits_{x \to \infty} \frac{1}{x} = 0$
+  - napaka: $\frac{\infty}{\infty} = 1$
+- Zveznost
+  - $\lim\limits_{x \to a} f(x) = f(a)$
+  - nezveznosti: luknja, skok, pol
+  - ovojnica s skokom: zvočnik poči

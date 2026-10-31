@@ -293,3 +293,11 @@ Funkcija pa je recept, ki ga pomočnik shrani v predal. Ko rečeš `ure(100, 15)
 - `for k in koraki:` z zamaknjenim `skupaj = k`
 ~ Prireditev `skupaj = k` vsakič prepiše vrednost; na koncu je v `skupaj` le zadnji dan.
 > Akumulator nastavimo na $0$ enkrat, pred zanko; v zanki pa vsak dan prištejemo k vsoti.
+
+:::simboli
+a | začetek obsega range(a, b) | | | vključen
+b | konec obsega range(a, b) | | | ni vključen; obseg ima $b - a$ števil
+n | število ponovitev pri range(n) | | | range(n) je kratko za range(0, n)
+i | števec zanke for | | | dobi vrednosti $a, \ldots, b - 1$
+x | spremenljivka | | | x = x + 1 je prireditev, ne enačba
+:::

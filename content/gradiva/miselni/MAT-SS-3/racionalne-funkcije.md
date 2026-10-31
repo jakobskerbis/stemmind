@@ -1,0 +1,27 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Racionalna funkcija
+  - $f(x) = \dfrac{p(x)}{q(x)}$
+  - ni definirana v ničlah imenovalca
+- Krajšanje
+  - najprej razcepi števec in imenovalec
+  - skupni faktor pusti luknjo, ne pola
+- Ničle in poli
+  - ničle iz števca, poli iz imenovalca
+  - ob polu $c$ navpična asimptota $x = c$
+  - napaka: pol zamenjan z ničlo
+- Stopnja pola
+  - liha: veji na nasprotnih straneh
+  - soda: obe veji v isto smer
+- Vodoravna asimptota
+  - števec nižji: $y = 0$
+  - enaki stopnji: $y = \dfrac{a_n}{b_n}$
+  - graf jo lahko seka
+- Poševna asimptota
+  - količnik $k(x)$ pri deljenju $p$ s $q$
+  - $\dfrac{x^2 + 1}{x}$: asimptota $y = x$
+- Smisel v nalogi
+  - čoln: $t(v) = \dfrac{24v}{v^2 - 9}$, $v > 3$
+  - povprečna hitrost nikoli ne doseže $6\,\mathrm{km/h}$

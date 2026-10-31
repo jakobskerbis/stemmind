@@ -208,3 +208,18 @@ Reaktivnost halogenov upada od fluora proti jodu, ker so atomi navzdol po skupin
 - vodik
 + helij
 > Helij je žlahtni plin, lažji od zraka in negorljiv. Klor je strupen in težji od zraka, argon je prav tako težji od zraka, vodik pa je sicer lažji od zraka, a gori.
+
+:::simboli
+\mathrm{F} | fluor | | | halogen (17. skupina), najbolj reaktiven
+\mathrm{Cl} | klor | | | halogen (17. skupina)
+\mathrm{Br} | brom | | | halogen (17. skupina)
+\mathrm{I} | jod | | | halogen (17. skupina)
+\mathrm{At} | astat | | | radioaktiven in zelo redek halogen
+\mathrm{F_2}, \mathrm{Cl_2}, \mathrm{Br_2}, \mathrm{I_2} | dvoatomna molekula halogena | | | halogeni kot elementi tvorijo dvoatomne molekule
+\mathrm{He} | helij | | | žlahtni plin (18. skupina), enoatomen
+\mathrm{Ne} | neon | | | žlahtni plin (18. skupina)
+\mathrm{Ar} | argon | | | žlahtni plin (18. skupina)
+\mathrm{Kr} | kripton | | | žlahtni plin (18. skupina)
+\mathrm{Xe} | ksenon | | | žlahtni plin (18. skupina)
+\mathrm{Rn} | radon | | | žlahtni plin (18. skupina)
+:::

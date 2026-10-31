@@ -241,3 +241,12 @@ Ko prikaz bereš nazaj, postopek obrneš: stolpec je visok $3$ kvadratke, merilo
 - Stolpci postanejo preširoki.
 - Števila na osi postanejo negativna.
 > Če se os ne začne pri $0$, višina stolpca ni več sorazmerna z vrednostjo, zato se razlike zdijo večje, kot so.
+
+:::simboli
+\text{višina stolpca} | višina stolpca v kvadratkih | \text{višina stolpca} = \text{vrednost} : \text{merilo} | | vrednost iz višine: višina · merilo
+\text{vrednost} | podatek, ki ga stolpec prikazuje | | | na primer število knjig
+\text{merilo} | koliko pomeni en kvadratek na navpični osi | | | na primer 1 kvadratek = 4 knjige
+\text{večje število}, \text{manjše število} | večja in manjša od dveh primerjanih vrednosti | | | njuna razlika pove, za koliko je ena večja
+\text{novejša}, \text{starejša} | kasnejša in prejšnja od dveh zaporednih vrednosti | | | razlika > 0 naraščanje, < 0 padanje, 0 stalno
+\text{največja}, \text{najmanjša} | največja in najmanjša vrednost v podatkih | | | njuna razlika je razpon
+:::

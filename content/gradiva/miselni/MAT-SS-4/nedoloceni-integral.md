@@ -1,0 +1,25 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Odvajanje nazaj
+  - znana hitrost spreminjanja, iščemo količino
+  - $F'(x) = f(x)$
+- Družina funkcij
+  - $\int f(x)\,dx = F(x) + C$
+  - grafi premaknjeni navpično, nakloni enaki
+  - napaka: pozabljeni $+ C$
+- Osnovni integrali
+  - $\int x^n\,dx = \frac{x^{n+1}}{n+1} + C$, $n \ne -1$
+  - $\int \frac{1}{x}\,dx = \ln\lvert x\rvert + C$
+  - $\int \sin x\,dx = -\cos x + C$
+- Pravila računanja
+  - konstanta pred integral, vsota po členih
+  - za produkt takega pravila ni
+- Nova spremenljivka
+  - $u = g(x)$, $du = g'(x)\,dx$
+  - integriraj po $u$, vrni se k $x$
+  - $\int \cos(kx)\,dx = \frac{\sin(kx)}{k} + C$
+- Začetni pogoj
+  - dodatni podatek določi $C$
+  - struna: $y(0) = 0$ da $C = 0$

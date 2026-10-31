@@ -1,0 +1,24 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Sprememba
+  - končno stanje minus začetno
+  - baterija z $83\,\%$ na $77\,\%$: $-6$
+- Seštevanje
+  - enaka predznaka: seštej, predznak ostane
+  - različna: odštej, predznak večje absolutne vrednosti
+  - $(-6) + 12 = 6$
+- Odštevanje
+  - $a - b = a + (-b)$
+  - $5 - (-3) = 8$, ne $2$
+- Množenje
+  - enaka predznaka $+$, različna $-$
+  - $(-1) \cdot (-2) = 2$ iz vzorca
+- Deljenje
+  - predznak kot pri množenju
+  - preizkus: $(-12) : 4 = -3$, ker $4 \cdot (-3) = -12$
+  - z $0$ ne delimo
+- Vrstni red
+  - oklepaji, krat in deljeno, plus in minus
+  - $2 + 3 \cdot (-4) = -10$

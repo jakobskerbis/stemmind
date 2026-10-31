@@ -1,0 +1,24 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Racionalno število
+  - zapis $\frac{a}{b}$, $a, b$ celi, $b \neq 0$
+  - tudi $-7 = \frac{-7}{1}$ in $0{,}333\ldots = \frac{1}{3}$
+- Urejanje na premici
+  - bolj desno je večje
+  - $-2{,}8 < -2{,}5$: večja absolutna vrednost, bolj levo
+  - pred primerjanjem enak zapis
+- Seštevanje in odštevanje
+  - predznaki kot pri celih številih
+  - skupni imenovalec: $\frac{a}{c} + \frac{b}{c} = \frac{a + b}{c}$
+  - napaka: $\frac{1}{2}$ in $\frac{1}{3}$ ne dasta $\frac{2}{5}$
+- Množenje in deljenje
+  - enaka predznaka $+$, različna $-$
+  - delimo z množenjem z obratno vrednostjo
+- Številski izrazi
+  - oklepaji, krat in deljeno, plus in minus
+  - $2 - 3 \cdot (-4) = 14$
+- Vreme v številih
+  - sprememba: končna minus začetna temperatura
+  - povprečje $-3{,}5$, $1{,}2$, $-2{,}8$ je $-1{,}7$

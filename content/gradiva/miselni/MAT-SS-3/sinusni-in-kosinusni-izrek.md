@@ -1,0 +1,28 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Pari stranica–kot
+  - $a$ leži nasproti kota $\alpha$
+  - večji kot, daljša nasprotna stranica
+- Sinusni izrek
+  - $\dfrac{a}{\sin\alpha} = \dfrac{b}{\sin\beta} = \dfrac{c}{\sin\gamma} = 2R$
+  - izpeljava z višino $v_c$
+  - potrebuješ vsaj en cel par
+- Kosinusni izrek
+  - $c^2 = a^2 + b^2 - 2ab\cos\gamma$
+  - pri $\gamma = 90^\circ$ Pitagorov izrek
+  - napaka: pozabljen koren
+- Kot iz stranic
+  - $\cos\gamma = \dfrac{a^2 + b^2 - c^2}{2ab}$
+  - negativen kosinus pomeni top kot
+- Izbira izreka
+  - tri stranice ali vmesni kot: kosinusni
+  - stranica in dva kota: sinusni
+- Past pri sinusu
+  - kandidata $x$ in $180^\circ - x$
+  - kot nasproti krajše stranice je oster
+- Uporaba v športu
+  - golf: razdalja do zastavice
+  - nogomet: strelni kot
+  - zavoj $50^\circ$ da notranji kot $130^\circ$

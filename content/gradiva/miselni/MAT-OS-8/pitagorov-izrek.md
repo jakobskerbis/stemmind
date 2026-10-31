@@ -1,0 +1,25 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Kateti in hipotenuza
+  - kateti $a$, $b$ oklepata pravi kot
+  - hipotenuza $c$ nasproti pravega kota, najdaljša
+- Kvadrati nad stranicami
+  - $9 + 16 = 25$ pri trikotniku $3$, $4$, $5$
+  - izrek govori o ploščinah
+- Pitagorov izrek
+  - $a^2 + b^2 = c^2$
+  - velja samo v pravokotnem trikotniku
+- Iskanje hipotenuze
+  - $c = \sqrt{a^2 + b^2}$
+  - napaka: pozabljen koren, $c = 100$ namesto $10$
+- Iskanje katete
+  - $a = \sqrt{c^2 - b^2}$
+  - kateta je vedno krajša od hipotenuze
+- Iracionalni rezultat
+  - kateti $1$ in $1$: $c = \sqrt{2} \approx 1{,}41$
+  - zaokrožimo na cm ali mm
+- Obrat izreka
+  - $a^2 + b^2 = c^2$ pomeni pravi kot
+  - zidarsko pravilo $60$, $80$, $100\,\text{cm}$

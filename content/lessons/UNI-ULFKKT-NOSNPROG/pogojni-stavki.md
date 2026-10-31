@@ -283,3 +283,12 @@ Včasih pa kontrolor pokliče posebno ekipo, ki ima svoj seznam. Na primer, ko j
 - `if je_noc == oblacnost < 30:`
 ~ To je veriga primerjav: zahteva, da je `je_noc` enak `oblacnost`, kar nima smisla. Da morata veljati oba pogoja, pove `and`.
 > Notranji blok se izvede le, ko sta oba pogoja `True`; prav to pomeni `and`.
+
+:::simboli
+h | višina skoka na Zemlji | | cm | vnos v programu
+h_\text{luna} | višina skoka na Luni | h_\text{luna} = h \cdot \dfrac{9{,}81}{1{,}62} | cm | približno šestkrat višje kot na Zemlji
+m | navidezna magnituda | | – | manjše število pomeni svetlejši objekt
+m_1, m_2, m_3 | navidezne magnitude treh objektov | | – | vnosi za verigo elif
+v | hitrost vetra | | m/s | meja 15 m/s
+T | temperatura | | ^\circ\mathrm{C} | meja $-5\,^\circ\mathrm{C}$
+:::

@@ -1,0 +1,23 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Ponavljajoče množenje
+  - $4 \cdot 4 \cdot 4 = 4^3$
+  - kot $4 + 4 + 4 = 3 \cdot 4$
+- Osnova in eksponent
+  - $a^n$: osnova $a$, eksponent $n$
+  - napaka: $2^4 = 2 \cdot 4$
+  - $4^3 \ne 3^4$
+- Negativna osnova
+  - sod eksponent pozitivno, lih negativno
+  - $-2^4 = -16$, $(-2)^4 = 16$
+- Množenje potenc
+  - $a^m \cdot a^n = a^{m+n}$
+  - napaka: $a^3 \cdot a^2 = a^6$
+- Deljenje potenc
+  - $a^m : a^n = a^{m-n}$, $m > n$, $a \ne 0$
+  - $5^7 : 5^3 = 5^4$
+- Meje pravil
+  - samo enaka osnova
+  - ne za vsoto: $2^3 + 2^2 = 12$

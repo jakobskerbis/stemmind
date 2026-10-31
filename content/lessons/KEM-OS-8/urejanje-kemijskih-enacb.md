@@ -168,3 +168,14 @@ Zakaj se masa ohrani? Ker ima vsak atom svojo maso in je atomov pred reakcijo in
 + koeficiente pred formulami.
 - oboje, odvisno od enačbe.
 > Indeksi določajo snov. Če jih spremeniš, zapišeš drugo snov.
+
+:::simboli
+\mathrm{H_2} | molekula vodika | | | 2 atoma H
+\mathrm{O_2} | molekula kisika | | | 2 atoma O
+\mathrm{H_2O} | molekula vode | | | 2 atoma H in 1 atom O
+\mathrm{CH_4} | molekula metana | | | 1 atom C in 4 atomi H
+\mathrm{CO_2} | molekula ogljikovega dioksida | | | 1 atom C in 2 atoma O
+\mathrm{NH_3} | molekula amonijaka | | | 1 atom N in 3 atomi H
+\mathrm{Fe} | atom železa | |
+\mathrm{Fe_2O_3} | železov(III) oksid | | | 2 atoma Fe in 3 atomi O
+:::

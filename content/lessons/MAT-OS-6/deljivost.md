@@ -232,3 +232,8 @@ Prvi del je $297 + 36 = 333$ in je deljiv z $9$. O deljivosti z $9$ (ali s $3$) 
 - Da, vsak dobi $45$ jagod.
 ~ To je $135 : 3$. Gostov je $9$, zato deli z $9$, ne s $3$.
 > Vsota števk je $1 + 3 + 5 = 9$, zato je $135$ deljivo z $9$: $135 : 9 = 15$.
+
+:::simboli
+a | število, ki ga delimo (deljenec) | | | deljivo je z $b$, če pri $a : b$ ni ostanka
+b | število, s katerim delimo (delitelj) | | | $a$ je večkratnik števila $b$
+:::

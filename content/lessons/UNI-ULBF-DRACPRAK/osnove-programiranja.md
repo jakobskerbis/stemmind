@@ -296,3 +296,12 @@ Ko program ne da pričakovanega rezultata, naredi tako tabelo: napaka je v prvi 
 - `Do While Cells(i, 1).Value <> ""` brez spreminjanja `i`
 ~ Brez `i = i + 1` makro ves čas gleda isto celico in se nikoli ne ustavi.
 > Pri neznanem številu ponovitev uporabiš zanko s pogojem in v vsaki ponovitvi povečaš števec.
+
+:::simboli
+x | spremenljivka | | | v programu x = x + 3 poveča x za 3
+i | števec zanke | | | v zanki For dobi zaporedne vrednosti
+a, b | začetna in končna vrednost števca | | | For i = a To b ponovi blok $b - a + 1$-krat
+s | spremenljivka, ki zbira vsoto | | | začne z 0, v vsaki ponovitvi ji prištejemo
+\text{vsota} | vsota točk na vseh tekmah | | |
+\text{število tekem} | število odigranih tekem | | | povprečje je vsota : število tekem
+:::

@@ -1,0 +1,26 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Ničle iz razcepa
+  - faktor $(x - c)$ da ničlo $c$
+  - brez razcepa: delitelji prostega člena, Horner
+- Stalen predznak
+  - med sosednjima ničlama en predznak
+  - ena testna točka na interval
+- Stopnja ničle
+  - $(x - c)^k$: ničla stopnje $k$
+  - liha: graf seka os $x$
+  - soda: graf se osi le dotakne
+- Stopnja polinoma
+  - vsota stopenj ničel
+  - napaka: šteti le različne ničle
+- Kraka grafa
+  - za velike $|x|$: $p(x) \approx a_n x^n$
+  - sod $n$: kraka na isti strani
+  - predznak $a_n$ določi desni krak
+- Presečišče z osjo $y$
+  - točka $(0, p(0))$
+- Skica od desne
+  - pri lihi ničli zamenjaj predznak
+  - zmrzal: $T(t) = -0{,}04(t - 2)(t - 7)^2$

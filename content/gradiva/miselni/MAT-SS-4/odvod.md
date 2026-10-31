@@ -1,0 +1,26 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Diferenčni količnik
+  - $\frac{f(a + h) - f(a)}{h}$
+  - povprečna hitrost, sekanta
+- Definicija odvoda
+  - limita pri $h \to 0$
+  - hitrost v trenutku, npr. $^\circ\mathrm{C/min}$
+  - smerni koeficient tangente
+- Pravilo za potenco
+  - $(x^n)' = n x^{n-1}$
+  - odvod konstante je $0$
+- Konstanta in vsota
+  - $(c f)' = c f'$
+  - odvajaj člen za členom
+- Produkt in kvocient
+  - $(f g)' = f' g + f g'$
+  - napaka: produkt odvodov
+- Sestavljena funkcija
+  - zunanji odvod krat notranji
+  - napaka: pozabljen notranji odvod
+- Elementarne funkcije
+  - $(\sin x)' = \cos x$, $(\cos x)' = -\sin x$
+  - $(e^x)' = e^x$, $(\ln x)' = \frac{1}{x}$

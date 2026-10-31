@@ -251,3 +251,8 @@ Uporaben trik: če kdo reče »X in jaz sva iste vrste«, je X gotovo vitez, ne 
 - Tine
 ~ Potem bi lagala Miha in Tine. »Natanko eden« pomeni, da drugi govorijo resnico.
 > Če je bil Miha: Jure pove resnico, Miha laže, Tine pove resnico. Laže natanko eden. Pri drugih dveh krivcih bi lagala dva.
+
+:::simboli
+n | število oseb v nalogi | | | tabela vseh možnosti ima $2^n$ vrstic
+p, q | izjavi | | | vsaka je resnična ali neresnična
+:::

@@ -248,3 +248,8 @@ Nika dosuje sladkor do $0{,}15$. Na listek si zapiše: *ničle v imenovalcu pove
 ~ Lahko: dopišeš ničlo do enakega števila mest, $0{,}6 = 0{,}60$.
 + Ne, ker je $0{,}55 < 0{,}60$.
 > Z ničlo: $0{,}60$ in $0{,}55$. Odločijo desetinke, $5 < 6$, zato je moke premalo.
+
+:::simboli
+\text{kg} | kilogram, enota za maso | | | npr. $0{,}25\,\text{kg} = \dfrac{25}{100}\,\text{kg}$
+\text{l} | liter, enota za prostornino | | | npr. $0{,}1\,\text{l} = \dfrac{1}{10}\,\text{l}$
+:::
