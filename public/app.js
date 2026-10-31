@@ -1668,7 +1668,6 @@ function localStorageSet(k, v) {
 
 const LEVEL_NAMES = { 1: t("level.1"), 2: t("level.2"), 3: t("level.3") };
 const NODE = {
-  locked: ["lock", t("node.locked")],
   due: ["rotate-ccw", t("node.due")],
   mastered: ["check", t("node.mastered")],
   learning: ["pencil", t("node.learning")],
@@ -1889,25 +1888,25 @@ async function loadPath(key = state.pathKey) {
     <div class="xp-stats">${xpStatsHtml(x)}</div>`;
 
   content.innerHTML =
-    `<div class="legend">${["mastered", "learning", "due", "locked"].map((k) => `<span class="lg ${k}">${icon(NODE[k][0])}${NODE[k][1]}</span>`).join("")}</div>` +
+    `<div class="legend">${["mastered", "learning", "due"].map((k) => `<span class="lg ${k}">${icon(NODE[k][0])}${NODE[k][1]}</span>`).join("")}</div>` +
     p.units
       .map((u, ui) => {
         const rel = u.topics.filter((t) => t.practice).length ? u.topics.filter((t) => t.practice) : u.topics;
         const nDone = rel.filter((t) => t.status === "mastered").length;
         const pct = Math.round(u.progress * 100);
-        return `<section class="unit card ${u.locked ? "locked" : ""} ${u.mastered ? "mastered" : ""}">
+        return `<section class="unit card ${u.ahead ? "ahead" : ""} ${u.mastered ? "mastered" : ""}">
         <div class="unit-head">
-          <div class="ring" style="--p:${pct}">${u.locked ? icon("lock") : u.mastered ? icon("award") : `<span>${pct}%</span>`}</div>
+          <div class="ring" style="--p:${pct}">${u.mastered ? icon("award") : `<span>${pct}%</span>`}</div>
           <div class="unit-title"><span class="eyebrow">${t("unit.label", { n: ui + 1 })}</span><h2>${escapeHtml(u.title)}</h2>
-            <span class="muted">${u.locked ? t("unit.lockedNote") : t("unit.progress", { done: nDone, total: rel.length })}</span></div>
+            <span class="muted">${u.suggest ? t("unit.aheadNote", { unit: escapeHtml(u.suggest.unit) }) : t("unit.progress", { done: nDone, total: rel.length })}</span></div>
         </div>
         <ol class="path">
           ${u.topics
             .map((tp) => {
-              const st = u.locked ? "locked" : tp.due ? "due" : tp.status;
+              const st = tp.due ? "due" : tp.status;
               const isNext = p.next && p.next.id === tp.id;
-              const sub = NODE[st][1] + (tp.practice && tp.status === "learning" && !u.locked ? ` · ${LEVEL_NAMES[tp.level]}` : "");
-              return `<li><button class="node ${st} ${isNext ? "current" : ""}" data-open="${tp.id}" ${u.locked ? "disabled" : ""}>
+              const sub = NODE[st][1] + (tp.practice && tp.status === "learning" ? ` · ${LEVEL_NAMES[tp.level]}` : "");
+              return `<li><button class="node ${st} ${isNext ? "current" : ""}" data-open="${tp.id}">
                 <span class="node-dot">${icon(NODE[st][0])}</span>
                 <span class="node-text"><span class="node-name">${escapeHtml(tp.name)}</span><span class="node-sub">${isNext ? t("node.nextPrefix") : ""}${sub}</span></span>
               </button></li>`;
@@ -1915,8 +1914,8 @@ async function loadPath(key = state.pathKey) {
             .join("")}
         </ol>
         <div class="unit-actions">
-          ${u.hasPractice && !u.locked && u.started ? `<button class="secondary small" data-unit="${ui}">${icon("puzzle")}${t("unit.practice")}</button>` : ""}
-          ${u.hasPractice && !u.mastered ? `<button class="secondary small" data-placement="${ui}">${icon("target")}${u.locked ? t("unit.unlockTest") : t("unit.test")}</button>` : ""}
+          ${u.hasPractice && u.started ? `<button class="secondary small" data-unit="${ui}">${icon("puzzle")}${t("unit.practice")}</button>` : ""}
+          ${u.hasPractice && !u.mastered ? `<button class="secondary small" data-placement="${ui}">${icon("target")}${u.ahead ? t("unit.skipTest") : t("unit.test")}</button>` : ""}
         </div>
       </section>`;
       })
@@ -1993,15 +1992,21 @@ async function openTopic(topicId) {
   const tp = await api(`/api/topic?id=${encodeURIComponent(topicId)}&lang=${encodeURIComponent(state.student?.settings?.language || "")}`);
   state.topic = tp;
   showView("topic");
-  const hasPractice = (await api(`/api/students/${state.student.id}/path?key=${encodeURIComponent(tp.path)}`)).units
-    .flatMap((u) => u.topics)
-    .find((x) => x.id === tp.id);
+  const units = (await api(`/api/students/${state.student.id}/path?key=${encodeURIComponent(tp.path)}`)).units;
+  const unit = units.find((u) => u.topics.some((x) => x.id === tp.id));
+  const hasPractice = unit?.topics.find((x) => x.id === tp.id);
+  // Vse teme so odprte; če prejšnji sklop še ni osvojen, samo priporočimo, kje začeti.
+  const tip = unit?.suggest?.topic;
+  const aheadHint = tip
+    ? `<div class="fb info ahead-hint">${icon("info")}<span>${t("topic.aheadHint", { unit: escapeHtml(unit.suggest.unit) })} <button type="button" class="text-btn" data-open="${escapeHtml(tip.id)}">${escapeHtml(tip.name)}</button></span></div>`
+    : "";
   const canPractice = !!hasPractice?.practice;
   $("#topic-content").innerHTML = `<div class="topic-grid">
     <div class="card topic-head">
       <span class="eyebrow">${escapeHtml(tp.pathLabel)} · ${escapeHtml(tp.unit)}</span>
       <h1>${escapeHtml(tp.name)}</h1>
       <p class="goals">${icon("target")}<span>${escapeHtml(tp.goals)}</span></p>
+      ${aheadHint}
       <div class="actions">
         ${canPractice ? `<button class="primary big" id="t-practice">${icon("pencil")}${t("topic.practice")}</button>` : ""}
         <button class="${canPractice ? "secondary" : "primary big"}" id="t-learn">${icon("message-circle")}${t("topic.learn")}</button>
@@ -2526,7 +2531,7 @@ async function checkTask(task, ctx, value) {
     if (r.placement) {
       const p = r.placement;
       html += `<div class="card result ${p.passed ? "celebrate" : ""}">${p.passed ? `<div class="result-icon">${icon("award")}</div>` : ""}<h2>${p.passed ? t("placement.passed") : t("placement.notYet")}</h2>
-        <p>${t("placement.score", { correct: p.correct, total: p.total })}${p.passed ? (p.xp ? ` +${p.xp.gained} XP` : "") : t("placement.unlocked")}</p>${r.unlocked ? unlockedHtml(r.unlocked) : ""}
+        <p>${t("placement.score", { correct: p.correct, total: p.total })}${p.passed ? (p.xp ? ` +${p.xp.gained} XP` : "") : t("placement.startFirst")}</p>${r.unlocked ? unlockedHtml(r.unlocked) : ""}
         <button class="primary big" id="fb-back">${t("result.toPath")}</button></div>`;
     } else html += next();
   } else if (r.closed) {

@@ -69,11 +69,21 @@ test("a mistake lowers difficulty and returns a hint, not the solution", () => {
   assert.ok(last.solution);
 });
 
-test("chapters unlock in order; placement test unlocks and masters a unit", () => {
+test("all units open; later units only get a recommendation; placement test skips a unit", () => {
   const { p, s } = setup();
   let view = p.pathView(s.id, "MAT-OS-8");
-  assert.equal(view.units[0].locked, false);
-  assert.equal(view.units[1].locked, true);
+  assert.ok(view.units.every((u) => u.locked === undefined), "ni več ključavnic");
+  assert.equal(view.units[0].ahead, false);
+  assert.equal(view.units[1].ahead, true);
+  // Priporočilo kaže na prvo neosvojeno temo prejšnjega sklopa z vajami.
+  const first = view.units[0].topics.find((t) => t.practice);
+  assert.deepEqual(view.units[1].suggest, { unit: view.units[0].title, topic: { id: first.id, name: first.name } });
+  // Sklop »naprej« lahko vadiš takoj (prej je bil zaklenjen).
+  const later = p.startUnit(s.id, "MAT-OS-8", 2);
+  assert.ok(later.task.id, "vaja sklopa naprej deluje");
+  view = p.pathView(s.id, "MAT-OS-8");
+  assert.equal(view.units[2].ahead, false, "začet sklop ni več »naprej«");
+  assert.equal(view.units[2].suggest, undefined);
   const start = p.startPlacement(s.id, "MAT-OS-8", 0);
   let next = start, result;
   while (!next.finished) {
@@ -85,8 +95,8 @@ test("chapters unlock in order; placement test unlocks and masters a unit", () =
   assert.equal(result.passed, true);
   view = p.pathView(s.id, "MAT-OS-8");
   assert.equal(view.units[0].mastered, true);
-  assert.equal(view.units[1].locked, false);
-  assert.equal(view.units[2].locked, true);
+  assert.equal(view.units[1].ahead, false);
+  assert.equal(view.units[1].suggest, undefined);
 });
 
 test("review mixes due topics and pushes the next review out", () => {
@@ -171,7 +181,7 @@ test("daily flips to mostly review when review piles up", () => {
   assert.equal(q.total, RULES.quickReviewTasks);
 });
 
-test("test prep: harder tasks closer to the date; unit practice only when unlocked", () => {
+test("test prep: harder tasks closer to the date; unit practice in every unit", () => {
   const { p, s } = setup();
   const path = "MAT-OS-8";
   const view = p.pathView(s.id, path);
@@ -188,8 +198,8 @@ test("test prep: harder tasks closer to the date; unit practice only when unlock
   const avg = (pl) => pl.reduce((a, x) => a + x.level, 0) / pl.length;
   assert.ok(avg(near) > avg(far));
   assert.equal(p.testPlan(s.id).daysLeft, 1);
-  const locked = view.units.findIndex((u) => u.locked);
-  if (locked >= 0) assert.equal(p.startUnit(s.id, path, locked), null);
+  const ahead = view.units.findIndex((u) => u.ahead && u.hasPractice);
+  if (ahead >= 0) assert.ok(p.startUnit(s.id, path, ahead).task.id, "sklopi naprej niso zaklenjeni");
   const u = p.startUnit(s.id, path, ui);
   assert.ok(u.task.id);
   assert.equal(p.startUnit(s.id, path, ui).task.id, u.task.id);
@@ -198,7 +208,7 @@ test("test prep: harder tasks closer to the date; unit practice only when unlock
 test("tekmovanja: trening brez zaklepanja, poskusno tekmovanje s točkami in časom", () => {
   const { p, s } = setup();
   const view = p.pathView(s.id, "MAT-TEK-OS");
-  assert.ok(view.units.length > 1 && view.units.every((u) => !u.locked), "tekmovalni sklopi niso zaklenjeni");
+  assert.ok(view.units.length > 1 && view.units.every((u) => !u.ahead && !u.suggest), "tekmovalni sklopi so brez priporočil");
 
   const tr = p.startCompetition(s.id, "MAT-TEK-OS");
   assert.equal(tr.total, 10);
