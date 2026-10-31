@@ -549,6 +549,66 @@ async function calculator(p, label) {
 
 // Premična okna (public/okna.js): ukaz inštruktorju odpre kalkulator v oknu (telefon: spodnji list),
 // zunaj klepeta ostane mehurček, ki odpre klepet v oknu; zavihek iz zgornje vrstice potegnemo na stran.
+// Vsak zavihek zgoraj (tudi tedenske novosti) se odpre kot premično okno brez napak, vodoravnega
+// drsenja in s pogledom na svojem mestu po zaprtju. Na računalniku vsak glavni pogled z dvema
+// visokima stolpcema drug ob drugem dobi ročaj za širino (public/razdelilnik.js), docs/oblikovanje.md.
+async function oknaVsi(p) {
+  await tab(p, "path");
+  // Okna iz prejšnjih korakov zapremo in jih na koncu vrnemo (sicer bi zavihek odprl okno namesto glavnega pogleda).
+  const before = await p.$$eval(".okno[data-view]", (ws) => ws.map((w) => w.dataset.view));
+  for (const v of before) await p.evaluate((v) => window.evklid.closeWindow(v), v);
+  const views = await p.$$eval(".topbar .tabs .tab[data-view]", (ts) => ts.filter((t) => !t.hidden).map((t) => t.dataset.view));
+  for (const v of views) {
+    if (v === "path") continue; // Učna pot je glavni pogled tega koraka
+    const ok = await p.evaluate((v) => window.evklid.openWindow(v), v);
+    if (!ok) throw new Error(`zavihek »${v}« se ne odpre kot okno`);
+    await settle(p, 400);
+    const bad = await p.evaluate((v) => {
+      const w = document.querySelector(`.okno[data-view="${v}"]`);
+      if (!w) return "ni okna";
+      const body = w.querySelector(".okno-body") || w;
+      if (body.scrollWidth > body.clientWidth + 2) return `vodoravno drsenje v oknu (${body.scrollWidth} > ${body.clientWidth})`;
+      if (!w.querySelector(`#view-${v}`)) return "pogled ni v oknu";
+      return "";
+    }, v);
+    if (bad) throw new Error(`okno »${v}«: ${bad}`);
+    await p.evaluate((v) => window.evklid.closeWindow(v), v);
+    await settle(p, 200);
+    if (!(await p.locator(`#view-${v}`).evaluate((el) => el.parentElement === document.body || !el.closest(".okno")))) throw new Error(`pogled »${v}« se po zaprtju okna ni vrnil`);
+  }
+  // Dvostolpčne postavitve brez ročaja (nov pogled tedna brez makeSplitter): mreža z dvema stolpcema ali
+  // vrstica flex z dvema deloma drug ob drugem. Dve visoki kartici, ki nista dvodelni pogled: data-brez-locnice.
+  for (const v of views) {
+    await tab(p, v);
+    await settle(p, 300);
+    const miss = await p.evaluate(() => {
+      const main = document.querySelector("main.view:not([hidden]):not(.in-okno)");
+      if (!main) return [];
+      const out = [];
+      for (const el of [main, ...main.querySelectorAll("*")]) {
+        if (!el.offsetParent && el !== main) continue;
+        const cs = getComputedStyle(el);
+        if (cs.display === "grid") {
+          const cols = cs.gridTemplateColumns.split(" ").filter((c) => parseFloat(c) > 0);
+          if (cols.length !== 2 || cols.some((c) => parseFloat(c) < 240)) continue;
+        } else if (!(cs.display.endsWith("flex") && cs.flexDirection.startsWith("row"))) continue;
+        if (el.closest("[data-brez-locnice]")) continue;
+        const kids = [...el.children].filter((c) => c.offsetParent && !c.classList.contains("split-handle") && !/absolute|fixed/.test(getComputedStyle(c).position));
+        if (kids.length !== 2) continue;
+        const [a, b] = kids.map((k) => k.getBoundingClientRect());
+        if (Math.min(a.width, b.width) < 240 || Math.min(a.height, b.height) < innerHeight * 0.5) continue;
+        if (!(a.right <= b.left + 2 || b.right <= a.left + 2)) continue; // eden pod drugim
+        if (el.querySelector(":scope > .split-handle") || el.closest(".split-host")?.querySelector(":scope > .split-handle")) continue;
+        out.push(el.id ? `#${el.id}` : `${el.tagName.toLowerCase()}.${[...el.classList].join(".")}`);
+      }
+      return out;
+    });
+    if (miss.length) throw new Error(`pogled »${v}«: dva stolpca brez ročaja za širino (${miss.join(", ")}); uporabi makeSplitter`);
+  }
+  await tab(p, "path");
+  for (const v of before) await p.evaluate((v) => window.evklid.openWindow(v), v);
+}
+
 async function okna(p, label) {
   const sheet = label === "tel";
   await tab(p, "chat");
@@ -935,6 +995,7 @@ async function desktop(browser, app) {
   await step(p, "laboratorij", () => lab(p, "OS"));
   await step(p, "okna", () => okna(p, "OS"));
   await step(p, "razdelilnik", () => razdelilnik(p, "OS"));
+  await step(p, "okna-vsi", () => oknaVsi(p));
   await step(p, "tekmovanja", () => competition(p, "OS"));
   await step(p, "poskusno-tekmovanje", () => contest(p, "OS"));
   await step(p, "npz-matura", () => examsView(p, "OS"));
