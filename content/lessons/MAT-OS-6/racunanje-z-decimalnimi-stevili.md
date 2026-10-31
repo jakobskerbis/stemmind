@@ -243,3 +243,7 @@ Zakaj pravila delujejo? Decimalna števila lahko zapišemo kot desetiške ulomke
 - $0{,}40\,€$
 ~ Zapisal si tri decimalke namesto dveh. Ocena: več kot $2\,\text{kg}$ po $1{,}6\,€$ mora stati več kot $3\,€$.
 > $16 \cdot 25 = 400$, dve decimalki: $1{,}6 \cdot 2{,}5 = 4{,}00 = 4$. Plačaš $4\,€$.
+
+:::simboli
+\text{število kozarcev} | koliko kozarcev napolnimo iz vrča soka | \text{število kozarcev} = 1{,}8 : 0{,}15 | | prostornina vrča : prostornina kozarca
+:::

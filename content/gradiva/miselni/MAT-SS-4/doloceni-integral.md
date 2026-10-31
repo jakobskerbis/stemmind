@@ -1,0 +1,24 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Ploščina pod grafom
+  - pot je ploščina pod grafom hitrosti
+  - pravokotniki širine $\Delta x$, spodnja in zgornja vsota
+  - $\int_0^1 x^2\,dx = \frac{1}{3}$
+- Določeni integral
+  - limita vsot pravokotnikov
+  - meji $a$ in $b$, rezultat je število
+- Newton-Leibnizova formula
+  - $\int_a^b f(x)\,dx = F(b) - F(a)$
+  - konstanta $C$ se izniči
+  - napaka: $F(a) - F(b)$
+- Predznak
+  - pod osjo $x$ negativen prispevek
+  - ploščina: razdeli v ničlah, seštej absolutne vrednosti
+- Ploščina med krivuljama
+  - $\int_a^b (g - f)\,dx$, $g$ zgoraj
+- Prostornina vrtenine
+  - rezine so tanki valji
+  - $V = \pi \int_a^b f(x)^2\,dx$
+  - napaka: pozabljen kvadrat

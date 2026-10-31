@@ -1,0 +1,22 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Tangenta
+  - smerni koeficient je $f'(a)$
+  - $y = f(a) + f'(a)(x - a)$
+  - napaka: $f'(x)$ namesto števila $f'(a)$
+- Naraščanje in padanje
+  - $f' > 0$: narašča, $f' < 0$: pada
+  - odloča predznak $f'$, ne predznak $f$
+- Stacionarna točka
+  - $f'(a) = 0$, tangenta vodoravna
+  - $x^3$ pri $0$: stacionarna, a brez ekstrema
+- Lokalni ekstremi
+  - $f'$ iz $+$ v $-$: maksimum
+  - $f'$ iz $-$ v $+$: minimum
+  - vrednost dobiš iz $f$, ne iz $f'$
+- Ekstremalni problemi
+  - sestavi funkcijo ene spremenljivke
+  - določi smiselni interval in preveri robove
+  - rogljički: največji prihodek $312{,}50\,€$ pri $1{,}25\,€$

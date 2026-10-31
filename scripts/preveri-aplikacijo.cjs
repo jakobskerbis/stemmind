@@ -567,6 +567,66 @@ async function calculator(p, label) {
 
 // Premična okna (public/okna.js): ukaz inštruktorju odpre kalkulator v oknu (telefon: spodnji list),
 // zunaj klepeta ostane mehurček, ki odpre klepet v oknu; zavihek iz zgornje vrstice potegnemo na stran.
+// Vsak zavihek zgoraj (tudi tedenske novosti) se odpre kot premično okno brez napak, vodoravnega
+// drsenja in s pogledom na svojem mestu po zaprtju. Na računalniku vsak glavni pogled z dvema
+// visokima stolpcema drug ob drugem dobi ročaj za širino (public/razdelilnik.js), docs/oblikovanje.md.
+async function oknaVsi(p) {
+  await tab(p, "path");
+  // Okna iz prejšnjih korakov zapremo in jih na koncu vrnemo (sicer bi zavihek odprl okno namesto glavnega pogleda).
+  const before = await p.$$eval(".okno[data-view]", (ws) => ws.map((w) => w.dataset.view));
+  for (const v of before) await p.evaluate((v) => window.evklid.closeWindow(v), v);
+  const views = await p.$$eval(".topbar .tabs .tab[data-view]", (ts) => ts.filter((t) => !t.hidden).map((t) => t.dataset.view));
+  for (const v of views) {
+    if (v === "path") continue; // Učna pot je glavni pogled tega koraka
+    const ok = await p.evaluate((v) => window.evklid.openWindow(v), v);
+    if (!ok) throw new Error(`zavihek »${v}« se ne odpre kot okno`);
+    await settle(p, 400);
+    const bad = await p.evaluate((v) => {
+      const w = document.querySelector(`.okno[data-view="${v}"]`);
+      if (!w) return "ni okna";
+      const body = w.querySelector(".okno-body") || w;
+      if (body.scrollWidth > body.clientWidth + 2) return `vodoravno drsenje v oknu (${body.scrollWidth} > ${body.clientWidth})`;
+      if (!w.querySelector(`#view-${v}`)) return "pogled ni v oknu";
+      return "";
+    }, v);
+    if (bad) throw new Error(`okno »${v}«: ${bad}`);
+    await p.evaluate((v) => window.evklid.closeWindow(v), v);
+    await settle(p, 200);
+    if (!(await p.locator(`#view-${v}`).evaluate((el) => el.parentElement === document.body || !el.closest(".okno")))) throw new Error(`pogled »${v}« se po zaprtju okna ni vrnil`);
+  }
+  // Dvostolpčne postavitve brez ročaja (nov pogled tedna brez makeSplitter): mreža z dvema stolpcema ali
+  // vrstica flex z dvema deloma drug ob drugem. Dve visoki kartici, ki nista dvodelni pogled: data-brez-locnice.
+  for (const v of views) {
+    await tab(p, v);
+    await settle(p, 300);
+    const miss = await p.evaluate(() => {
+      const main = document.querySelector("main.view:not([hidden]):not(.in-okno)");
+      if (!main) return [];
+      const out = [];
+      for (const el of [main, ...main.querySelectorAll("*")]) {
+        if (!el.offsetParent && el !== main) continue;
+        const cs = getComputedStyle(el);
+        if (cs.display === "grid") {
+          const cols = cs.gridTemplateColumns.split(" ").filter((c) => parseFloat(c) > 0);
+          if (cols.length !== 2 || cols.some((c) => parseFloat(c) < 240)) continue;
+        } else if (!(cs.display.endsWith("flex") && cs.flexDirection.startsWith("row"))) continue;
+        if (el.closest("[data-brez-locnice]")) continue;
+        const kids = [...el.children].filter((c) => c.offsetParent && !c.classList.contains("split-handle") && !/absolute|fixed/.test(getComputedStyle(c).position));
+        if (kids.length !== 2) continue;
+        const [a, b] = kids.map((k) => k.getBoundingClientRect());
+        if (Math.min(a.width, b.width) < 240 || Math.min(a.height, b.height) < innerHeight * 0.5) continue;
+        if (!(a.right <= b.left + 2 || b.right <= a.left + 2)) continue; // eden pod drugim
+        if (el.querySelector(":scope > .split-handle") || el.closest(".split-host")?.querySelector(":scope > .split-handle")) continue;
+        out.push(el.id ? `#${el.id}` : `${el.tagName.toLowerCase()}.${[...el.classList].join(".")}`);
+      }
+      return out;
+    });
+    if (miss.length) throw new Error(`pogled »${v}«: dva stolpca brez ročaja za širino (${miss.join(", ")}); uporabi makeSplitter`);
+  }
+  await tab(p, "path");
+  for (const v of before) await p.evaluate((v) => window.evklid.openWindow(v), v);
+}
+
 async function okna(p, label) {
   const sheet = label === "tel";
   await tab(p, "chat");
@@ -602,6 +662,45 @@ async function okna(p, label) {
     if ((await currentView(p)) !== "view-textbook" || (await p.locator(".okno").count())) throw new Error("»Odpri čez cel zaslon« ne vrne Učbenika v glavni pogled");
     await tab(p, "path");
   }
+}
+
+// Ločnice med deli strani (public/razdelilnik.js): poteg ločnice ob seznamu pogovorov razširi seznam,
+// širina ostane po ponovnem nalaganju, puščica jo spremeni za 16 px, dvoklik vrne privzeto.
+async function razdelilnik(p, label) {
+  const handle = async () => {
+    await tab(p, "chat");
+    const h = p.locator("#view-chat > .split-handle");
+    await h.waitFor({ state: "visible", timeout: 5000 }).catch(() => {
+      throw new Error("ni ločnice ob seznamu pogovorov");
+    });
+    return h;
+  };
+  const width = () => p.locator("#view-chat > .sidebar").evaluate((el) => Math.round(el.getBoundingClientRect().width));
+  let h = await handle();
+  const w0 = await width();
+  const b = await h.boundingBox();
+  const y = b.y + Math.min(b.height / 2, 300);
+  await p.mouse.move(b.x + b.width / 2, y);
+  await p.mouse.down();
+  for (let i = 1; i <= 5; i++) await p.mouse.move(b.x + b.width / 2 + 16 * i, y);
+  await p.mouse.up();
+  await settle(p, 200);
+  const w1 = await width();
+  if (Math.abs(w1 - w0 - 80) > 3) throw new Error(`poteg ločnice ni razširil seznama pogovorov (${w0} → ${w1} px)`);
+  await screen(p, `razdelilnik-klepet-${label}`);
+  await p.reload();
+  await settle(p, 500);
+  h = await handle();
+  const w2 = await width();
+  if (Math.abs(w2 - w1) > 2) throw new Error(`širina seznama se po ponovnem nalaganju ni ohranila (${w1} → ${w2} px)`);
+  await h.focus();
+  await p.keyboard.press("ArrowLeft");
+  await settle(p, 150);
+  if (Math.abs((await width()) - (w2 - 16)) > 2) throw new Error("puščica levo na ločnici ne zoži seznama za 16 px");
+  await h.dblclick();
+  await settle(p, 200);
+  if (Math.abs((await width()) - w0) > 2) throw new Error("dvoklik na ločnico ne vrne privzete širine");
+  await tab(p, "path");
 }
 
 async function competition(p, label, view = "competition") {
@@ -687,6 +786,28 @@ async function games(p, label) {
   await screen(p, `igra-konec-${label}`);
   await click(p, ".gm-end [data-act=exit]");
   await expectVisible(p, "#games-content .gm-portal", "igre po koncu igre");
+}
+
+// Laboratorij (public/laboratorij.js): seznam poskusov, odprt poskus s simulacijo; Nazaj in Esc vrneta na seznam,
+// »Odpri temo v učbeniku« odpre lekcijo.
+async function lab(p, label) {
+  await tab(p, "lab");
+  await expectVisible(p, "#view-lab .lab-card", "poskusi v laboratoriju");
+  await screen(p, `laboratorij-${label}`);
+  const opened = "#view-lab .lab-mount .demo-reset, #view-lab .lab-locked";
+  await click(p, "#view-lab .lab-card [data-lab-open]", { wait: 300 });
+  await expectVisible(p, opened, "odprt poskus");
+  await screen(p, `poskus-${label}`);
+  await p.goBack();
+  await settle(p, 300);
+  if ((await currentView(p)) !== "view-lab") throw new Error("Nazaj v poskusu ne vodi na seznam laboratorija");
+  await expectVisible(p, "#view-lab .lab-card", "seznam po tipki Nazaj");
+  await click(p, "#view-lab .lab-card [data-lab-open]", { wait: 300 });
+  await expectVisible(p, opened, "odprt poskus");
+  await p.keyboard.press("Escape");
+  await expectVisible(p, "#view-lab .lab-card", "seznam po Esc");
+  await click(p, "#view-lab .lab-card [data-lab-topic]", { wait: 300 });
+  await expectVisible(p, "#view-textbook .tb-title", "tema učbenika iz laboratorija");
 }
 
 async function views(p, label) {
@@ -889,7 +1010,10 @@ async function desktop(browser, app) {
   await step(p, "ucbenik", () => textbook(p, "OS"));
   await step(p, "klepet", () => chat(p, "OS"));
   await step(p, "kalkulator", () => calculator(p, "OS"));
+  await step(p, "laboratorij", () => lab(p, "OS"));
   await step(p, "okna", () => okna(p, "OS"));
+  await step(p, "razdelilnik", () => razdelilnik(p, "OS"));
+  await step(p, "okna-vsi", () => oknaVsi(p));
   await step(p, "tekmovanja", () => competition(p, "OS"));
   await step(p, "poskusno-tekmovanje", () => contest(p, "OS"));
   await step(p, "npz-matura", () => examsView(p, "OS"));
@@ -1062,6 +1186,7 @@ async function phone(browser, app) {
   });
   await step(p, "tel-ucbenik", () => textbook(p, "tel"));
   await step(p, "tel-kalkulator", () => calculator(p, "tel"));
+  await step(p, "tel-laboratorij", () => lab(p, "tel"));
   await step(p, "tel-okna", () => okna(p, "tel"));
   await step(p, "tel-igre", () => games(p, "tel"));
   await step(p, "tel-skeniraj", () => scan(p, "tel"));

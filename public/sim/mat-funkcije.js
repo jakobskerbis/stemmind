@@ -336,6 +336,99 @@ const PRESETS = {
     },
     tryText: "Pri vsaki funkciji zmanjšaj h na 0,001. Ali se leva in desna vrednost ujemata?",
   },
+  // Lastnosti funkcij: definicijsko območje, zaloga vrednosti, ničle, monotonost, sodost, injektivnost, inverzna funkcija.
+  lastnosti: {
+    params: [["a", -3, 3, 0.5, 1]],
+    choice: ["funkcija", [["kv", "a(x² − 4)"], ["kub", "a·x³"], ["abs", "a(|x| − 2)"], ["rec", "a/x"], ["kor", "a·√(x + 4)"], ["lin", "a·x + 2"]]],
+    f: (x, P) => (P.choice === "lin" ? P.a * x + 2 : P.a * LAST[P.choice].f(x)),
+    gName: "Inverzna funkcija",
+    g: (x, P) => (P.a ? LAST[P.choice].inv?.(x, P.a) ?? NaN : NaN),
+    tex: (P) => `f(x) = ${LAST[P.choice].tex(P.a)}`,
+    marks: (A, P, svg) => {
+      if (P.a && LAST[P.choice].inv) s("line", { x1: A.X(-6), y1: A.Y(-6), x2: A.X(6), y2: A.Y(6), class: "guide", "data-name": "y = x" }, svg);
+      (P.a ? LAST[P.choice].zeros(P.a) : []).forEach((z) => dot(svg, A, z, 0, "a", "", "Ničle"));
+    },
+    info: (P) => {
+      const F = LAST[P.choice], a = P.a;
+      if (!a) return "<p>Pri a = 0 je funkcija konstantna: f(x) = 0 za vsak x iz definicijskega območja. Vsako število tega območja je ničla.</p>";
+      const z = F.zeros(a);
+      return `<p><b>Definicijsko območje:</b> ${F.D}. <b>Zaloga vrednosti:</b> ${F.Z(a)}. <b>Ničle:</b> ${z.length ? z.map((v) => fmt(v)).join(" in ") : "jih ni"}.</p>
+        <p><b>Monotonost:</b> ${F.mono(a)}. <b>Sodost:</b> ${F.par}. <b>Injektivnost:</b> ${F.inv ? "injektivna (vsaka vodoravna premica seka graf največ enkrat)" : "ni injektivna (neka vodoravna premica seka graf dvakrat)"}.</p>
+        <p class="muted">${F.inv ? `Inverzna funkcija <span class="dot dot-b"></span> ${tex(`f^{-1}(x) = ${F.invTex(a)}`)}: njen graf je zrcalna slika grafa f čez premico y = x.` : "Ker funkcija ni injektivna, na celem definicijskem območju nima inverzne funkcije."}</p>`;
+    },
+    tryText: "Katere izmed funkcij so sode in katere lihe? Preveri na grafu: soda je simetrična glede na os y, liha glede na izhodišče. Katere imajo inverzno funkcijo?",
+  },
+  // Transformacije grafa: g(x) = a·f(b(x − p)) + q
+  transformacije: {
+    params: [["a", -3, 3, 0.5, 1], ["b", -1, 1, 2, 1], ["p", -4, 4, 0.5, 0], ["q", -4, 4, 0.5, 0]],
+    fmtParam: { b: (v) => (v < 0 ? "−1 (zrcali čez os y)" : "1") },
+    choice: ["osnovna funkcija", [["kv", "f(x) = x²"], ["abs", "f(x) = |x|"], ["kor", "f(x) = √x"], ["kub", "f(x) = x³"], ["rec", "f(x) = 1/x"]]],
+    f: (x, P) => P.a * TRANS[P.choice].f(P.b * (x - P.p)) + P.q,
+    fName: "g(x)",
+    gName: "Osnovna funkcija f",
+    g: (x, P) => TRANS[P.choice].f(x),
+    tex: (P) => {
+      const inner = P.b < 0 ? `-${shift("x", P.p)}` : shift("x", P.p).replace(/^\((.*)\)$/, "$1");
+      return P.a ? `g(x) = ${cf(P.a)}${TRANS[P.choice].tex(inner)}${term(P.q)}` : `g(x) = ${T(P.q)}`;
+    },
+    marks: (A, P, svg) => {
+      if (P.choice === "rec") {
+        s("line", { x1: A.X(P.p), y1: A.T, x2: A.X(P.p), y2: A.B, class: "guide stroke-danger", "data-name": "Asimptote" }, svg);
+        s("line", { x1: A.L, y1: A.Y(P.q), x2: A.R, y2: A.Y(P.q), class: "guide stroke-danger", "data-name": "Asimptote" }, svg);
+      } else dot(svg, A, P.p, P.q, "c", "", "Premaknjeno izhodišče");
+    },
+    info: (P) => {
+      const st = [];
+      if (P.b < 0) st.push("zrcaljenje čez os y (x zamenjamo z −x)");
+      if (P.p) st.push(`vzporedni premik za ${fmt(Math.abs(P.p))} v ${P.p > 0 ? "desno" : "levo"} (x zamenjamo z x ${P.p > 0 ? "−" : "+"} ${fmt(Math.abs(P.p))})`);
+      if (Math.abs(P.a) !== 1 && P.a) st.push(`${Math.abs(P.a) > 1 ? "raztezanje" : "skrčitev"} v smeri osi y s faktorjem ${fmt(Math.abs(P.a))}`);
+      if (P.a < 0) st.push("zrcaljenje čez os x (vrednosti pomnožimo z −1)");
+      if (P.q) st.push(`vzporedni premik za ${fmt(Math.abs(P.q))} ${P.q > 0 ? "navzgor" : "navzdol"}`);
+      return `<p>Graf <span class="dot dot-b"></span>osnovne funkcije f preslikamo po vrsti: ${st.length ? st.map((x, i) => `<b>${i + 1}.</b> ${x}`).join("; ") : "nič se ne spremeni"}.</p>
+        <p class="muted">${P.choice === "kv" || P.choice === "abs" ? "f je soda, zato zrcaljenje čez os y grafa ne spremeni. " : ""}Sprememba znotraj oklepaja (pri x) deluje vodoravno in »obratno« od pričakovanja, sprememba zunaj pa navpično.</p>`;
+    },
+    tryText: "Izberi f(x) = √x. Nastavi p = 2 in q = −1. Kam se premakne začetna točka grafa? Kaj naredi b = −1 pri x² in kaj pri √x?",
+  },
+  // Potenčne funkcije s celim eksponentom: f(x) = a·xⁿ
+  "potencna-cela": {
+    params: [["n", -3, 5, 1, 3], ["a", -2, 2, 0.5, 1]],
+    win: [-4, 4, -4, 4],
+    f: (x, P) => (P.n < 0 && x === 0 ? NaN : P.a * x ** P.n),
+    tex: (P) => (P.n === 0 ? `f(x) = ${T(P.a)}` : `f(x) = ${cf(P.a)}x^{${P.n}}${P.n < 0 ? ` = ${P.a < 0 ? "-" : ""}\\frac{${T(Math.abs(P.a))}}{x^{${-P.n}}}` : ""}`),
+    marks: (A, P, svg) => {
+      dot(svg, A, 1, P.a, "c", "", "Točki pri x = ±1");
+      dot(svg, A, -1, P.a * (-1) ** P.n, "c", "", "Točki pri x = ±1");
+    },
+    info: (P) => {
+      const { n, a } = P;
+      if (n === 0 || a === 0) return `<p>Pri ${n === 0 ? "n = 0" : "a = 0"} je funkcija konstantna (vodoravna premica).</p>`;
+      const even = n % 2 === 0, pos = n > 0;
+      const Z = even ? (pos ? (a > 0 ? "[0, ∞)" : "(−∞, 0]") : a > 0 ? "(0, ∞)" : "(−∞, 0)") : pos ? "ℝ" : "ℝ ∖ {0}";
+      return `<p><b>${pos ? "Pozitivni" : "Negativni"} ${even ? "sodi" : "lihi"} eksponent.</b> Definicijsko območje ${pos ? "ℝ" : "ℝ ∖ {0}"}, zaloga vrednosti ${Z}. Funkcija je <b>${even ? "soda" : "liha"}</b>: graf je simetričen glede na ${even ? "os y" : "koordinatno izhodišče"}.</p>
+        <p>${pos ? `Ničla x = 0 (stopnje ${n}). ${n === 1 ? "To je premica." : n === 2 ? "Graf je parabola." : n === 3 ? "Graf je kubična parabola." : even ? "Graf je podoben paraboli, ob izhodišču je bolj sploščen." : "Graf je podoben kubični paraboli, ob izhodišču je bolj sploščen."}` : "Ničel ni. Os x in os y sta asimptoti (hiperbola)."} Graf gre skozi (1, ${fmt(a)}) in (−1, ${fmt(a * (-1) ** n)}).</p>
+        <p class="muted">Večji kot je |n|, bolj se graf na intervalu (−1, 1) približa osi x${pos ? "" : " (pri negativnem n pa se vrednosti na tem intervalu večajo)"}.</p>`;
+    },
+    tryText: "Primerjaj n = 2 in n = 4 ter n = −1 in n = −2. Kje sta grafa x² in x⁴ enaka? Kateri je bližje osi x med −1 in 1?",
+  },
+};
+
+// Funkcije za prednastavitev »lastnosti« (pri a ≠ 0). f brez faktorja a (lin: f(x) = x).
+const intv = (lo, hi, l = "[", r = "]") => `${l}${lo}, ${hi}${r}`;
+const LAST = {
+  kv: { f: (x) => x * x - 4, tex: (a) => (a === 1 ? "x^2 - 4" : `${cf(a)}(x^2 - 4)`), D: "ℝ", Z: (a) => (a > 0 ? intv(fmt(-4 * a), "∞", "[", ")") : intv("−∞", fmt(-4 * a), "(", "]")), zeros: () => [-2, 2], mono: (a) => (a > 0 ? "pada na (−∞, 0], narašča na [0, ∞)" : "narašča na (−∞, 0], pada na [0, ∞)"), par: "soda, f(−x) = f(x)" },
+  kub: { f: (x) => x ** 3, tex: (a) => `${cf(a)}x^3`, D: "ℝ", Z: () => "ℝ", zeros: () => [0], mono: (a) => (a > 0 ? "narašča na vsem ℝ" : "pada na vsem ℝ"), par: "liha, f(−x) = −f(x)", inv: (x, a) => Math.cbrt(x / a), invTex: (a) => (a === 1 ? "\\sqrt[3]{x}" : `\\sqrt[3]{\\frac{x}{${T(a)}}}`) },
+  abs: { f: (x) => Math.abs(x) - 2, tex: (a) => (a === 1 ? "|x| - 2" : `${cf(a)}(|x| - 2)`), D: "ℝ", Z: (a) => (a > 0 ? intv(fmt(-2 * a), "∞", "[", ")") : intv("−∞", fmt(-2 * a), "(", "]")), zeros: () => [-2, 2], mono: (a) => (a > 0 ? "pada na (−∞, 0], narašča na [0, ∞)" : "narašča na (−∞, 0], pada na [0, ∞)"), par: "soda, f(−x) = f(x)" },
+  rec: { f: (x) => (x === 0 ? NaN : 1 / x), tex: (a) => (a < 0 ? `-\\frac{${T(-a)}}{x}` : `\\frac{${T(a)}}{x}`), D: "ℝ ∖ {0}", Z: () => "ℝ ∖ {0}", zeros: () => [], mono: (a) => `${a > 0 ? "pada" : "narašča"} na (−∞, 0) in posebej na (0, ∞), ne pa na celem definicijskem območju`, par: "liha, f(−x) = −f(x)", inv: (x, a) => (x === 0 ? NaN : a / x), invTex: (a) => `\\frac{${T(a)}}{x}\\ (\\text{sama sebi inverzna})` },
+  kor: { f: (x) => (x < -4 ? NaN : Math.sqrt(x + 4)), tex: (a) => `${cf(a)}\\sqrt{x + 4}`, D: "[−4, ∞)", Z: (a) => (a > 0 ? "[0, ∞)" : "(−∞, 0]"), zeros: () => [-4], mono: (a) => (a > 0 ? "narašča na [−4, ∞)" : "pada na [−4, ∞)"), par: "ni ne soda ne liha (definicijsko območje ni simetrično)", inv: (x, a) => (x / a < 0 ? NaN : (x / a) ** 2 - 4), invTex: (a) => `\\left(\\frac{x}{${T(a)}}\\right)^2 - 4,\\ \\frac{x}{${T(a)}} \\ge 0` },
+  lin: { f: (x) => x, tex: (a) => `${cf(a)}x + 2`, D: "ℝ", Z: () => "ℝ", zeros: (a) => [-2 / a], mono: (a) => (a > 0 ? "narašča na vsem ℝ" : "pada na vsem ℝ"), par: "ni ne soda ne liha", inv: (x, a) => (x - 2) / a, invTex: (a) => `\\frac{x - 2}{${T(a)}}` },
+};
+// Osnovne funkcije za »transformacije«; tex(inner) zapiše f(inner).
+const TRANS = {
+  kv: { f: (x) => x * x, tex: (u) => (u === "x" ? "x^2" : `\\left(${u}\\right)^2`) },
+  abs: { f: (x) => Math.abs(x), tex: (u) => `\\left|${u}\\right|` },
+  kor: { f: (x) => (x < 0 ? NaN : Math.sqrt(x)), tex: (u) => `\\sqrt{${u}}` },
+  kub: { f: (x) => x ** 3, tex: (u) => (u === "x" ? "x^3" : `\\left(${u}\\right)^3`) },
+  rec: { f: (x) => (x === 0 ? NaN : 1 / x), tex: (u) => `\\frac{1}{${u}}` },
 };
 
 // title: ime točke na gumbu »Prikaži« (public/sim/prikaz.js), npr. »Teme«.
@@ -360,7 +453,7 @@ export function graf(el, { preset = "kvadratna" } = {}) {
     const f = (x) => C.f(x, P);
     if (C.g) s("path", { d: fnPath((x) => C.g(x, P), A), class: "graph-line stroke-b thin-line", "data-name": C.gName }, svg);
     C.marks?.(A, P, svg, f);
-    s("path", { d: fnPath(f, A, { n: 500 }), class: "graph-line", "data-name": "f(x)" }, svg);
+    s("path", { d: fnPath(f, A, { n: 500 }), class: "graph-line", "data-name": C.fName || "f(x)" }, svg);
     C.marks && svg.querySelectorAll(".pt").forEach((p) => svg.append(p));
     eq.innerHTML = tex(C.tex(P));
     out.innerHTML = C.info(P, f);

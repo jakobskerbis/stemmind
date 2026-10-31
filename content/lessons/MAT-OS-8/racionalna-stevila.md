@@ -5,189 +5,243 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Do zdaj si spoznal naravna števila ($1, 2, 3, \dots$), cela števila (tudi negativna, npr. $-5$) in ulomke ter decimalna števila (npr. $\frac{3}{4}$, $0{,}75$). V 8. razredu vse to povežemo v eno množico: **racionalna števila**. Tako lahko računamo z vsemi števili, ki jih srečaš vsak dan: temperatura $-3{,}5\,^\circ\text{C}$, polovica pice $\frac{1}{2}$, dolg $-12{,}40$ evra.
+Na vremenski postaji ob jezeru so opolnoči izmerili $-2{,}5\,^\circ\mathrm{C}$, ob šestih zjutraj pa $-2{,}8\,^\circ\mathrm{C}$. Sošolec Luka trdi: »Zjutraj je bilo topleje, ker je $2{,}8$ več kot $2{,}5$.«
 
-Naučil se boš:
-
-- kako racionalna števila **razvrstiš** po velikosti, tudi ko so negativna in zapisana na različne načine,
-- kako z njimi **računaš** in v kakšnem vrstnem redu izvajaš računske operacije v **številskih izrazih**.
+Ima prav? Temperature v vremenski napovedi niso le cela števila. Pogosto imajo decimalke, so pod ničlo, padavine pa so včasih podane kot ulomek običajne količine. Da Luki odgovoriš, moraš znati primerjati in računati s števili, ki so hkrati negativna in niso cela. Na koncu prvega dela razlage boš odgovor znal utemeljiti.
 
 ## Razlaga
 
-**1. Kaj je racionalno število.** Racionalno število je vsako število, ki ga lahko zapišemo kot ulomek $\dfrac{a}{b}$, kjer sta $a$ in $b$ cela števila in $b \neq 0$. Množico racionalnih števil označimo z $\mathbb{Q}$.
+**1. Nova množica.** Iz prejšnjih razredov poznaš ulomke in decimalna števila, kot sta $\frac{3}{4}$ in $0{,}75$. Zdaj jim dodamo še nasprotna števila: $-\frac{3}{4}$, $-0{,}75$, $-2{,}8$. **Racionalno število** je vsako število, ki ga lahko zapišemo kot ulomek $\frac{a}{b}$, kjer sta $a$ in $b$ celi števili in $b \neq 0$. Množico racionalnih števil označimo z $\mathbb{Q}$.
 
-Racionalna so:
+Racionalna so cela števila ($5 = \frac{5}{1}$, $-3 = \frac{-3}{1}$), ulomki, končna decimalna števila ($-0{,}4 = -\frac{2}{5}$) in tudi periodična ($\frac{1}{3} = 0{,}333\ldots$). Minus ulomka lahko stoji pred ulomkom ali v števcu: $-\frac{3}{4} = \frac{-3}{4}$.
 
-- **cela števila**, npr. $5 = \frac{5}{1}$, $-3 = \frac{-3}{1}$,
-- **ulomki**, npr. $\frac{2}{3}$, $-\frac{7}{4}$,
-- **končna decimalna števila**, npr. $0{,}75 = \frac{3}{4}$, $-1{,}2 = -\frac{6}{5}$,
-- **periodična decimalna števila**, npr. $\frac{1}{3} = 0{,}333\ldots = 0{,}\overline{3}$.
+*Hiter preizkus:* ali je $-7$ racionalno število? *(Da, $-7 = \frac{-7}{1}$.)*
 
-**2. Predznak ulomka.** Velja $-\dfrac{a}{b} = \dfrac{-a}{b} = \dfrac{a}{-b}$. Navadno minus pišemo pred ulomek ali v števec.
+**2. Na premici.** Racionalna števila zapolnijo prostor med celimi števili. Na številski premici leži $-2{,}5$ točno na sredini med $-3$ in $-2$, $-2{,}8$ pa je bližje $-3$:
 
-**3. Številska premica in urejanje.** Racionalna števila ležijo na številski premici. Število, ki je bolj **levo**, je manjše. Zato velja:
+```
+ -3   -2,8      -2,5          -2
+  |----*---------*-------------|
+  bolj levo = manjše
+```
 
-- vsako negativno število je manjše od nič in od vsakega pozitivnega števila,
-- med negativnimi števili je **manjše tisto, ki ima večjo absolutno vrednost**: $-3 < -2$.
+Še vedno velja: večje število je bolj desno. Zato ima od dveh negativnih števil večjo vrednost tisto z manjšo absolutno vrednostjo. Absolutna vrednost $|{-2{,}8}| = 2{,}8$ je večja od $|{-2{,}5}| = 2{,}5$, torej je $-2{,}8 < -2{,}5$.
 
-*Absolutna vrednost* $|x|$ je razdalja števila od $0$: $|-3| = 3$, $|3| = 3$.
+Luka se je zmotil. Zjutraj je bilo hladneje, temperatura se je spremenila za $-2{,}8 - (-2{,}5) = -0{,}3$ stopinje.
 
-**4. Kako primerjamo.**
+V simulaciji spodaj (Racionalna števila na premici) postavi točko na $-0{,}5$, nato na $-\frac{3}{4}$. Opazuj, katera je bolj levo, čeprav ima ulomek »večje številke«.
 
-- Ulomke z enakim imenovalcem primerjamo po števcih.
-- Ulomke z različnimi imenovalci razširimo na **skupni imenovalec**.
-- Če so števila zapisana različno, jih lahko vsa zapišemo kot decimalna ali vsa kot ulomke.
+Ko števila zapišemo različno, jih pred primerjavo prevedemo v isto obliko: vsa v decimalni zapis ali vsa v ulomke s skupnim imenovalcem.
 
-**5. Seštevanje in odštevanje.** Ulomka morata imeti skupni imenovalec:
+*Hiter preizkus:* katero je večje, $-1{,}2$ ali $-1{,}25$? *(Število $-1{,}2$, ker ima manjšo absolutno vrednost.)*
 
-$$\frac{a}{c} + \frac{b}{c} = \frac{a+b}{c}$$
+**3. Seštevanje in odštevanje.** Pravila za predznake so ista kot pri celih številih. Pri enakih predznakih absolutni vrednosti seštejemo, pri različnih odštejemo manjšo od večje in vzamemo predznak tistega z večjo absolutno vrednostjo. Odštevanje je prištevanje nasprotnega števila.
 
-Odštevanje pomeni prištevanje nasprotnega števila: $x - y = x + (-y)$.
+Primer z decimalnimi števili: jutranjih $-2{,}4\,^\circ\mathrm{C}$ se segreje za $5{,}1$, torej $-2{,}4 + 5{,}1 = 2{,}7$. Pri ulomkih najprej poiščemo **skupni imenovalec**, nato računamo s števci:
 
-**6. Množenje.** Množimo števec s števcem in imenovalec z imenovalcem:
+$$\frac{a}{c} + \frac{b}{c} = \frac{a + b}{c}$$
 
-$$\frac{a}{b}\cdot\frac{c}{d} = \frac{a\cdot c}{b\cdot d}$$
+Tako je $-\frac{1}{2} - \frac{1}{3} = -\frac{3}{6} - \frac{2}{6} = -\frac{5}{6}$.
 
-**Pravila za predznak:** enaka predznaka dasta $+$, različna dasta $-$.
+:::premisli
+Zakaj ne smemo kar sešteti števcev in imenovalcev, tako da bi iz $\frac{1}{2}$ in $\frac{1}{3}$ dobili $\frac{2}{5}$? Pomisli, ali je rezultat lahko manjši od $\frac{1}{2}$.
+---
+Ker bi bil rezultat $\frac{2}{5} = 0{,}4$ manjši od $\frac{1}{2} = 0{,}5$, čeprav smo $\frac{1}{2}$ prišteli pozitivno število. Seštevamo lahko le enako velike dele, zato najprej poiščemo skupni imenovalec: $\frac{3}{6} + \frac{2}{6} = \frac{5}{6}$.
+:::
 
-**7. Deljenje.** Deljenje z ulomkom pomeni množenje z **obratno vrednostjo** (obratnim ulomkom):
+**4. Množenje in deljenje.** Predznak določimo kot pri celih številih: enaka predznaka dasta $+$, različna $-$. Absolutni vrednosti nato zmnožimo ali delimo kot doslej. Ulomke množimo števec s števcem in imenovalec z imenovalcem. Z ulomkom delimo tako, da množimo z njegovo **obratno vrednostjo** (zamenjamo števec in imenovalec):
 
-$$\frac{a}{b} : \frac{c}{d} = \frac{a}{b}\cdot\frac{d}{c} \qquad (c \neq 0)$$
+$$\frac{a}{b} : \frac{c}{d} = \frac{a}{b} \cdot \frac{d}{c}$$
 
-Z nič ne smemo deliti.
+pri čemer so $b$, $c$ in $d$ različni od $0$. Na primer $\left(-\frac{1}{2}\right)\cdot\left(-\frac{4}{3}\right) = \frac{4}{6} = \frac{2}{3}$ in $\left(-\frac{3}{4}\right) : \frac{1}{4} = -\frac{3}{4} \cdot 4 = -3$.
 
-**8. Vrstni red računskih operacij v številskih izrazih.**
+*Hiter preizkus:* koliko je $(-0{,}5)\cdot 4$? *(Različna predznaka, $-2$.)*
 
-1. Najprej račun v **oklepajih** (od notranjih proti zunanjim).
-2. Nato **potence**.
-3. Nato **množenje in deljenje** (od leve proti desni).
-4. Nazadnje **seštevanje in odštevanje** (od leve proti desni).
+**5. Številski izrazi.** Številski izraz je zapis s števili, računskimi znaki in oklepaji. Vrstni red je isti kot pri celih številih: najprej oklepaji, nato množenje in deljenje, nazadnje seštevanje in odštevanje, vse od leve proti desni.
+
+:::premisli
+Koliko je $2 - 3 \cdot (-4)$? Napovej, nato premisli, kaj bi dobil, če bi najprej odštel.
+---
+Najprej množimo: $3 \cdot (-4) = -12$, nato $2 - (-12) = 14$. Če bi najprej odštel, bi računal $(2 - 3)\cdot(-4) = 4$, kar je drug izraz.
+:::
 
 ## Rešeni primeri
 
-### Primer 1 (lažji): urejanje po velikosti
+### Primer 1 (lažji): odmik gladine od povprečja
 
-Uredi po velikosti od najmanjšega do največjega: $-\dfrac{3}{4},\ 0{,}5,\ -0{,}8,\ \dfrac{2}{3}$.
+Hidrologi merijo, za koliko metrov je gladina reke nad povprečjem (pozitivno) ali pod njim (negativno). V štirih mesecih so zapisali: $-\frac{3}{4}\,\mathrm{m}$, $0{,}5\,\mathrm{m}$, $-0{,}8\,\mathrm{m}$ in $\frac{2}{3}\,\mathrm{m}$. Uredi odmike od najmanjšega do največjega.
 
-1. Števila zapišemo v decimalni obliki, ker jih je tako najlažje primerjati: $-\frac{3}{4} = -0{,}75$, $0{,}5$, $-0{,}8$, $\frac{2}{3} = 0{,}666\ldots$
-2. Ločimo negativna in pozitivna. Negativni sta $-0{,}75$ in $-0{,}8$, pozitivni sta $0{,}5$ in $0{,}666\ldots$ Negativna so vedno manjša od pozitivnih.
-3. Med negativnima je večja absolutna vrednost pri $-0{,}8$ ($0{,}8 > 0{,}75$), zato je $-0{,}8 < -0{,}75$.
-4. Med pozitivnima: $0{,}5 < 0{,}666\ldots$
-5. **Odgovor:** $-0{,}8 < -\dfrac{3}{4} < 0{,}5 < \dfrac{2}{3}$.
+**Podatki:** odmiki $-\frac{3}{4}\,\mathrm{m}$, $0{,}5\,\mathrm{m}$, $-0{,}8\,\mathrm{m}$, $\frac{2}{3}\,\mathrm{m}$
+**Iščemo:** vrstni red od najmanjšega do največjega
+
+:::formula
+Bolj levo na premici je manjše. Od dveh negativnih je manjše tisto z večjo absolutno vrednostjo.
+:::
+
+**Rešitev:**
+
+1. Vse zapišemo decimalno, da jih lažje primerjamo: $-\frac{3}{4} = -0{,}75$ in $\frac{2}{3} = 0{,}666\ldots$
+2. Negativni števili sta $-0{,}75$ in $-0{,}8$; obe sta manjši od vseh pozitivnih.
+3. Ker je $0{,}8 > 0{,}75$, je $-0{,}8 < -0{,}75$: večja absolutna vrednost pomeni bolj levo.
+4. Med pozitivnima je $0{,}5 < 0{,}666\ldots$
+5. Odgovor: $-0{,}8\,\mathrm{m} < -\frac{3}{4}\,\mathrm{m} < 0{,}5\,\mathrm{m} < \frac{2}{3}\,\mathrm{m}$. Najnižja je bila gladina v mesecu z odmikom $-0{,}8\,\mathrm{m}$.
 
 ### Primer 2: seštevanje in odštevanje ulomkov
 
-Izračunaj $\dfrac{2}{3} - \dfrac{5}{6} + \dfrac{1}{4}$.
+Izračunaj $\frac{2}{3} - \frac{5}{6} + \frac{1}{4}$.
+
+**Podatki:** ulomki $\frac{2}{3}$, $\frac{5}{6}$, $\frac{1}{4}$ v izrazu $\frac{2}{3} - \frac{5}{6} + \frac{1}{4}$
+**Iščemo:** vrednost izraza
+
+:::formula
+$\frac{a}{c} + \frac{b}{c} = \frac{a + b}{c}$ (najprej skupni imenovalec)
+:::
+
+**Rešitev:**
 
 1. Imenovalci so $3$, $6$ in $4$. Najmanjši skupni večkratnik je $12$, zato je to skupni imenovalec.
-2. Razširimo: $\frac{2}{3} = \frac{8}{12}$ (pomnožili smo z $4$), $\frac{5}{6} = \frac{10}{12}$ (pomnožili smo z $2$), $\frac{1}{4} = \frac{3}{12}$ (pomnožili smo s $3$).
-3. Seštejemo števce, imenovalec ostane: $\dfrac{8 - 10 + 3}{12} = \dfrac{1}{12}$.
-4. Ulomek $\frac{1}{12}$ se ne da več krajšati, zato je to končni rezultat.
+2. Razširimo: $\frac{2}{3} = \frac{8}{12}$, $\frac{5}{6} = \frac{10}{12}$, $\frac{1}{4} = \frac{3}{12}$.
+3. Računamo s števci, imenovalec ostane: $\frac{8 - 10 + 3}{12} = \frac{1}{12}$.
+4. Odgovor: vrednost izraza je $\frac{1}{12}$, ki se ne da več krajšati.
 
-### Primer 3 (težji): številski izraz
+### Primer 3 (težji): povprečna temperatura
 
-Izračunaj $\left(-\dfrac{3}{4} + \dfrac{1}{2}\right) : \left(-\dfrac{1}{8}\right) - 2\cdot\left(-\dfrac{3}{2}\right)^2$.
+V treh zimskih dneh so ob sedmih zjutraj izmerili $-3{,}5\,^\circ\mathrm{C}$, $1{,}2\,^\circ\mathrm{C}$ in $-2{,}8\,^\circ\mathrm{C}$. Kolikšna je povprečna jutranja temperatura?
 
-1. **Prvi oklepaj:** $-\frac{3}{4} + \frac{1}{2} = -\frac{3}{4} + \frac{2}{4} = -\frac{1}{4}$.
-2. **Potenca:** $\left(-\frac{3}{2}\right)^2 = \frac{9}{4}$. Rezultat je pozitiven, ker je kvadrat negativnega števila pozitiven.
-3. Izraz je zdaj $-\dfrac{1}{4} : \left(-\dfrac{1}{8}\right) - 2\cdot\dfrac{9}{4}$.
-4. **Deljenje:** $-\frac{1}{4} : \left(-\frac{1}{8}\right) = -\frac{1}{4}\cdot(-8) = \frac{8}{4} = 2$. Minus krat minus je plus.
-5. **Množenje:** $2 \cdot \frac{9}{4} = \frac{18}{4} = \frac{9}{2}$.
-6. **Odštevanje:** $2 - \frac{9}{2} = \frac{4}{2} - \frac{9}{2} = -\frac{5}{2}$.
-7. **Odgovor:** $-\dfrac{5}{2} = -2{,}5$.
+**Podatki:** $t_1 = -3{,}5\,^\circ\mathrm{C}$, $t_2 = 1{,}2\,^\circ\mathrm{C}$, $t_3 = -2{,}8\,^\circ\mathrm{C}$
+**Iščemo:** povprečno temperaturo $\bar{t}$
+
+:::formula
+$\bar{t} = (t_1 + t_2 + t_3) : 3$
+:::
+
+**Rešitev:**
+
+1. Najprej oklepaj: $-3{,}5 + 1{,}2 = -2{,}3$ (različna predznaka, predznak večje absolutne vrednosti).
+2. Nadaljujemo: $-2{,}3 + (-2{,}8) = -5{,}1$ (enaka predznaka, absolutni vrednosti seštejemo).
+3. Delimo s številom dni: $-5{,}1 : 3 = -1{,}7$ (različna predznaka, količnik je negativen).
+4. Preverimo smiselnost: povprečje leži med najnižjo $-3{,}5$ in najvišjo $1{,}2$.
+5. Odgovor: povprečna jutranja temperatura je $-1{,}7\,^\circ\mathrm{C}$.
+
+### Primer 4 – zdaj ti
+
+Izračunaj $\left(-\frac{3}{4} + \frac{1}{2}\right) : \left(-\frac{1}{8}\right) - 3 \cdot \frac{5}{6}$.
+
+**Podatki:** izraz $\left(-\frac{3}{4} + \frac{1}{2}\right) : \left(-\frac{1}{8}\right) - 3 \cdot \frac{5}{6}$
+**Iščemo:** vrednost izraza
+
+:::formula
+Vrstni red: oklepaji, množenje in deljenje, seštevanje in odštevanje.
+$\frac{a}{b} : \frac{c}{d} = \frac{a}{b} \cdot \frac{d}{c}$
+:::
+
+**Rešitev:**
+
+1. Oklepaj: $-\frac{3}{4} + \frac{2}{4} = -\frac{1}{4}$.
+2. Deljenje z obratno vrednostjo: $-\frac{1}{4} : \left(-\frac{1}{8}\right) = -\frac{1}{4} \cdot (-8) = 2$, ker enaka predznaka dasta plus.
+3. Izračunaj še $3 \cdot \frac{5}{6}$ in odštej od $2$.
+
+:::premisli
+Napovej, ali bo $2 - 3 \cdot \frac{5}{6}$ pozitivno ali negativno, nato izračunaj.
+---
+Negativno, ker je $3 \cdot \frac{5}{6}$ več kot $2$. $3 \cdot \frac{5}{6} = \frac{15}{6} = \frac{5}{2}$, nato $2 - \frac{5}{2} = \frac{4}{2} - \frac{5}{2} = -\frac{1}{2}$. Vrednost izraza je $-\frac{1}{2}$.
+:::
 
 ## Pogoste napake
 
-- **Seštevanje števcev in imenovalcev.** $\frac{1}{2} + \frac{1}{3}$ ni $\frac{2}{5}$. Najprej poiščemo skupni imenovalec: $\frac{3}{6} + \frac{2}{6} = \frac{5}{6}$.
-- **Napačno urejanje negativnih števil.** $-5$ je manjše od $-2$, čeprav je $5 > 2$. Bolj levo na premici pomeni manjše.
-- **Deljenje brez obrata.** $\frac{1}{2} : \frac{1}{4}$ ni $\frac{1}{8}$. Pravilno: $\frac{1}{2}\cdot 4 = 2$.
-- **Predznak potence.** $\left(-\frac{3}{2}\right)^2 = \frac{9}{4}$, a $-\left(\frac{3}{2}\right)^2 = -\frac{9}{4}$. Oklepaj je pomemben.
-- **Napačen vrstni red.** V izrazu $2 - 3\cdot(-4)$ najprej množimo, šele nato odštevamo.
-- **Pozabljeno krajšanje.** Rezultat vedno okrajšaj, če gre.
+- **Večje številke, večje število.** Luka je mislil, da je $-2{,}8 > -2{,}5$, ker je $2{,}8 > 2{,}5$. To velja le za pozitivna števila. Pri negativnih je večje tisto, ki je bližje $0$, zato $-2{,}8 < -2{,}5$.
+- **Seštevanje števcev in imenovalcev.** $\frac{1}{2} + \frac{1}{3} = \frac{2}{5}$ je napačno, ker seštevamo različno velike dele. Prava pot gre prek skupnega imenovalca: $\frac{3}{6} + \frac{2}{6} = \frac{5}{6}$.
+- **Deljenje brez obrata.** Kdo izračuna $\frac{1}{2} : \frac{1}{4} = \frac{1}{8}$, ker namesto deljenja kar zmnoži. Polovica vsebuje dve četrtini, zato $\frac{1}{2} \cdot 4 = 2$.
+- **Izgubljen predznak pri ulomku.** Pri $\left(-\frac{1}{2}\right)\cdot\left(-\frac{4}{3}\right)$ kdo zapiše $-\frac{2}{3}$, ker je minus v ulomku manj opazen. Dva negativna faktorja dasta pozitiven zmnožek: $\frac{2}{3}$.
+- **Napačen vrstni red.** V $2 - 3 \cdot (-4)$ najprej odštejejo in dobijo $4$. Množenje ima prednost, zato je pravilno $14$.
 
 ## Povzetek
 
-- Racionalna števila so števila oblike $\frac{a}{b}$, $a, b \in \mathbb{Z}$, $b \neq 0$. Vključujejo cela števila, ulomke in končna ter periodična decimalna števila.
-- Večje je tisto število, ki je na številski premici bolj desno. Pri negativnih številih je manjše tisto z večjo absolutno vrednostjo.
-- Za seštevanje in odštevanje potrebujemo skupni imenovalec. Množimo števec s števcem in imenovalec z imenovalcem. Delimo tako, da množimo z obratnim ulomkom.
-- Vrstni red: oklepaji, potence, množenje in deljenje, seštevanje in odštevanje.
-- Predznaki: enaka predznaka dasta $+$, različna dasta $-$.
+- Racionalna števila $\mathbb{Q}$ so števila oblike $\frac{a}{b}$, kjer sta $a$ in $b$ celi števili, $b \neq 0$: cela števila, ulomki, končna in periodična decimalna števila.
+- Večje je tisto, ki je na premici bolj desno; od negativnih je manjše tisto z večjo absolutno vrednostjo. Pred primerjanjem števila zapišemo v isti obliki.
+- Pravila za predznake so ista kot pri celih številih. Ulomke seštevamo prek skupnega imenovalca, množimo števec s števcem, delimo z množenjem z obratno vrednostjo.
+- V številskih izrazih: oklepaji, množenje in deljenje, seštevanje in odštevanje.
 
 ## Drugače: Na sliki
 
-Nariši številsko premico z enoto $1$ in označi točke $-2, -1, 0, 1, 2$. Racionalna števila ležijo tudi med njimi:
+Nariši premico z enoto $4$ kvadratke. Vsak kvadratek je potem $\frac{1}{4}$ ali $0{,}25$:
 
-- $\frac{1}{2}$ je na sredini med $0$ in $1$,
-- $-\frac{3}{2} = -1{,}5$ je na sredini med $-2$ in $-1$,
-- $\frac{3}{4} = 0{,}75$ je tri četrtine poti od $0$ do $1$.
+```
+ -2    -1,5  -1 -0,75     0     0,5   1
+  |-----|-----|--|--------|-----|-----|
+```
 
-Kar je na premici bolj desno, je večje. Zato je $-1{,}5 < -0{,}5 < 0{,}75$.
+- $-\frac{3}{4} = -0{,}75$ leži tri kvadratke levo od $0$.
+- $-1{,}5$ leži na sredini med $-2$ in $-1$.
+- $0{,}5$ leži dva kvadratka desno od $0$.
 
-Seštevanje je **premik po premici**: pri $-1{,}5 + 2$ začneš pri $-1{,}5$ in se premakneš za $2$ v desno, pristaneš pri $0{,}5$. Odštevanje pozitivnega števila je premik v levo.
+Branje od leve proti desni da urejenost: $-1{,}5 < -0{,}75 < 0{,}5$.
 
-## Drugače: Iz vsakdanjega življenja
+Seštevanje je premik. Pri $-1{,}5 + 2$ začneš pri $-1{,}5$ in narediš $8$ kvadratkov v desno, pristaneš pri $0{,}5$. Prištevanje negativnega števila je premik v levo.
 
-**Temperatura.** Zjutraj je $-3{,}5\,^\circ\text{C}$, čez dan se segreje za $6\,^\circ\text{C}$. Izračunaš $-3{,}5 + 6 = 2{,}5$, torej $2{,}5\,^\circ\text{C}$. Hladneje je tisto, kar je bolj levo: $-8\,^\circ\text{C}$ je hladneje kot $-3\,^\circ\text{C}$.
-
-**Denar.** Negativno število pomeni dolg. Če imaš na računu $-12{,}40$ evra (si v minusu) in vložiš $20$ evrov, imaš $-12{,}40 + 20 = 7{,}60$ evra.
-
-**Kuhanje.** Recept zahteva $\frac{3}{4}$ litra mleka, ti pa pripraviš le polovico. Izračunaš $\frac{1}{2}\cdot\frac{3}{4} = \frac{3}{8}$ litra. Če želiš vedeti, koliko kozarcev po $\frac{1}{4}$ litra napolniš s $\frac{3}{4}$ litra, deliš: $\frac{3}{4} : \frac{1}{4} = \frac{3}{4}\cdot 4 = 3$ kozarce.
-
-## Drugače: Korak za korakom s številkami
-
-**Naloga:** izračunaj $-1{,}5 + \dfrac{3}{4}$.
-
-| Korak | Kaj naredimo | Rezultat |
-|---|---|---|
-| 1 | Števili zapišemo v isti obliki. Izberemo ulomke: $-1{,}5 = -\frac{3}{2}$ | $-\frac{3}{2} + \frac{3}{4}$ |
-| 2 | Skupni imenovalec je $4$. $-\frac{3}{2} = -\frac{6}{4}$ | $-\frac{6}{4} + \frac{3}{4}$ |
-| 3 | Seštejemo števca: $-6 + 3 = -3$ | $-\frac{3}{4}$ |
-| 4 | Preverimo z decimalnim zapisom: $-1{,}5 + 0{,}75 = -0{,}75$ | $-\frac{3}{4} = -0{,}75$ ✓ |
-
-**Predznaki pri množenju in deljenju:**
-
-| Račun | Predznaka | Rezultat |
-|---|---|---|
-| $(+)\cdot(+)$ | enaka | $+$ |
-| $(-)\cdot(-)$ | enaka | $+$ |
-| $(+)\cdot(-)$ | različna | $-$ |
-| $(-)\cdot(+)$ | različna | $-$ |
-
-Enako velja za deljenje. Primer: $\left(-\frac{1}{2}\right)\cdot\left(-\frac{4}{3}\right) = +\frac{4}{6} = \frac{2}{3}$.
+Množenje z negativnim številom pa točko prezrcali čez $0$ in jo raztegne: $(-2)\cdot 0{,}5$ prenese $0{,}5$ na drugo stran ničle in podvoji razdaljo, dobiš $-1$.
 
 ## Drugače: Bolj natančno
 
-**Definicija.** $\mathbb{Q} = \left\{ \dfrac{a}{b} \;\middle|\; a, b \in \mathbb{Z},\ b \neq 0 \right\}$. Ulomka $\frac{a}{b}$ in $\frac{c}{d}$ predstavljata isto število natanko tedaj, ko je $a\cdot d = b\cdot c$. Zato je npr. $\frac{2}{3} = \frac{8}{12}$, ker je $2\cdot 12 = 3\cdot 8 = 24$.
+**Enakost ulomkov.** Ulomka $\frac{a}{b}$ in $\frac{c}{d}$ sta isto racionalno število natanko tedaj, ko je $a \cdot d = b \cdot c$. Zato je $\frac{2}{3} = \frac{8}{12}$: velja $2 \cdot 12 = 3 \cdot 8 = 24$. Eno racionalno število ima torej neskončno zapisov.
 
-**Zakaj delimo z obratno vrednostjo?** Deliti z $\frac{c}{d}$ pomeni vprašati, kolikokrat se $\frac{c}{d}$ "skrije" v številu. Ker je $\frac{c}{d}\cdot\frac{d}{c} = 1$, velja $\frac{a}{b} : \frac{c}{d} = \frac{a}{b}\cdot\frac{d}{c}$. Če namreč to pomnožimo z $\frac{c}{d}$, dobimo spet $\frac{a}{b}$.
+**Gostota.** Med dvema različnima racionalnima številoma je vedno še eno, na primer njuno povprečje. Med $-2{,}8$ in $-2{,}5$ leži $(-2{,}8 + (-2{,}5)) : 2 = -2{,}65$. Med $-2{,}8$ in $-2{,}65$ spet najdeš novo in tako naprej. Zato pri racionalnih številih ni »naslednjega« števila, kot je pri celih.
 
-**Zakaj je minus krat minus plus?** Vemo, da $(-1)\cdot 3 = -3$ in $(-1)\cdot 0 = 0$. Vzorec pri $(-1)\cdot 2, (-1)\cdot 1, (-1)\cdot 0$ je $-2, -1, 0$, rezultat se vsakič poveča za $1$. Nadaljujemo: $(-1)\cdot(-1) = 1$ in $(-1)\cdot(-2) = 2$. Tako ostanejo pravila računanja nespremenjena.
+**Zakaj obratna vrednost?** Ker je $\frac{c}{d} \cdot \frac{d}{c} = 1$, je $\frac{a}{b} \cdot \frac{d}{c}$ tisto število, ki ga moramo pomnožiti s $\frac{c}{d}$, da dobimo $\frac{a}{b}$. Prav to pomeni deljenje.
 
-**Periodično število kot ulomek.** Naj bo $x = 0{,}\overline{3} = 0{,}333\ldots$ Potem je $10x = 3{,}333\ldots$ Odštejemo: $10x - x = 3$, torej $9x = 3$ in $x = \frac{1}{3}$. Tudi periodična decimalna števila so torej racionalna.
+**Periodično število kot ulomek.** Naj bo $x = 0{,}333\ldots$ Potem je $10x = 3{,}333\ldots$ Če odštejemo, dobimo $9x = 3$, torej $x = \frac{1}{3}$. Tudi periodična decimalna števila so racionalna.
 
 ## Preveri se
 
-? Katero od števil je najmanjše?
-- $-\dfrac{1}{4}$
-- $-0{,}5$
-+ $-\dfrac{2}{3}$
-> Zapišemo decimalno: $-0{,}25$, $-0{,}5$, $-0{,}666\ldots$ Med negativnimi števili je najmanjše tisto z največjo absolutno vrednostjo, torej $-\frac{2}{3}$.
+? Katera trditev drži?
+- Število $0{,}333\ldots$ ni racionalno, ker se nikoli ne konča.
+~ Periodično decimalno število je racionalno: $0{,}333\ldots = \frac{1}{3}$.
+- Med $-1$ in $0$ ni nobenega racionalnega števila.
+~ To velja za cela števila. Med $-1$ in $0$ ležijo npr. $-0{,}5$ in $-\frac{3}{4}$.
++ Vsako celo število je racionalno.
+- Negativni ulomki niso racionalna števila.
+~ V $\frac{a}{b}$ je $a$ lahko negativno celo število, npr. $-\frac{3}{4} = \frac{-3}{4}$.
+> Vsako celo število $n$ lahko zapišemo kot $\frac{n}{1}$, zato je racionalno.
 
-? Izračunaj $-\dfrac{1}{2}\cdot\left(-\dfrac{4}{3}\right)$.
-- $-\dfrac{2}{3}$
-+ $\dfrac{2}{3}$
-- $\dfrac{5}{6}$
-> Minus krat minus je plus. Množimo števca in imenovalca: $\frac{1\cdot 4}{2\cdot 3} = \frac{4}{6} = \frac{2}{3}$. Odgovor $\frac{5}{6}$ bi dobil, če bi števili seštel.
+? Izračunaj $\left(-\frac{1}{2}\right)\cdot\left(-\frac{4}{3}\right)$.
+- $-\frac{2}{3}$
+~ Minus v ulomku je spregledan: dva negativna faktorja dasta pozitiven zmnožek.
++ $\frac{2}{3}$
+- $-\frac{11}{6}$
+~ To je vsota $-\frac{1}{2} + \left(-\frac{4}{3}\right)$, ne zmnožek.
+- $\frac{3}{8}$
+~ To je količnik $\frac{1}{2} : \frac{4}{3}$; pri množenju ulomka ne obračamo.
+> Enaka predznaka dasta $+$. Števec s števcem, imenovalec z imenovalcem: $\frac{1 \cdot 4}{2 \cdot 3} = \frac{4}{6} = \frac{2}{3}$.
 
-? Izračunaj $2 - 3\cdot(-4)$.
-- $4$
-- $-10$
-+ $14$
-> Najprej množimo: $3\cdot(-4) = -12$. Nato odštejemo: $2 - (-12) = 2 + 12 = 14$. Če bi najprej odštel, bi dobil $(2-3)\cdot(-4) = 4$, kar je napačen vrstni red.
+? Rok je izraz izračunal takole: $2 - 3 \cdot (-4) = (-1)\cdot(-4) = 4$. Kje je napaka?
++ Najprej bi moral množiti, ne odštevati.
+- Pri $(-1)\cdot(-4)$ bi moral dobiti $-4$.
+~ Ta korak je pravilen: dva negativna faktorja dasta pozitiven zmnožek. Napaka je že prej.
+- Napake ni, rezultat $4$ je pravilen.
+~ Rok je računal od leve proti desni, kot da množenje nima prednosti.
+> Množenje ima prednost: $3 \cdot (-4) = -12$, nato $2 - (-12) = 14$.
+
+? Katero število je večje, $-\frac{2}{3}$ ali $-\frac{3}{4}$?
+- $-\frac{3}{4}$, ker ima večji števec in imenovalec.
+~ Večje številke pri negativnih številih pomenijo bolj levo, torej manjše.
++ $-\frac{2}{3}$
+- Sta enaki, ker se števec in imenovalec v obeh razlikujeta za $1$.
+~ Enaka razlika med števcem in imenovalcem ne pomeni enake vrednosti: $-0{,}666\ldots \neq -0{,}75$.
+> $-\frac{2}{3} = -0{,}666\ldots$ in $-\frac{3}{4} = -0{,}75$. Prvo ima manjšo absolutno vrednost, zato je bližje $0$ in večje.
+
+? Ob sedmih zjutraj je bilo $-1{,}5\,^\circ\mathrm{C}$, ob dveh popoldne $4{,}2\,^\circ\mathrm{C}$. Za koliko stopinj se je ogrelo?
+- $2{,}7$
+~ To je $4{,}2 - 1{,}5$; začetna temperatura je bila $-1{,}5$, ne $1{,}5$.
++ $5{,}7$
+- $-5{,}7$
+~ To je začetna minus končna. Sprememba je končna minus začetna, ogrelo se je, zato je pozitivna.
+> Sprememba je $4{,}2 - (-1{,}5) = 4{,}2 + 1{,}5 = 5{,}7$ stopinje.
 
 :::simboli
 a | števec ulomka | | | celo število
-b | imenovalec ulomka | | | b ≠ 0; v a/c + b/c števec
-c | števec drugega ulomka | | | v a/c + b/c skupni imenovalec; pri deljenju c ≠ 0
-d | imenovalec drugega ulomka | | | d ≠ 0
+b | imenovalec ulomka | | | $b \neq 0$
+c | imenovalec (pri seštevanju) ali števec drugega ulomka (pri deljenju) | | | pri deljenju $c \neq 0$
+d | imenovalec drugega ulomka | | | $d \neq 0$
+\bar{t} | povprečna temperatura | \bar{t} = (t_1 + t_2 + t_3) : 3 | ^\circ\mathrm{C}
+t_1, t_2, t_3 | izmerjene jutranje temperature | | ^\circ\mathrm{C}
 :::

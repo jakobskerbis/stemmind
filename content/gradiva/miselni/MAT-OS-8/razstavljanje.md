@@ -1,0 +1,25 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Vsota v produkt
+  - $3 \cdot 5 + 3 \cdot 7 = 3 \cdot (5 + 7)$
+  - dva pravokotnika z enako višino zložimo v enega
+- Skupni faktor
+  - $ab + ac = a(b + c)$
+  - pravilo o razdeljevanju, brano v obratni smeri
+- Največji skupni delitelj
+  - $\text{NSD}(12, 18) = 6$
+  - napaka: $12x + 18 = 2(6x + 9)$ ni končano
+- Spremenljivke
+  - samo tiste, ki so v vseh členih
+  - najmanjši eksponent: iz $x^3$ in $x^2$ vzamemo $x^2$
+- Enica v oklepaju
+  - $3x + 3 = 3(x + 1)$
+  - člen, enak faktorju, ne izgine
+- Negativni faktor
+  - $-2x - 6 = -2(x + 3)$
+  - predznaki v oklepaju se obrnejo
+- Preverjanje
+  - oklepaj pomnoži nazaj
+  - ali vstavi število, npr. $x = 5$

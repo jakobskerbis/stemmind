@@ -1,0 +1,25 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Obresti in obrestna mera
+  - $o = \dfrac{G_0 \cdot p}{100}$
+  - $5\,\%$ od $400\,\text{€}$ je $20\,\text{€}$
+- Navadno obrestovanje
+  - obresti vedno od začetne glavnice
+  - $G_n = G_0 \left(1 + \frac{n \cdot p}{100}\right)$
+  - aritmetično zaporedje, diferenca $o$
+- Obrestno obrestovanje
+  - obresti se pripišejo in obrestujejo
+  - $G_n = G_0 \cdot r^n$, $r = 1 + \frac{p}{100}$
+  - geometrijsko zaporedje, količnik $r$
+- Primerjava
+  - po 1. letu enako, nato obrestno več
+  - višja navadna mera zmaga le kratkoročno
+- Računanje nazaj
+  - $G_0 = \dfrac{G_n}{r^n}$
+  - napaka: odštevanje odstotkov od končnega zneska
+- Pasti pri računanju
+  - $r = 1{,}04$, ne $1{,}4$
+  - potenciraj, ne množi z $n$
+  - zaokrožuj šele na koncu

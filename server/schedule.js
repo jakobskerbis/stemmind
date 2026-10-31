@@ -335,7 +335,7 @@ export async function fetchIcs(url, { fetchFn = fetch, lookup = dns.lookup } = {
   if (!clean) throw new Error("Povezava mora biti javni naslov https (ali webcal) do koledarja.");
   const host = new URL(clean).hostname.replace(/^\[|\]$/g, "");
   const addrs = net.isIP(host) ? [{ address: host }] : await lookup(host, { all: true }).catch(() => []);
-  if (!addrs.length) throw new Error("Strežnika s koledarjem ni mogoče najti.");
+  if (!addrs.length) throw new Error("Koledarja na tej povezavi ni mogoče najti.");
   if (addrs.some((a) => privateIp(a.address))) throw new Error("Ta naslov ni javen.");
   const res = await fetchFn(clean, { redirect: "error", signal: AbortSignal.timeout(15000), headers: { Accept: "text/calendar, text/plain;q=0.5" } });
   if (!res.ok) throw new Error(`Koledarja ni bilo mogoče prenesti (${res.status}).`);

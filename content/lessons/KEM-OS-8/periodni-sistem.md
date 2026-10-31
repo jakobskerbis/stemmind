@@ -211,3 +211,10 @@ Obratni recept (iz lege v elektrone): perioda ti pove število lupin, skupina š
 + Ker imajo enako število valenčnih elektronov.
 - Ker imajo enako število nevtronov.
 > Kemijske lastnosti določajo valenčni elektroni. Elementi iste skupine jih imajo enako število, število lupin pa se znotraj skupine spreminja (enako je v isti periodi).
+
+:::simboli
+\mathrm{Na} | natrij | | | 11 elektronov
+\mathrm{K} | kalij | | | 19 elektronov
+\mathrm{Mg} | magnezij | | | 12 elektronov
+\mathrm{Cl} | klor | | | 17 elektronov
+:::

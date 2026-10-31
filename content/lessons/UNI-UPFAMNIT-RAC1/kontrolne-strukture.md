@@ -315,3 +315,14 @@ Paketov je veliko, a Jure nima stotih enakih listkov, le enega: »Dokler je v ko
 - $10$ €
 ~ $15 \le 10$ ni res, zato se izvede veja `else` z doplačilom.
 > $15 > 10$, zato $10 + 2 \cdot (15 - 10) = 20$ €. Ker $20$ ni več kot $25$, cena ostane $20$ €.
+
+:::simboli
+\text{prva} | prva vrednost števca, pri kateri je pogoj resničen | | |
+\text{zadnja} | zadnja vrednost števca, pri kateri je pogoj še resničen | | | odvisna od meje < ali <=
+\text{korak} | sprememba števca v enem obhodu | | |
+\text{število obhodov} | število obhodov zanke for | \text{število obhodov} = \dfrac{\text{zadnja} - \text{prva}}{\text{korak}} + 1 | – |
+t | čas (števec zanke) | | min |
+b | stanje baterije | | \% |
+b_1, b_2 | stanji baterije v primeru | | \% | v primeru $20\,\%$ in $3\,\%$
+x | spremenljivka v zanki while | | | vsak obhod se pomnoži s 3
+:::

@@ -233,3 +233,9 @@ Postopek za ligaško lestvico, ki jo boš lahko spreminjal:
 ~ To je $3 \cdot (9 + 4)$: tudi neodločeni so pomnoženi s $3$. Remi prinese le $1$ točko.
 + $31$
 > $3 \cdot 9 + 4 = 31$.
+
+:::simboli
+A, B, C | stolpci preglednice | | | naslov celice je črka stolpca in številka vrstice, npr. B3
+\text{vsota} | vsota vseh podatkov | | | v preglednici =SUM(B2:B5)
+\text{število podatkov} | koliko podatkov povprečimo | | | povprečje je vsota : število podatkov
+:::

@@ -260,3 +260,9 @@ Naloga: pet enakih svinčnikov stane $4$ €. Koliko stane osem svinčnikov?
 - $10$ €
 ~ To je $6 + 4$: prišteto število novih učencev. Učenci in evri se ne seštevajo.
 > Vseh učencev je $24$, zato vsak plača $120 : 24 = 5$ €.
+
+:::simboli
+\text{cena 1 kosa} | cena enega kosa (enote) | \text{cena 1 kosa} = \text{skupna cena} : \text{število kosov} | | najprej izračunamo ceno za eno enoto
+\text{skupna cena} | cena vseh kosov skupaj | | | v evrih
+\text{število kosov} | koliko kosov kupimo | | | pri jabolkih število kilogramov
+:::

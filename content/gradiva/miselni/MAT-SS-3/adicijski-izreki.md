@@ -1,0 +1,24 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Sinus vsote
+  - $\sin(\alpha + \beta) = \sin\alpha\cos\beta + \cos\alpha\sin\beta$
+  - napaka: $\sin(\alpha + \beta) = \sin\alpha + \sin\beta$
+- Kosinus vsote
+  - $\cos(\alpha + \beta) = \cos\alpha\cos\beta - \sin\alpha\sin\beta$
+  - pri kosinusu se predznak obrne
+- Razlika kotov
+  - $\beta$ zamenjaš z $-\beta$
+  - $\cos 15^\circ = \cos(45^\circ - 30^\circ)$
+- Tangens vsote
+  - $\tan(\alpha \pm \beta) = \dfrac{\tan\alpha \pm \tan\beta}{1 \mp \tan\alpha\tan\beta}$
+- Dvojni kot
+  - $\sin 2\alpha = 2\sin\alpha\cos\alpha$
+  - $\cos 2\alpha = 1 - 2\sin^2\alpha = 2\cos^2\alpha - 1$
+  - napaka: $\sin 2\alpha = 2\sin\alpha$
+- Preoblikovanje izrazov
+  - $2\sin x\cos x$ zložiš v $\sin 2x$
+  - $\dfrac{\sin 2\alpha}{1 + \cos 2\alpha} = \tan\alpha$
+- Zasuk točke
+  - mikrovalovka: točka $(r\cos(\alpha + \beta),\ r\sin(\alpha + \beta))$

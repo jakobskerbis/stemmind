@@ -250,3 +250,10 @@ Napaka za faktor $2$ te pusti v istem nadstropju ali v sosednjem stanovanju. Nap
 - $7$
 ~ To je število litrov ($6{,}6$ l, zaokroženo), ne plastenk. Ena plastenka ima $1{,}5$ l.
 > Potrebuješ $22 \cdot 0{,}3 = 6{,}6$ l, kar je $6{,}6 : 1{,}5 = 4{,}4$ plastenke. Ker mora soka biti dovolj za vse, zaokrožiš navzgor na $5$.
+
+:::simboli
+a | število pred potenco v znanstvenem zapisu | | | $1 \le a < 10$
+n | eksponent potence števila 10 | | | celo število; $10^n$ pove red velikosti
+\text{cena} | cena kosa sira | | € | cena kilograma je $\dfrac{\text{cena}}{\text{masa}}$
+\text{masa} | masa kosa sira | | kg
+:::

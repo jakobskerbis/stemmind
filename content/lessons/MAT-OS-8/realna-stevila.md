@@ -5,42 +5,76 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Do zdaj si spoznal naravna števila, cela števila in ulomke oziroma decimalna števila. Znaš tudi kvadrirati in korenit: $\sqrt{49} = 7$, ker je $7^2 = 49$. Ob korenjenju pa se je morda že zgodilo, da kalkulator ob $\sqrt{2}$ pokaže dolgo število, ki se ne konča: $1{,}41421356\ldots$
+Odpri kalkulator na telefonu, vtipkaj $2$ in pritisni $\sqrt{\phantom{x}}$. Zaslon pokaže $1{,}414213562$. Zdaj to število prepiši in ga pomnoži samo s seboj. Dobiš $1{,}99999999894\ldots$, ne pa natanko $2$.
 
-Kaj je to za število? Ali ga lahko zapišemo kot ulomek? Ali ga lahko označimo na številski premici? V tej lekciji bomo ugotovili, da poleg ulomkov obstajajo še druga števila, **iracionalna**, in da skupaj z racionalnimi tvorijo **realna števila**. Ta števila potrebuješ povsod, kjer računaš s koreni ali s številom $\pi$, na primer pri obsegu in ploščini kroga.
+Je kalkulator zgrešil? Ne. Zaslon ima le deset mest, število $\sqrt{2}$ pa ima neskončno decimalk, ki se nikoli ne začnejo ponavljati. Tako število ni ulomek. Imenujemo ga **iracionalno**.
+
+Taka števila srečuješ pogosto. Kvadratna nalepka za telefon s ploščino $2\,\text{cm}^2$ ima stranico $\sqrt{2}\,\text{cm}$. Okrogla ura ima obseg, v katerem nastopa $\pi$. Ugotovili bomo, kako iracionalna števila prepoznaš, kje ležijo na številski premici in zakaj skupaj z ulomki tvorijo **realna števila**.
 
 ## Razlaga
 
-**1. Racionalna števila.** Število je **racionalno**, če ga lahko zapišemo kot ulomek $\dfrac{m}{n}$, kjer je $m$ celo število, $n$ pa naravno število. Množico racionalnih števil označimo z $\mathbb{Q}$.
+**1. Racionalna števila.** Število je **racionalno**, če ga lahko zapišemo kot ulomek $\dfrac{m}{n}$, kjer je $m$ celo število, $n$ pa naravno število. Množico racionalnih števil označimo z $\mathbb{Q}$. Sem sodijo naravna števila ($5 = \dfrac{5}{1}$), cela števila ($-3 = \dfrac{-3}{1}$), ulomki, končna decimalna števila ($0{,}75 = \dfrac{3}{4}$) in neskončna **periodična** decimalna števila ($0{,}333\ldots = \dfrac{1}{3}$).
 
-Sem sodijo:
+*Hitra preizkušnja:* je $-1{,}5$ racionalno? (Da, $-1{,}5 = \dfrac{-3}{2}$.)
 
-- naravna števila: $5 = \dfrac{5}{1}$,
-- cela števila: $-3 = \dfrac{-3}{1}$,
-- ulomki: $\dfrac{2}{3}$,
-- končna decimalna števila: $0{,}75 = \dfrac{3}{4}$,
-- neskončna **periodična** decimalna števila: $0{,}333\ldots = \dfrac{1}{3}$.
+**2. Iracionalna števila.** Število je **iracionalno**, če ga **ni mogoče** zapisati kot ulomek. Njegov decimalni zapis je neskončen in **neperiodičen**: noben vzorec števk se ne ponavlja v nedogled. Primeri: $\sqrt{2} = 1{,}41421356\ldots$, $\sqrt{3} = 1{,}7320508\ldots$, $\pi = 3{,}14159265\ldots$
 
-**2. Iracionalna števila.** Število je **iracionalno**, če ga **ni mogoče** zapisati kot ulomek. Njegov decimalni zapis je neskončen in **neperiodičen**: števke se nikoli ne začnejo ponavljati v enakem vzorcu.
+*Hitra preizkušnja:* je $0{,}121212\ldots$ iracionalno? (Ne, vzorec $12$ se ponavlja, zato je periodično.)
 
-Primeri: $\sqrt{2} = 1{,}41421356\ldots$, $\sqrt{3} = 1{,}7320508\ldots$, $\pi = 3{,}14159265\ldots$
+:::premisli
+Na zaslonu telefona sta $\dfrac{1}{7} = 0{,}1428571429$ in $\sqrt{2} = 1{,}414213562$ skoraj enako dolga. Zakaj je prvo število racionalno, drugo pa ne?
+---
+Pri $\dfrac{1}{7}$ se skupina števk $142857$ ponavlja v nedogled; zaslon je le odrezal zapis. Pri $\sqrt{2}$ se tudi za zaslonom noben vzorec ne ponavlja. O vrsti števila ne odloča dolžina zapisa na zaslonu, ampak to, ali je zapis periodičen.
+:::
 
-**3. Kdaj je koren iracionalen?** Naj bo $n$ naravno število.
+**3. Kdaj je koren iracionalen?** Naj bo $n$ naravno število. Če je $n$ popolni kvadrat ($1$, $4$, $9$, $16$, $25$, …), je $\sqrt{n}$ naravno število, na primer $\sqrt{16} = 4$. Če $n$ ni popolni kvadrat, je $\sqrt{n}$ iracionalno, na primer $\sqrt{2}$, $\sqrt{7}$, $\sqrt{10}$.
 
-- Če je $n$ kvadrat naravnega števila (1, 4, 9, 16, 25, …), je $\sqrt{n}$ naravno število. Na primer $\sqrt{16} = 4$.
-- Če $n$ ni kvadrat naravnega števila, je $\sqrt{n}$ iracionalno. Na primer $\sqrt{2}$, $\sqrt{7}$, $\sqrt{10}$.
+*Hitra preizkušnja:* je $\sqrt{36}$ iracionalno? (Ne, $\sqrt{36} = 6$.)
 
-**4. Realna števila.** Racionalna in iracionalna števila skupaj tvorijo **realna števila**, ki jih označimo z $\mathbb{R}$. Vsako število, ki ga poznaš iz šole, je realno. Velja:
+**4. Realna števila.** Racionalna in iracionalna števila skupaj tvorijo **realna števila** z oznako $\mathbb{R}$. Vsaka množica je vsebovana v naslednji:
 
 $$\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R}$$
 
+| množica | oznaka | primeri |
+|---|---|---|
+| naravna | $\mathbb{N}$ | $1$, $7$, $\sqrt{9}$ |
+| cela | $\mathbb{Z}$ | $-3$, $0$, $7$ |
+| racionalna | $\mathbb{Q}$ | $\dfrac{2}{3}$, $-1{,}5$, $0{,}333\ldots$ |
+| realna | $\mathbb{R}$ | vsa zgoraj ter $\sqrt{2}$, $\pi$, $-\sqrt{5}$ |
+
 Iracionalna števila so v $\mathbb{R}$, niso pa v $\mathbb{Q}$.
 
-**5. Številska premica.** Vsakemu realnemu številu ustreza natanko ena točka na številski premici in vsaki točki na premici natanko eno realno število. Na premici ni »lukenj«. Iracionalna števila zapolnijo prostor med racionalnimi.
+*Hitra preizkušnja:* je vsako celo število realno? (Da, $\mathbb{Z} \subset \mathbb{R}$.)
 
-**6. Kako iracionalno število umestimo na premico?** Najprej ugotovimo, med katerima celima številoma leži, nato pa jih po potrebi približamo z decimalnimi števili. Pri $\sqrt{n}$ iščemo dva zaporedna kvadrata, med katerima leži $n$.
+**5. Številska premica.** Vsakemu realnemu številu ustreza natanko ena točka na številski premici in vsaki točki natanko eno realno število. Iracionalna števila zapolnijo vse »luknje« med ulomki. Lego najprej ocenimo s celima številoma: ker je $1^2 = 1 < 2 < 4 = 2^2$, je $1 < \sqrt{2} < 2$.
 
-**7. Približki.** Iracionalnega števila ne moremo zapisati natančno z decimalkami, zato pišemo približek: $\sqrt{2} \approx 1{,}41$. Znak $\approx$ pomeni »približno enako«. Znak $=$ bi bil napačen.
+```
+−3   −2   −1    0    1    2    3    4
+ +----+----+----+----+----+----+----+
+     ▲             ▲   ▲        ▲
+     −√5           0,5 √2       π
+```
+
+:::premisli
+Napovej: leži $-\sqrt{5}$ levo ali desno od $-2$?
+---
+Levo. Ker je $4 < 5 < 9$, je $\sqrt{5}$ med $2$ in $3$, približno $2{,}24$. Nasprotno število $-\sqrt{5} \approx -2{,}24$ leži zrcalno čez $0$, torej levo od $-2$.
+:::
+
+V simulaciji spodaj, »Realna števila: kam spada število?«, najprej klikni $\sqrt{9}$, nato $\sqrt{2}$. Opazuj, v kateri množici se pojavi točka in kje na premici leži. Opazi, da je $\sqrt{9}$ v najmanjši množici, $\sqrt{2}$ pa samo v $\mathbb{R}$.
+
+**6. Približki.** Iracionalnega števila ne moremo zapisati z vsemi decimalkami, zato pišemo približek z znakom $\approx$ (»približno enako«): $\sqrt{2} \approx 1{,}41$. Približek izboljšujemo s kvadriranjem poskusov:
+
+| poskus | kvadrat | primerjava z $2$ |
+|---|---|---|
+| $1{,}4$ | $1{,}96$ | premalo |
+| $1{,}5$ | $2{,}25$ | preveč |
+| $1{,}41$ | $1{,}9881$ | premalo |
+| $1{,}42$ | $2{,}0164$ | preveč |
+
+Torej $1{,}41 < \sqrt{2} < 1{,}42$. Postopek lahko nadaljuješ, a se nikoli ne konča s kvadratom natanko $2$.
+
+*Hitra preizkušnja:* je zapis $\sqrt{2} = 1{,}41$ pravilen? (Ne, pravilno je $\sqrt{2} \approx 1{,}41$.)
 
 ## Rešeni primeri
 
@@ -48,135 +82,176 @@ Iracionalna števila so v $\mathbb{R}$, niso pa v $\mathbb{Q}$.
 
 Katera od števil $7$, $-3$, $0{,}5$, $\sqrt{9}$, $\sqrt{7}$, $\pi$, $\sqrt{\dfrac{16}{25}}$ so racionalna in katera iracionalna?
 
-1. $7$ je naravno število, zato je racionalno ($7 = \dfrac{7}{1}$).
-2. $-3$ je celo število, zato je racionalno.
-3. $0{,}5 = \dfrac{1}{2}$ je racionalno.
-4. $\sqrt{9} = 3$, ker je $3^2 = 9$. To je naravno število, zato je racionalno. Pozor: koren ne pomeni samodejno iracionalnega števila.
-5. $\sqrt{7}$: $7$ ni kvadrat naravnega števila ($2^2 = 4$, $3^2 = 9$), zato je $\sqrt{7}$ iracionalno.
-6. $\pi$ je iracionalno (to je znano dejstvo).
-7. $\sqrt{\dfrac{16}{25}} = \dfrac{4}{5}$, ker je $\left(\dfrac{4}{5}\right)^2 = \dfrac{16}{25}$. To je ulomek, zato je število racionalno.
+**Podatki:** števila $7$, $-3$, $0{,}5$, $\sqrt{9}$, $\sqrt{7}$, $\pi$, $\sqrt{\dfrac{16}{25}}$
+**Iščemo:** katera so racionalna in katera iracionalna
 
-**Odgovor.** Iracionalni sta samo $\sqrt{7}$ in $\pi$. Vsa ostala števila so racionalna. Vsa so realna.
+:::formula
+Racionalno je število, ki ga zapišemo kot $\dfrac{m}{n}$. Koren naravnega števila je racionalen le, če je to število popolni kvadrat.
+:::
+
+**Rešitev:**
+
+1. $7 = \dfrac{7}{1}$ in $-3 = \dfrac{-3}{1}$ sta racionalni, ker sta celi števili.
+2. $0{,}5 = \dfrac{1}{2}$ je racionalno, ker je končno decimalno število.
+3. $\sqrt{9} = 3$, ker je $3^2 = 9$. Koren torej še ne pomeni iracionalnega števila.
+4. $\sqrt{7}$ je iracionalno, ker $7$ ni popolni kvadrat: $2^2 = 4$ in $3^2 = 9$.
+5. $\pi$ je iracionalno; to je znano dejstvo, njegove decimalke se ne ponavljajo.
+6. $\sqrt{\dfrac{16}{25}} = \dfrac{4}{5}$, ker je $\left(\dfrac{4}{5}\right)^2 = \dfrac{16}{25}$. To je ulomek, torej racionalno število.
+7. Odgovor: iracionalni sta le $\sqrt{7}$ in $\pi$, vsa druga števila so racionalna. Realna so vsa.
 
 ### Primer 2: položaj na številski premici
 
-Med katerima zaporednima celima številoma ležita $\sqrt{50}$ in $-\sqrt{20}$? Katero celo število je vsakemu bližje?
+Med katerima zaporednima celima številoma ležita $\sqrt{50}$ in $-\sqrt{20}$? Kateremu celemu številu je vsako bližje?
 
-1. **Za $\sqrt{50}$** poiščemo kvadrata, med katerima leži $50$: $7^2 = 49$ in $8^2 = 64$, torej $49 < 50 < 64$.
-2. Ker koren pri pozitivnih številih ohranja vrstni red, je $7 < \sqrt{50} < 8$.
-3. $50$ je zelo blizu $49$, zato je $\sqrt{50}$ blizu $7$. Preverimo: $7{,}07^2 = 49{,}9849$ in $7{,}08^2 = 50{,}1264$, torej $\sqrt{50} \approx 7{,}07$.
-4. **Za $\sqrt{20}$:** $4^2 = 16$ in $5^2 = 25$, torej $4 < \sqrt{20} < 5$. Preverimo: $4{,}47^2 = 19{,}9809$ in $4{,}48^2 = 20{,}0704$, zato je $\sqrt{20} \approx 4{,}47$.
-5. Število $-\sqrt{20}$ je nasprotno število, zato leži zrcalno čez $0$: $-5 < -\sqrt{20} < -4$, približno pri $-4{,}47$. Bližje je celemu številu $-4$.
+**Podatki:** števili $\sqrt{50}$ in $-\sqrt{20}$
+**Iščemo:** sosednji celi števili in bližje celo število za vsako
 
-**Odgovor.** $\sqrt{50}$ leži med $7$ in $8$ (bližje $7$), $-\sqrt{20}$ pa med $-5$ in $-4$ (bližje $-4$).
+:::formula
+Če je $k^2 < x < (k + 1)^2$, je $k < \sqrt{x} < k + 1$.
+:::
 
-### Primer 3: urejanje po velikosti
+**Rešitev:**
 
-Uredi po velikosti od najmanjšega do največjega: $\sqrt{10}$, $3{,}1$, $\pi$, $\dfrac{22}{7}$.
+1. Za $\sqrt{50}$: $7^2 = 49$ in $8^2 = 64$, torej $49 < 50 < 64$ in zato $7 < \sqrt{50} < 8$.
+2. Število $50$ je zelo blizu $49$, zato je $\sqrt{50}$ blizu $7$. Preverimo: $7{,}07^2 = 49{,}9849$ in $7{,}08^2 = 50{,}1264$, torej $\sqrt{50} \approx 7{,}07$.
+3. Za $\sqrt{20}$: $4^2 = 16$ in $5^2 = 25$, torej $4 < \sqrt{20} < 5$. Ker je $4{,}47^2 = 19{,}9809$ in $4{,}48^2 = 20{,}0704$, je $\sqrt{20} \approx 4{,}47$.
+4. Nasprotno število leži zrcalno čez $0$: $-5 < -\sqrt{20} < -4$, približno pri $-4{,}47$.
+5. Odgovor: $\sqrt{50}$ leži med $7$ in $8$, bližje $7$; $-\sqrt{20}$ leži med $-5$ in $-4$, bližje $-4$.
 
-1. Vsako število zapišemo z decimalkami:
-   - $\sqrt{10}$: $3{,}16^2 = 9{,}9856$ in $3{,}17^2 = 10{,}0489$, torej $\sqrt{10} \approx 3{,}16$ (natančneje $3{,}1623\ldots$),
-   - $3{,}1$,
-   - $\pi \approx 3{,}14159$,
-   - $\dfrac{22}{7} = 22 : 7 = 3{,}142857\ldots$
-2. Primerjamo po decimalkah: $3{,}1 < 3{,}14159 < 3{,}142857 < 3{,}1623$.
-3. **Odgovor.** $3{,}1 < \pi < \dfrac{22}{7} < \sqrt{10}$.
-4. Opaziš lahko, da je $\dfrac{22}{7}$ le dober približek za $\pi$, ni pa enak $\pi$. Ulomek je racionalno število, $\pi$ pa je iracionalno.
+### Primer 3: zaslon pametne ure
+
+Pametna ura ima kvadraten zaslon s ploščino $10\,\text{cm}^2$. Trije prijatelji ugibajo dolžino stranice: Ana reče $3{,}1\,\text{cm}$, Bor $\pi\,\text{cm}$, Cene $\dfrac{22}{7}\,\text{cm}$. Uredi pravo stranico in vsa tri ugibanja po velikosti. Kdo je najbliže?
+
+**Podatki:** $S = 10\,\text{cm}^2$, ugibanja $3{,}1\,\text{cm}$, $\pi\,\text{cm}$, $\dfrac{22}{7}\,\text{cm}$
+**Iščemo:** stranico $a$, vrstni red števil in najboljše ugibanje
+
+:::formula
+$a = \sqrt{S}$
+:::
+
+**Rešitev:**
+
+1. Stranica kvadrata je koren ploščine: $a = \sqrt{10}\,\text{cm}$. Ker $10$ ni popolni kvadrat, je to iracionalno število.
+2. Približek: $3{,}16^2 = 9{,}9856$ in $3{,}17^2 = 10{,}0489$, torej $\sqrt{10} \approx 3{,}162$.
+3. Ugibanja zapišemo z decimalkami: $3{,}1$; $\pi \approx 3{,}1416$; $\dfrac{22}{7} = 3{,}142857\ldots$
+4. Po velikosti: $3{,}1 < \pi < \dfrac{22}{7} < \sqrt{10}$.
+5. Najbližje $\sqrt{10}$ je največje ugibanje, $\dfrac{22}{7}$: razlika je le približno $0{,}02\,\text{cm}$.
+6. Odgovor: stranica meri $\sqrt{10}\,\text{cm} \approx 3{,}16\,\text{cm}$; najbliže je Cene. Mimogrede: $\dfrac{22}{7}$ je le približek za $\pi$, saj je $\pi$ iracionalen.
+
+### Primer 4: zdaj ti
+
+Aplikacija za fotografije ustvari kvadratno sliko. Ali ima lahko slika natanko $2\,250\,000$ pikslov? Pa natanko $2\,000\,000$ pikslov?
+
+**Podatki:** $S_1 = 2\,250\,000$ pikslov, $S_2 = 2\,000\,000$ pikslov, kvadratna oblika
+**Iščemo:** ali je stranica v pikslih naravno število
+
+:::formula
+$a = \sqrt{S}$; $a$ je naravno število le, če je $S$ popolni kvadrat.
+:::
+
+**Rešitev:**
+
+1. Stranica mora imeti celo število pikslov, zato mora biti $\sqrt{S}$ naravno število.
+2. $1500^2 = 2\,250\,000$, zato je prva slika mogoča: $1500 \times 1500$ pikslov.
+3. Zdaj ti: med katerima zaporednima kvadratoma leži $2\,000\,000$? Namig: poskusi s $1414$ in $1415$. Kaj to pove o $\sqrt{2\,000\,000}$?
+
+:::premisli
+Kaj dobiš?
+---
+$1414^2 = 1\,999\,396$ in $1415^2 = 2\,002\,225$, zato $1414 < \sqrt{2\,000\,000} < 1415$. Število $2\,000\,000$ ni popolni kvadrat, $\sqrt{2\,000\,000} \approx 1414{,}2$ je iracionalno. Kvadratne slike z natanko $2\,000\,000$ piksli ni; aplikacija vzame na primer $1414 \times 1414$ pikslov.
+:::
 
 ## Pogoste napake
 
-- **»Vsak koren je iracionalen.«** Ni res: $\sqrt{16} = 4$ in $\sqrt{\dfrac{1}{4}} = \dfrac{1}{2}$ sta racionalni. Iracionalen je koren, ki ni enak nobenemu ulomku, na primer $\sqrt{2}$.
-- **»Dolgo decimalno število je iracionalno.«** Ne. Število $0{,}125$ je racionalno ($\dfrac{1}{8}$). Tudi $0{,}333\ldots$ je racionalno, saj se števka ponavlja. Iracionalno je le število, ki je neskončno **in** neperiodično.
-- **$\pi = 3{,}14$ ali $\pi = \dfrac{22}{7}$.** To sta samo približka. Pravilno je $\pi \approx 3{,}14$.
-- **$\sqrt{2} = 1{,}41$.** To je zaokrožen približek. Natančno sta enaki le vrednosti, ki ju zapišemo z $\sqrt{2}$.
-- **Napačna lega negativnih korenov.** Število $-\sqrt{5}$ je levo od $0$ (približno pri $-2{,}24$), ne desno.
-- **Mešanje korena in kvadrata.** $\sqrt{9} = 3$, ne $81$ in ne $4{,}5$.
+- **»Vsak koren je iracionalen.«** Učenec vidi znak za koren in sklepa na iracionalnost. Toda $\sqrt{16} = 4$ in $\sqrt{0{,}49} = 0{,}7$ sta racionalni. Najprej preveri, ali je pod korenom popolni kvadrat.
+- **»Dolg ali neskončen zapis pomeni iracionalno.«** Število $0{,}333\ldots$ je neskončno, a periodično, zato je $\dfrac{1}{3}$. Iracionalno je le število, ki je neskončno **in** neperiodično.
+- **Približek namesto vrednosti.** Zapisa $\pi = 3{,}14$ in $\sqrt{2} = 1{,}41$ sta napačna, ker sta to zaokrožena približka. Tudi $\dfrac{22}{7}$ ni $\pi$. Piši $\pi \approx 3{,}14$.
+- **Napačna lega negativnih korenov.** $-\sqrt{5}$ ni med $2$ in $3$, ampak zrcalno čez $0$: med $-3$ in $-2$, približno pri $-2{,}24$.
+- **Koren zamenjan s polovico.** »$\sqrt{70}$ je okrog $35$«, ker je učenec delil z $2$. Koren je število, ki krat samo sebe da $70$: $8^2 = 64$ in $9^2 = 81$, torej je $\sqrt{70}$ med $8$ in $9$.
 
 ## Povzetek
 
-- Racionalna števila ($\mathbb{Q}$) so tista, ki jih lahko zapišemo kot ulomek. Njihov decimalni zapis je končen ali neskončen periodičen.
-- Iracionalna števila nimajo zapisa v obliki ulomka. Njihov decimalni zapis je neskončen in neperiodičen. Primeri: $\sqrt{2}$, $\sqrt{3}$, $\pi$.
-- $\sqrt{n}$ za naravno število $n$ je naravno število, če je $n$ kvadrat naravnega števila, sicer je iracionalno.
-- Racionalna in iracionalna števila skupaj so realna števila ($\mathbb{R}$). Vsakemu ustreza natanko ena točka na številski premici in obratno.
-- Položaj korena določimo z bližnjima kvadratoma. Iracionalna števila zapisujemo z znakom $\approx$.
+- Racionalno število ($\mathbb{Q}$) lahko zapišemo kot ulomek; njegov decimalni zapis je končen ali periodičen.
+- Iracionalnega števila ne moremo zapisati kot ulomek; zapis je neskončen in neperiodičen. Primeri: $\sqrt{2}$, $\sqrt{3}$, $\pi$.
+- $\sqrt{n}$ za naravni $n$ je naravno število, če je $n$ popolni kvadrat, sicer je iracionalno.
+- Racionalna in iracionalna števila skupaj so realna števila: $\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R}$.
+- Vsakemu realnemu številu ustreza natanko ena točka na številski premici. Lego korena določimo z bližnjima kvadratoma; $-\sqrt{a}$ leži zrcalno čez $0$.
+- Iracionalna števila zapisujemo s približki in znakom $\approx$.
 
 ## Drugače: Na sliki
 
-Predstavljaj si številsko premico in pod njo povečevalno steklo.
+Predstavljaj si številsko premico in povečevalno steklo nad njo.
 
-- Na običajni premici vidiš celi števili $1$ in $2$. Število $\sqrt{2}$ leži nekje med njima.
-- Če povečaš razdelek med $1$ in $2$ na deset delov, vidiš $1{,}1$; $1{,}2$; …; $1{,}4$; $1{,}5$. Število $\sqrt{2}$ je med $1{,}4$ in $1{,}5$.
-- Če povečaš še razdelek med $1{,}4$ in $1{,}5$, vidiš, da je $\sqrt{2}$ med $1{,}41$ in $1{,}42$.
-- Tako lahko nadaljuješ v nedogled. Vsako povečavo dobiš eno števko več, a točka nikoli ne pade natanko na eno od decimalnih oznak.
+- Brez povečave vidiš le, da je točka $\sqrt{2}$ med $1$ in $2$.
+- Razdelek med $1$ in $2$ povečaš in razdeliš na deset delov: $1{,}1$; $1{,}2$; …; $1{,}9$. Točka $\sqrt{2}$ je med $1{,}4$ in $1{,}5$.
+- Povečaš še razdelek med $1{,}4$ in $1{,}5$: točka je med $1{,}41$ in $1{,}42$.
+- To lahko ponavljaš brez konca. Vsaka povečava ti da eno števko več, a točka nikoli ne pade natanko na oznako.
 
-Točka za $\sqrt{2}$ torej na premici **obstaja**, a je ne moremo zapisati z nobenim končnim decimalnim številom ali ulomkom. Prav to pomeni, da je iracionalno število.
-
-## Drugače: Iz vsakdanjega življenja
-
-**Kalkulator.** Ko na kalkulatorju natipkaš $\sqrt{2}$, dobiš na primer $1{,}414213562$. Zaslon ima le omejeno število mest, zato pokaže **približek**. Če števec pomnožiš sam s seboj, ne dobiš natanko $2$, ampak število, ki je zelo blizu $2$.
-
-**Tlakovanje.** Predstavljaj si kvadratno ploščo s ploščino $2\,\text{m}^2$. Njena stranica je $\sqrt{2}\,\text{m}$. Če jo hočeš izmeriti z metrom, boš odčital približno $1{,}41\,\text{m}$ ali s finejšim merilom $1{,}414\,\text{m}$. Natančne mere pa ne dobiš nikoli, ker je število iracionalno. V praksi to ni težava: obrtniku zadostuje na milimeter natančen približek.
-
-**Krog.** Pri koles z obsegom $o = 2\pi r$ vedno računamo s približkom števila $\pi$. Za večino nalog zadostuje $3{,}14$. Izračun je tako le približek, ne natančna vrednost.
-
-## Drugače: Korak za korakom s številkami
-
-Kako najdemo decimalni približek za $\sqrt{2}$ samo s kvadriranjem? Iščemo število, katerega kvadrat je blizu $2$.
-
-| Poskus | Kvadrat | Primerjava z 2 |
-|---|---|---|
-| $1^2$ | $1$ | premalo |
-| $2^2$ | $4$ | preveč |
-| $1{,}4^2$ | $1{,}96$ | premalo |
-| $1{,}5^2$ | $2{,}25$ | preveč |
-| $1{,}41^2$ | $1{,}9881$ | premalo |
-| $1{,}42^2$ | $2{,}0164$ | preveč |
-| $1{,}414^2$ | $1{,}999396$ | premalo |
-| $1{,}415^2$ | $2{,}002225$ | preveč |
-
-Iz tabele sledi $1{,}414 < \sqrt{2} < 1{,}415$.
-
-Postopek je vedno enak:
-
-1. Poišči dve zaporedni celi števili, med katerima leži rezultat.
-2. Preizkusi desetinke in poišči par, kjer kvadrat preskoči iskano število.
-3. Isto naredi za stotinke, tisočinke in tako naprej.
-4. Ustavi se, ko je približek dovolj natančen.
-
-Ta postopek se nikoli ne konča z natančnim kvadratom $2$. To je še en pokazatelj, da je $\sqrt{2}$ iracionalno.
+Točka $\sqrt{2}$ na premici torej **obstaja**, ne moremo pa je zapisati s končnim decimalnim številom ali ulomkom. Prav to pomeni beseda iracionalno. Podobno kot pri povečavi fotografije na telefonu: vsak zoom pokaže več podrobnosti, a slika se nikoli ne »konča«.
 
 ## Drugače: Bolj natančno
 
-**Zakaj $\sqrt{2}$ ni racionalno število?** Dokažemo s protislovjem.
+**Zakaj $\sqrt{2}$ ni ulomek?** Dokažemo s protislovjem: predpostavimo nasprotno in pokažemo, da to vodi v nesmisel.
 
-Recimo, da je $\sqrt{2}$ racionalno. Potem ga lahko zapišemo kot **okrajšan** ulomek $\sqrt{2} = \dfrac{m}{n}$, kjer $m$ in $n$ nimata skupnega delitelja razen $1$.
+Recimo, da je $\sqrt{2} = \dfrac{m}{n}$, kjer je ulomek **okrajšan**: $m$ in $n$ nimata skupnega delitelja, večjega od $1$.
 
-1. Obe strani kvadriramo: $2 = \dfrac{m^2}{n^2}$, torej $m^2 = 2n^2$.
-2. Zato je $m^2$ sodo število. Kvadrat lihega števila je liho, zato mora biti sodo tudi $m$. Zapišemo $m = 2k$.
-3. Vstavimo: $(2k)^2 = 2n^2$, torej $4k^2 = 2n^2$, in po deljenju z $2$ dobimo $n^2 = 2k^2$.
-4. Zato je $n^2$ sodo, torej je sodo tudi $n$.
-5. Sedaj sta $m$ in $n$ oba soda, torej imata skupni delitelj $2$. To je v nasprotju s predpostavko, da je ulomek okrajšan.
+1. Kvadriramo: $2 = \dfrac{m^2}{n^2}$, torej $m^2 = 2n^2$. Zato je $m^2$ sodo število.
+2. Kvadrat lihega števila je lih, zato mora biti sodo tudi $m$. Zapišemo $m = 2k$.
+3. Vstavimo: $4k^2 = 2n^2$, po deljenju z $2$ pa $n^2 = 2k^2$. Torej je $n^2$ sodo in s tem tudi $n$.
+4. Oba, $m$ in $n$, sta soda in imata skupni delitelj $2$. To nasprotuje predpostavki, da je ulomek okrajšan.
 
-Predpostavka je napačna, torej $\sqrt{2}$ **ni** racionalno število. Je iracionalno.
+Predpostavka je bila napačna, zato $\sqrt{2}$ ni racionalno število. Podoben razmislek deluje za koren vsakega naravnega števila, ki ni popolni kvadrat.
 
 ## Preveri se
 
-? Katero od naslednjih števil je iracionalno?
-- $\sqrt{25}$
-- $\sqrt{0{,}49}$
-+ $\sqrt{13}$
-> $\sqrt{25} = 5$ in $\sqrt{0{,}49} = 0{,}7$ sta racionalni. Število $13$ ni kvadrat naravnega števila, zato je $\sqrt{13}$ iracionalno.
+? Katera razvrstitev v tabelo je pravilna?
+- racionalna: $0{,}333\ldots$ | iracionalna: $\sqrt{16}$, $\pi$
+~ $\sqrt{16} = 4$ je naravno število. Koren ni vedno iracionalen.
++ racionalna: $\sqrt{16}$, $0{,}333\ldots$ | iracionalna: $\sqrt{15}$, $\pi$
+- racionalna: $\sqrt{16}$ | iracionalna: $0{,}333\ldots$, $\pi$
+~ $0{,}333\ldots$ je neskončno, a periodično, zato je enako $\dfrac{1}{3}$.
+> $\sqrt{16} = 4$ in $0{,}333\ldots = \dfrac{1}{3}$ sta racionalni. $15$ ni popolni kvadrat, zato je $\sqrt{15}$ iracionalno, enako kot $\pi$.
 
-? Med katerima zaporednima celima številoma leži $\sqrt{70}$?
-- med $7$ in $8$
-+ med $8$ in $9$
-- med $34$ in $36$
+? Oceni: med katerima zaporednima celima številoma leži $\sqrt{70}$?
 - med $35$ in $36$
-> $8^2 = 64$ in $9^2 = 81$, torej $64 < 70 < 81$ in zato $8 < \sqrt{70} < 9$. Pri drugih odgovorih si pomešal koren s kvadriranjem ali z deljenjem z $2$.
+~ Število $70$ si delil z $2$. Koren je število, ki krat samo sebe da $70$.
+- med $7$ in $8$
+~ $8^2 = 64$ je še manj kot $70$, zato je $\sqrt{70}$ večji od $8$.
++ med $8$ in $9$
+> $8^2 = 64$ in $9^2 = 81$, torej $64 < 70 < 81$ in zato $8 < \sqrt{70} < 9$ (približno $8{,}37$).
 
-? Katera trditev je pravilna?
-- Število $\pi$ je enako $\dfrac{22}{7}$.
-- Vsako realno število je racionalno.
-+ Vsako racionalno število je tudi realno.
-- Število z neskončnim decimalnim zapisom je vedno iracionalno.
-> Racionalna števila so del realnih števil, zato je vsako racionalno število tudi realno. $\dfrac{22}{7}$ je le približek za $\pi$, iracionalna števila pa so realna, a niso racionalna. Tudi $0{,}333\ldots$ ima neskončen zapis, a je racionalno, ker je periodičen.
+? Zakaj je $0{,}333\ldots$ racionalno število, $1{,}41421356\ldots$ (to je $\sqrt{2}$) pa ne?
+- Ker ima $\sqrt{2}$ več decimalk.
+~ Oba zapisa sta neskončna. O vrsti števila ne odloča število decimalk.
+- Ker je $0{,}333\ldots$ manjše od $1$.
+~ Velikost ni pomembna: tudi $5{,}5$ je racionalno in $\sqrt{0{,}5}$ iracionalno.
++ Ker se v $0{,}333\ldots$ števke ponavljajo, v zapisu $\sqrt{2}$ pa ne.
+> Periodičen zapis lahko zapišemo kot ulomek ($0{,}333\ldots = \dfrac{1}{3}$); neperiodičnega neskončnega ne moremo.
+
+? Iracionalno število leži na številski premici med $6$ in $7$. Katero je lahko?
+- $\sqrt{50}$
+~ $49 < 50 < 64$, zato je $\sqrt{50}$ med $7$ in $8$.
+- $\sqrt{49}$
+~ $\sqrt{49} = 7$ je naravno število, ne iracionalno, in ne leži med $6$ in $7$.
++ $\sqrt{40}$
+- $6{,}5$
+~ $6{,}5 = \dfrac{13}{2}$ leži med $6$ in $7$, a je racionalno.
+> $36 < 40 < 49$, zato $6 < \sqrt{40} < 7$. Ker $40$ ni popolni kvadrat, je $\sqrt{40}$ iracionalno.
+
+? Kvadratna ikona aplikacije na zaslonu ima ploščino $8\,\text{cm}^2$. Katera trditev o njeni stranici je pravilna?
+- Stranica je $4\,\text{cm}$.
+~ Ploščino si delil z $2$. Kvadrat s stranico $4\,\text{cm}$ ima ploščino $16\,\text{cm}^2$.
+- Stranica je natanko $2{,}83\,\text{cm}$.
+~ $2{,}83$ je le približek: $2{,}83^2 = 8{,}0089$, ne natanko $8$.
++ Stranica je $\sqrt{8}\,\text{cm} \approx 2{,}83\,\text{cm}$ in je iracionalno število.
+> Stranica je $\sqrt{8}\,\text{cm}$. Ker $8$ ni popolni kvadrat, je to iracionalno število, približno $2{,}83\,\text{cm}$.
+
+:::simboli
+m | števec ulomka | | | celo število
+n | imenovalec ulomka | | | naravno število
+k | največje celo število, manjše od korena | | | $k < \sqrt{x} < k + 1$
+x | število pod korenom (korenjenec) | |
+S | ploščina kvadrata | S = a^2 | cm^2 | v Primeru 4 v pikslih
+a | stranica kvadrata | a = \sqrt{S} | cm | v Primeru 4 v pikslih
+S_1, S_2 | število pikslov prve in druge slike | | –
+:::

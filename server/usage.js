@@ -34,12 +34,12 @@ export const EUR_PER_USD = () => num("EVKLID_EUR_PER_USD", 0.87);
 
 // Opombe, ko je zmogljivejši model nadomeščen s hitrejšim (pokažejo se nad odgovorom).
 export const NOTES = {
-  dailyDeep: (n) => `*(Danes si že ${n}× uporabil podrobno razlago z zmogljivejšim modelom. To razlago pripravi hitrejši model, ki dobro premisli. Jutri je zmogljivejši spet na voljo.)*\n\n`,
+  dailyDeep: (n) => `*(Danes si že ${n}× dobil najpodrobnejšo razlago. Do jutri so podrobne razlage malo manj poglobljene, a še vedno skrbno premišljene.)*\n\n`,
   // Brezplačni paket: nikoli Opus, da brezplačni učenci ne porabijo plačanega dobroimetja.
-  free: "*(V brezplačnem paketu podrobno razlago pripravi hitrejši model, ki dobro premisli.)*\n\n",
-  softBudget: "*(Ta mesec si že veliko uporabljal podrobne razlage. Do konca meseca jih pripravi hitrejši model, ki dobro premisli.)*\n\n",
+  free: "*(V brezplačnem paketu so podrobne razlage malo manj poglobljene, a še vedno skrbno premišljene.)*\n\n",
+  softBudget: "*(Ta mesec si že veliko uporabljal podrobne razlage. Do konca meseca so malo manj poglobljene, a še vedno skrbno premišljene.)*\n\n",
   // Skupni mesečni proračun aplikacije je skoraj porabljen (server/proracun.js, raven 0).
-  appBudget: "*(Ta mesec je v Evklidu veliko vprašanj, zato podrobno razlago pripravi hitrejši model, ki dobro premisli.)*\n\n",
+  appBudget: "*(Ta mesec je v Evklidu veliko vprašanj, zato so podrobne razlage malo manj poglobljene, a še vedno skrbno premišljene.)*\n\n",
 };
 
 // Kako dolgo po napaki »ni dobroimetja« inštruktor ne kliče API-ja (en neuspel klic na 10 minut).

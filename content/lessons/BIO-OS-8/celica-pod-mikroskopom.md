@@ -242,3 +242,13 @@ Primerjava ima meje: šotor ni živ, celica pa se hrani, raste in deli.
 - $18\,\mathrm{mm}$
 ~ To je velikost na sliki, ne v resnici. Upoštevati moraš povečavo.
 > $\dfrac{18\,\mathrm{mm}}{100} = 0{,}18\,\mathrm{mm}$, kar je $180\,\mu\mathrm{m}$.
+
+:::simboli
+\text{povečava} | povečava mikroskopa | \text{povečava} = \text{povečava okularja} \cdot \text{povečava objektiva} | – | zapišemo jo z ×, npr. 400×; iz merilca: $\text{povečava} = \dfrac{\text{merilce na sliki}}{\text{dejanska dolžina merilca}}$
+\text{povečava okularja}, \text{okular} | povečava okularja | | – | npr. 10×
+\text{povečava objektiva}, \text{objektiv} | povečava objektiva | | – | npr. 4×, 10× ali 40×
+\text{dejanska velikost} | dejanska velikost celice | \text{dejanska velikost} = \dfrac{\text{velikost na sliki}}{\text{povečava}} | mm | celice merimo v µm: 1 mm = 1000 µm
+\text{velikost na sliki} | velikost celice na sliki | | mm
+\text{merilce na sliki} | dolžina merilca na sliki | | mm
+\text{dejanska dolžina merilca} | dejanska dolžina, ki jo kaže merilce | | µm | zapisana ob merilcu, npr. 50 µm
+:::

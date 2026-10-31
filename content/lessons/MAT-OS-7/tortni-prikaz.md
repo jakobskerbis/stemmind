@@ -236,3 +236,12 @@ Ko gostje pogledajo mizo, takoj vidijo, katerega lesa je največ. To je tortni p
 ~ Tako dobiš, če $60^\circ$ bereš kot $60\,\%$. Stopinje najprej deli s $360$.
 + $400\,€$
 > $\dfrac{60^\circ}{360^\circ} = \dfrac{1}{6}$, zato je cement stal $\dfrac{1}{6} \cdot 2400\,€ = 400\,€$.
+
+:::simboli
+\text{kot} | središčni kot izseka | \text{kot} = \dfrac{\text{število v skupini}}{\text{število vseh}} \cdot 360^\circ | ^\circ | cel krog je $360^\circ$
+\text{število v skupini} | koliko podatkov je v eni skupini | \text{število v skupini} = \dfrac{\text{kot}}{360^\circ} \cdot \text{število vseh} |
+\text{število vseh} | število vseh podatkov (celota) | | | vsota vseh skupin
+\text{odstotek} | delež skupine v odstotkih | \text{odstotek} = \dfrac{\text{kot}}{3{,}6^\circ} | \% | $1\,\%$ celote je $3{,}6^\circ$
+\text{celota} | celoten znesek ali količina, ki jo prikazuje krog | \text{celota} = \text{znesek} \cdot \dfrac{360^\circ}{\text{kot}} | | ustreza $360^\circ$
+\text{znesek}, \text{količina} | del celote, ki ga prikazuje en izsek | \text{znesek} = \dfrac{\text{kot}}{360^\circ} \cdot \text{celota} |
+:::

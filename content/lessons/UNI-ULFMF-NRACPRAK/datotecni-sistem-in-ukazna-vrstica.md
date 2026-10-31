@@ -264,3 +264,10 @@ Ukaz `..` je korak navzgor v hierarhiji: od Lune k Zemlji, od Zemlje k Soncu. Sk
 ~ Vzorec `*.fits` zajame vse posnetke v enem ukazu.
 + Skripta z `mkdir -p surovi` in `mv *.fits surovi/`, ki jo vsako jutro poženeš v imeniku posnetkov.
 > Skripta ukaze shrani, vzorec zajame vse posnetke, `-p` pa prepreči napako, ko `surovi` že obstaja.
+
+:::simboli
+\text{vnosi po ukazih} | število vnosov v imeniku po ukazih | \text{vnosi po ukazih} = \text{prej} - \text{premaknjene datoteke} + \text{novi imeniki} | – |
+\text{prej} | število vnosov v imeniku pred ukazi | | – |
+\text{premaknjene datoteke} | število datotek, ki jih mv premakne drugam | | – | npr. vse datoteke .fits
+\text{novi imeniki} | število imenikov, ki jih ustvari mkdir | | – | ls jih izpiše kot vnose
+:::

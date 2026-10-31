@@ -230,3 +230,11 @@ Recept za poskus, na primeru »Ali ogrevanje vpliva na število sklec v eni minu
 - ni je mogoče določiti brez grafa
 ~ Graf pomaga, a dovolj je primerjati spremembe na enakih korakih: $0{,}3$, $0{,}1$ in $0{,}05\,\text{s}$ niso enake.
 > Spremembe na enakih korakih niso enake, zato točke ne ležijo na premici: odvisnost je nelinearna.
+
+:::simboli
+\text{povprečje} | povprečje meritev | \text{povprečje} = \dfrac{\text{vsota meritev}}{\text{število meritev}} | | v isti enoti kot meritve (cm, s)
+\text{vsota meritev} | vsota vseh meritev | | | v isti enoti kot meritve
+\text{število meritev} | število meritev (ponovitev) | | –
+\text{izguba} | izguba vode z znojenjem | \text{izguba} = (\text{izguba v minuti}) \cdot \text{čas} | g | izguba v minuti je $\dfrac{\text{izguba}}{\text{čas}}$, npr. 15 g/min
+\text{čas} | čas treninga | | min
+:::

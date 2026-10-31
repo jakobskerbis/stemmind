@@ -115,6 +115,11 @@ test("check: English decimals with a dot are not read as thousands", () => {
   assert.deepEqual(parseNumberWithUnit("1.1484", { dot: true }), { value: 1.1484, decimals: 4, unit: "" });
   assert.deepEqual(parseNumberWithUnit("1.1484"), { value: 1.1484, decimals: 4, unit: "" });
   assert.equal(parseNumberWithUnit("12 345 m").value, 12345);
+  assert.equal(parseNumberWithUnit("1.200,5").value, 1200.5);
+  assert.equal(parseNumberWithUnit("1.200,5 m").unit, "m");
+  assert.equal(parseNumberWithUnit("-1.200").value, -1200);
+  assert.equal(parseNumberWithUnit("-1.200", { dot: true }).value, -1.2);
+  assert.equal(parseNumberWithUnit("1.200,5", { dot: true }), null);
   assert.equal(checkAnswer({ type: "number", value: 1.1484, decimals: 4, dot: true }, "1.1484").kind, "correct");
   assert.equal(checkAnswer({ type: "number", value: 0.0359, decimals: 4, dot: true }, "0.0359").kind, "correct");
 });

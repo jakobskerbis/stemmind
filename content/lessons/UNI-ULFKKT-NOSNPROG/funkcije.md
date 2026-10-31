@@ -329,3 +329,13 @@ print(x, y)
 - `6 17`
 ~ Izraz `x + 1` izračuna novo vrednost, ne spremeni `x`.
 > Argument je $6$; lokalni `x` postane $6 \cdot 3 = 18$, vrne se $18 - 1 = 17$. Zunanji `x` ostane $5$.
+
+:::simboli
+\text{točke} | točke ekipe v ligi | \text{točke} = 3 \cdot \text{zmage} + 1 \cdot \text{remiji} + 0 \cdot \text{porazi} | – | vrne jih funkcija tocke_lige
+\text{zmage} | število zmag | | – | zmaga prinese 3 točke
+\text{remiji} | število remijev | | – | remi prinese 1 točko
+\text{porazi} | število porazov | | – | poraz prinese 0 točk
+\text{odstotek} | odstotek zadetih metov | \text{odstotek} = \dfrac{100 \cdot \text{zadeti}}{\text{meti}} | \% | zaokrožen na eno decimalko
+\text{zadeti} | število zadetih metov | | – | parameter funkcije odstotek
+\text{meti} | število vseh metov | | – | pri $\text{meti} = 0$ funkcija vrne 0
+:::

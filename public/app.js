@@ -10,6 +10,7 @@ import { dialectsFor } from "./dialects.js";
 hydrateIcons();
 import { initAccount, accountsOn, openAddChild, logout, openProfileLock, renderAccount } from "./account.js";
 import { showFull, closeFull, fullOpen } from "./razpri.js";
+import { makeSplitter } from "./razdelilnik.js";
 import { initOkna, isFloating, openWindow, closeWindow, focusWindow, refreshBubble, chatReply, restoreWindows, windowsOn, tabHint, floatingViews, syncTabbarH } from "./okna.js";
 import { initProfileMenu, refreshProfileButton, closeProfileMenu } from "./profile-menu.js";
 import { initQuickStart, closeQuickStart } from "./quick-start.js";
@@ -35,6 +36,7 @@ import { initFullscreen } from "./fullscreen.js";
 import { deviceSnapshot, applyDeviceSettings, addProposal } from "./chat-settings.js";
 import { initSchedule, showSchedule, renderScheduleCard } from "./schedule.js";
 import { initScan, showScan, leaveScan, scanBack } from "./scan/scan.js";
+import { initLab, showLab, labBack } from "./laboratorij.js";
 import { initZbirke, showZbirke, meCard, unlockedText, itemThumb } from "./zbirke-view.js";
 import { initTestNotice } from "./testna-verzija.js";
 import { initFormulaInfo, annotateTex, setFormulaSubject } from "./formula-info.js";
@@ -174,6 +176,7 @@ function initView(name) {
   }
   if (name === "progress") loadProgress();
   if (name === "schedule") showSchedule();
+  if (name === "lab") showLab();
   if (name === "scan") showScan();
   if (name === "league") loadLeague(state.student.id);
   if (name === "path") loadPath();
@@ -306,6 +309,7 @@ window.addEventListener("popstate", () => {
   if (currentView === "textbook" && textbookBack()) return keep();
   if (currentView === "games" && gamesBack()) return keep();
   if (currentView === "scan" && scanBack()) return keep();
+  if (currentView === "lab" && labBack()) return keep();
   const subMe = meView(currentView) && !["me", "graph"].includes(currentView);
   if (subMe && $("#tabbar").offsetParent) return showView("me"); // telefon: nazaj na »Jaz«
   fromBack = true;
@@ -316,7 +320,7 @@ window.addEventListener("popstate", () => {
   }
 });
 
-const ME_VIEWS = ["me", "progress", "league", "settings", "account", "feedback", "graph", "games", "corner", "schedule", "zbirke", "scan"];
+const ME_VIEWS = ["me", "progress", "league", "settings", "account", "feedback", "graph", "games", "corner", "schedule", "zbirke", "scan", "lab"];
 // Tekmovanja in »NPZ in matura« si na telefonu delita četrto mesto spodnje vrstice; tisti, ki ga tam ni, je pod »Jaz«.
 const meView = (name) => ME_VIEWS.includes(name) || (!!name && name === offTabbarPrep());
 // Zbirke in učni pass: odpre pogled, po želji s predmetom v pogledu »preglej« (from = pogled za Nazaj).
@@ -523,6 +527,7 @@ async function selectStudent(id) {
   if (!$("#view-progress").hidden) loadProgress();
   if (!$("#view-league").hidden) loadLeague(state.student.id);
   if (!$("#view-scan").hidden) showScan(); // naloga prejšnjega profila ne ostane na zaslonu
+  if (!$("#view-lab").hidden) showLab(); // zaklep in vrstni red poskusov sta po profilu
   state.pathKey = null;
   state.modes = null; // »Nadaljuj z učenjem« in goNew ne smeta pokazati naslednje teme prejšnjega profila
   clearLevelCard();
@@ -665,7 +670,9 @@ const setSidebar = (open) => {
   $(".sidebar").classList.toggle("open", open);
   $("#toggle-sidebar").setAttribute("aria-expanded", String(open));
 };
-$("#toggle-sidebar").addEventListener("click", () => setSidebar(!$(".sidebar").classList.contains("open")));
+// Na računalniku je seznam lahko skrit s potegom ločnice do roba (public/razdelilnik.js): isti gumb ga vrne.
+let chatSplit = null;
+$("#toggle-sidebar").addEventListener("click", () => (chatSplit?.collapsed ? chatSplit.expand() : setSidebar(!$(".sidebar").classList.contains("open"))));
 $("#conversation-list").addEventListener("click", () => setSidebar(false));
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && $(".sidebar").classList.contains("open")) setSidebar(false);
@@ -3157,6 +3164,7 @@ function graphCalc() {
   calcP ||= import("./graph/calc.js").then(({ createCalculator }) => {
     const host = document.createElement("div");
     host.id = "graph-host";
+    queueMicrotask(() => makeSplitter(host, splitOpts("gc")));
     return createCalculator(host, {
       t,
       icon,
@@ -3197,6 +3205,7 @@ function calcTool(mode) {
   if (mode === "graph") return graphCalc();
   calcTools[mode] ||= (mode === "sci" ? import("./graph/sci.js") : import("./graph/tools.js")).then((m) => {
     const host = document.createElement("div");
+    if (mode === "sci") queueMicrotask(() => makeSplitter(host, splitOpts("sc")));
     const base = { t, icon, locale, onInsert: insertIntoCalc };
     if (mode === "sci")
       return m.createScientific(host, {
@@ -3392,6 +3401,35 @@ initOkna({
   toast: (m) => toast(m, "check"),
 });
 
+// Ločnice med deli strani (public/razdelilnik.js, docs/oblikovanje.md »Spreminjanje velikosti delov«):
+// širina stranskega dela v px; min/max varujeta, da noben del ni neuporabno ozek.
+function splitOpts(name) {
+  const base = { label: t("split.resize"), labelKey: "split.resize", hint: t("split.hint"), hintKey: "split.hint" };
+  const o = {
+    chat: { side: "start", min: 200, max: 480, otherMin: 420, collapse: true },
+    path: { side: "start", min: 300, max: 620, otherMin: 420 },
+    topic: { side: "end", min: 320, max: 900, otherMin: 400, grid: () => $("#topic-content > .topic-grid, #topic-content > .session-grid") },
+    lesson: { side: "end", min: 320, max: 900, otherMin: 400, grid: () => $("#view-textbook > .tb-lesson-grid.has-side") },
+    gc: { side: "start", min: 280, max: 640, otherMin: 320, varName: "--gc-panel" },
+    sc: { side: "end", min: 320, max: 720, otherMin: 280 },
+  }[name];
+  return { ...base, key: name, varName: `--split-${name}`, ...o };
+}
+chatSplit = makeSplitter($("#view-chat"), {
+  ...splitOpts("chat"),
+  onCollapse: (hidden) => {
+    const b = $("#toggle-sidebar");
+    const key = hidden ? "split.showList" : "chat.list";
+    b.dataset.i18nAria = key;
+    b.setAttribute("aria-label", t(key));
+    b.title = hidden ? t(key) : "";
+    b.setAttribute("aria-expanded", String(!hidden));
+  },
+});
+makeSplitter($("#view-path"), splitOpts("path"));
+makeSplitter($("#topic-content"), splitOpts("topic"));
+makeSplitter($("#view-textbook"), splitOpts("lesson"));
+
 initFlashcards({ api, renderRich, escapeHtml, toast, showView, getStudent: () => state.student, onDue: setCardsDue });
 
 // Urnik (public/schedule.js): po spremembi se osvežita kartica »Danes imaš …« in Priprava na test.
@@ -3416,6 +3454,8 @@ initScan({
   },
   openGraph: (exprs) => openGraphOverlay(exprs, t("scan.nav")),
 });
+// Laboratorij (public/laboratorij.js): vsi virtualni poskusi; »Odpri temo v učbeniku« odpre lekcijo.
+initLab({ api, escapeHtml, getStudent: () => state.student, openLesson });
 document.querySelectorAll("[data-open-scan]").forEach((b) => b.addEventListener("click", () => showView("scan")));
 
 initTextbook({

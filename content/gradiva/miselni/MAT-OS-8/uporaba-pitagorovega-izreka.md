@@ -1,0 +1,24 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Najprej pravokotni trikotnik
+  - nariši skico, označi pravi kot
+  - napaka: števila iz naloge kar v izrek
+- Hipotenuza nasproti pravega kota
+  - iščeš hipotenuzo: kvadrata seštej
+  - iščeš kateto: kvadrata odštej
+- Diagonala pravokotnika
+  - $d = \sqrt{a^2 + b^2}$
+  - igrišče $40$ in $30\,\text{m}$: $d = 50\,\text{m}$
+  - kvadrat: $d = a\sqrt{2}$
+- Višina enakokrakega trikotnika
+  - kateta je polovica osnovnice $\frac{a}{2}$
+  - $v = \sqrt{b^2 - \left(\frac{a}{2}\right)^2}$
+  - enakostranični: $v = \frac{a\sqrt{3}}{2}$
+- Besedilne naloge
+  - lestev, rampa, tobogan: poševna stranica je hipotenuza
+  - napaka: odštevanje dolžin namesto kvadratov
+- Preverjanje rezultata
+  - hipotenuza je najdaljša stranica
+  - na koncu koreni, zapiši enoto

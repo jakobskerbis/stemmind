@@ -342,7 +342,11 @@ body.onboarding .test-notice .tn-report, body.auth-mode .test-notice .tn-report 
 @keyframes rise { from { opacity: 0; transform: translate(-50%, 10px); } to { opacity: 1; transform: translate(-50%, 0); } }
 
 /* ---------- klepet z inštruktorjem ---------- */
-.chat-view { display: grid; grid-template-columns: 270px 1fr; }
+.chat-view { display: grid; grid-template-columns: var(--split-chat, 270px) minmax(0, 1fr); }
+/* Seznam pogovorov, skrit s potegom ločnice do roba (public/razdelilnik.js); gumb v glavi ga vrne. */
+.chat-view.split-collapsed > .sidebar { visibility: hidden; padding: 0; border: 0; overflow: hidden; }
+.chat-view.split-collapsed #toggle-sidebar { display: inline-flex; }
+.chat-view.split-collapsed .chat-head h1 { flex: 1; min-width: 0; }
 .sidebar { border-inline-end: 1px solid var(--border); padding: 14px; overflow-y: auto; background: var(--surface); }
 .sidebar .primary { width: 100%; }
 #conversation-list { list-style: none; padding: 0; margin: 14px 0 0; }

@@ -8,6 +8,7 @@
 import { t } from "./i18n.js";
 import { icon } from "./icons.js";
 import { makeRowSortable, resetRows } from "./vrstice.js";
+import { resetSplits, refreshSplitters } from "./razdelilnik.js";
 
 const KEY = "evklid.okna";
 const ON_KEY = "evklid.windows";
@@ -602,10 +603,11 @@ function closeAll() {
   for (const name of [...wins.keys()]) closeWindow(name);
 }
 
-/** Ponastavi postavitev: vrstni red zavihkov, okna in mehurček. */
+/** Ponastavi postavitev: vrstni red zavihkov, okna, mehurček in ločnice med deli strani. */
 export function resetLayout() {
   closeAll();
   resetRows();
+  resetSplits();
   layout = { geo: {}, open: [] };
   ls.del(KEY);
   bstate = {};
@@ -624,6 +626,7 @@ function setOn(on) {
   else restoreWindows(); // okna, ki so bila odprta ob izklopu
   const box = document.getElementById("okna-toggle");
   if (box) box.checked = on;
+  refreshSplitters(); // ločnice med deli strani so pod isto nastavitvijo
   refreshBubble();
 }
 
@@ -631,7 +634,7 @@ function mountSetting(box) {
   if (!box) return;
   box.hidden = false;
   box.innerHTML = `<label class="check-row"><input type="checkbox" id="okna-toggle"${windowsOn() ? " checked" : ""}>
-      <span><b>${t("win.setting")}</b><small class="muted">${t("win.settingNote")}</small></span></label>
+      <span><b>${t("win.setting")}</b><small class="muted">${t("win.settingNote")} ${t("split.settingNote")}</small></span></label>
     <button type="button" class="secondary small okna-reset">${icon("rotate-ccw")}<span>${t("win.reset")}</span></button>`;
   box.querySelector("input").addEventListener("change", (e) => setOn(e.target.checked));
   box.querySelector(".okna-reset").addEventListener("click", () => {

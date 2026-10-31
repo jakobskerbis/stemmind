@@ -30,15 +30,19 @@ at 360×740 and 1280×800, light and dark, Slovenian plus one RTL language (Arab
 at them. Checklist: nothing overlaps, clips or scrolls sideways; touch targets ≥ 40 px; contrast AA;
 focus visible and keyboard works; icon buttons have `aria-label`; no information only in colour;
 every new string has a key in `public/i18n/sl.js` and all 32 `public/i18n/ui/*.json`, none left in
-Slovenian in other languages; correct Slovenian (terms of the school level, decimal comma); any
+Slovenian in other languages; a new top tab, menu row or two-panel view works with movable windows,
+row reordering and width handles (`docs/oblikovanje.md` »Nove stvari«); correct Slovenian (terms of the school level, decimal comma); any
 student-facing maths/physics/chemistry is correct and at the right level.
 
 Each reviewer fixes what it is sure about with small edits (or returns a list), then the author
 reruns pass 1. Merge only when all three passes are clean or every open item is written in the PR
 body with a reason.
 
-Small PRs (≤ ~30 changed lines, no new screen): passes 2 and 3 may be one reviewer agent covering both
-checklists, but it is still a different agent from the author, and pass 1 still runs.
+Small PRs (≤ ~30 changed lines, no new screen) and look-only changes (CSS, layout, UI wording, screenshots)
+that touch nothing about money, AI usage or cost, accounts, personal data or lesson content: passes 2 and 3
+may be one reviewer agent covering both checklists, but it is still a different agent from the author, and
+pass 1 still runs. Anything touching those areas always gets two separate reviewers (j, 2026-10-30: the
+second and third reviews keep catching money and cost bugs there).
 
 ## 2. Lessons (`content/lessons/**`)
 

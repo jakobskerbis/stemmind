@@ -203,8 +203,9 @@ function lastUserText(messages) {
   const last = messages[messages.length - 1];
   if (!last) return "";
   if (typeof last.content === "string") return last.content;
+  // Skrita opomba s preverjenim rezultatom (server/live-check.js) ni del učenčevega besedila.
   return last.content
-    .filter((b) => b.type === "text")
+    .filter((b) => b.type === "text" && !b.text.startsWith("<preverjen_racun>"))
     .map((b) => b.text)
     .join(" ");
 }
@@ -234,7 +235,7 @@ function mockAnswer(userText) {
     return "*(Preizkusni način.)*\n\nPreden razložim: kaj že veš o tej temi? Poskusi odgovoriti na kratko vprašanje:\n\nKoliko je $3 \\cdot 4$?\n" + '<<META subject=MAT topic="-" error=0 mode=A flag=none done=0>>';
   }
   return (
-    "*(Preizkusni način – brez povezave s Claude.)*\n\n" +
+    "*(Preizkusni način: to je vnaprej pripravljen odgovor.)*\n\n" +
     "Poglejva skupaj. Pri enačbi $2x + 3 = 11$ želimo, da $x$ ostane sam.\n\n" +
     "Kaj bi naredil najprej, da se znebiš števila $3$ na levi strani?\n" +
     '<<META subject=MAT topic="linearne enačbe" error=0 mode=A flag=none done=0>>'

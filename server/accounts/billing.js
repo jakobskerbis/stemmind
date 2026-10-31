@@ -169,7 +169,7 @@ export function mountBilling(app, ctx) {
     return true;
   };
   const consented = (body) => body?.adult === true && body?.withdrawal === true;
-  const consentError = { error: "Pred plačilom potrdite obe izjavi.", consent: true };
+  const consentError = { error: "Pred plačilom sta potrebni obe potrditvi.", consent: true };
   // Shrani se slovensko besedilo in jezik, v katerem ju je plačnik prebral (prevod je v public/i18n).
   function recordConsent(parentId, payerEmail, kind, lang) {
     const l = /^[a-z]{2,3}(-[A-Za-z]{2,4})?$/.test(String(lang || "")) ? lang : "sl";
@@ -289,7 +289,7 @@ export function mountBilling(app, ctx) {
       res.json({ url: session.url });
     } catch (err) {
       log.error?.("[evklid] Stripe paket:", err.message);
-      res.status(502).json({ error: "Plačilne strani ni bilo mogoče odpreti. Poskusite znova." });
+      res.status(502).json({ error: "Plačilne strani ni bilo mogoče odpreti. Poskusi znova." });
     }
   });
 
@@ -297,7 +297,7 @@ export function mountBilling(app, ctx) {
   app.post("/api/billing/pass/confirm", json, async (req, res) => {
     if (needStripe(res)) return;
     const id = String(req.body?.session_id || "");
-    if (!/^cs_[\w]+$/.test(id)) return res.status(400).json({ error: "Neznana seja plačila." });
+    if (!/^cs_[\w]+$/.test(id)) return res.status(400).json({ error: "Plačila ni mogoče najti." });
     try {
       const session = await stripe.request("GET", `/checkout/sessions/${id}`);
       if (String(session.metadata?.parent_id) !== String(req.parent.id)) return res.status(404).json({ error: "Plačilo ne obstaja." });
@@ -306,7 +306,7 @@ export function mountBilling(app, ctx) {
       res.json({ pass: publicPass(pass), paid: pass?.status === "active" });
     } catch (err) {
       log.error?.("[evklid] Stripe paket (potrditev):", err.message);
-      res.status(502).json({ error: "Plačila ni bilo mogoče preveriti. Osvežite stran čez minuto." });
+      res.status(502).json({ error: "Plačila ni bilo mogoče preveriti. Osveži stran čez minuto." });
     }
   });
 
@@ -332,10 +332,10 @@ export function mountBilling(app, ctx) {
     if (needStripe(res)) return;
     const p = req.parent;
     if (!credits || !p || p.is_guest) return res.status(403).json({ error: "Najprej ustvari račun v zavihku Račun.", guest: true });
-    if (isMinor(p)) return res.status(403).json({ error: "Dokup porabe plača polnoleten imetnik računa (starš ali skrbnik)." });
+    if (isMinor(p)) return res.status(403).json({ error: "Dokup pogovorov plača polnoleten imetnik računa (starš ali skrbnik)." });
     const pack = req.body?.pack === "custom" ? customPack(req.body?.amount_eur) : packById(req.body?.pack);
     if (!pack) return res.status(400).json({ error: req.body?.pack === "custom" ? "Najmanjši znesek je 5 €." : "Neznan paket." });
-    if (currencyOf(req, p) !== "EUR") return res.status(400).json({ error: "Dokup porabe je zaenkrat na voljo samo v evrih." });
+    if (currencyOf(req, p) !== "EUR") return res.status(400).json({ error: "Dokup pogovorov je zaenkrat na voljo samo v evrih." });
     if (!consented(req.body)) return res.status(400).json(consentError);
     try {
       const customer = await ensureCustomer(p);
@@ -368,7 +368,7 @@ export function mountBilling(app, ctx) {
       res.json({ url: session.url });
     } catch (err) {
       log.error?.("[evklid] Stripe dokup porabe:", err.message);
-      res.status(502).json({ error: "Plačilne strani ni bilo mogoče odpreti. Poskusite znova." });
+      res.status(502).json({ error: "Plačilne strani ni bilo mogoče odpreti. Poskusi znova." });
     }
   });
 
@@ -383,7 +383,7 @@ export function mountBilling(app, ctx) {
   app.post("/api/billing/credit/confirm", json, async (req, res) => {
     if (needStripe(res)) return;
     const id = String(req.body?.session_id || "");
-    if (!/^cs_[\w]+$/.test(id)) return res.status(400).json({ error: "Neznana seja plačila." });
+    if (!/^cs_[\w]+$/.test(id)) return res.status(400).json({ error: "Plačila ni mogoče najti." });
     try {
       const session = await stripe.request("GET", `/checkout/sessions/${id}`);
       if (String(session.metadata?.parent_id) !== String(req.parent.id)) return res.status(404).json({ error: "Plačilo ne obstaja." });
@@ -392,7 +392,7 @@ export function mountBilling(app, ctx) {
       res.json({ paid: c?.status === "active", balance_conversations: conversationsFor(credits.balance(req.parent.id)) });
     } catch (err) {
       log.error?.("[evklid] Stripe dokup porabe (potrditev):", err.message);
-      res.status(502).json({ error: "Plačila ni bilo mogoče preveriti. Osvežite stran čez minuto." });
+      res.status(502).json({ error: "Plačila ni bilo mogoče preveriti. Osveži stran čez minuto." });
     }
   });
 
@@ -407,13 +407,13 @@ export function mountBilling(app, ctx) {
     if (needStripe(res)) return;
     const p = req.parent;
     if (p.is_guest) return res.status(403).json({ error: "Najprej ustvari račun." });
-    if (linkThrottle.blocked(`link${p.id}`)) return res.status(429).json({ error: "Preveč povezav v kratkem času. Poskusite čez eno uro." });
+    if (linkThrottle.blocked(`link${p.id}`)) return res.status(429).json({ error: "Preveč povezav v kratkem času. Poskusi čez eno uro." });
     const open = db.prepare("SELECT COUNT(*) AS n FROM pay_links WHERE parent_id = ? AND done_at IS NULL AND expires_at > ?").get(p.id, iso(Date.now())).n;
-    if (open >= 5) return res.status(429).json({ error: "Odprtih je že 5 povezav za plačilo. Počakajte, da starš plača ali da povezave potečejo." });
+    if (open >= 5) return res.status(429).json({ error: "Odprtih je že 5 povezav za plačilo. Počakaj, da starš plača ali da povezave potečejo." });
     const kind = req.body?.kind === "pass" ? "pass" : "sub";
     let row;
     if (kind === "sub") {
-      if (paidActive(p)) return res.status(409).json({ error: "Naročnino že imate." });
+      if (paidActive(p)) return res.status(409).json({ error: "Naročnino že imaš." });
       const school = req.body?.school === true;
       const plan = school ? schoolPlanFor(req.body?.interval) : planFor(Number(req.body?.seats), req.body?.interval, currencyOf(req, p));
       if (!plan) return res.status(400).json({ error: "Neznan paket." });
@@ -554,7 +554,7 @@ export function mountBilling(app, ctx) {
     const l = publicLink(req, res);
     if (!l) return;
     const id = String(req.body?.session_id || "");
-    if (!/^cs_[\w]+$/.test(id)) return res.status(400).json({ error: "Neznana seja plačila." });
+    if (!/^cs_[\w]+$/.test(id)) return res.status(400).json({ error: "Plačila ni mogoče najti." });
     try {
       const session = await stripe.request("GET", `/checkout/sessions/${id}`);
       if (session.metadata?.pay_link !== l.token_hash) return res.status(404).json({ error: "Plačilo ne obstaja." });

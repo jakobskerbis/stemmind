@@ -1,0 +1,25 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Eksponent ni število ničel
+  - $4\,500\,000 = 4{,}5 \cdot 10^6$, ne $10^5$
+  - šteješ premike vejice
+- Oblika zapisa
+  - $a \cdot 10^n$, $1 \le a < 10$
+  - $25 \cdot 10^5$ ni pravilen zapis
+- Velika števila
+  - vejica v levo, eksponent pozitiven
+  - $3\,500\,000\,\text{Hz} = 3{,}5 \cdot 10^6\,\text{Hz}$
+- Negativni eksponenti
+  - $10^0 = 1$, $10^{-n} = \frac{1}{10^n}$
+  - $10^{-3} = 0{,}001$, ne $-1000$
+- Majhna števila
+  - vejica v desno, eksponent negativen
+  - $0{,}0023\,\text{s} = 2{,}3 \cdot 10^{-3}\,\text{s}$
+- Primerjanje
+  - najprej eksponenta, nato $a$
+  - $10^{-6}$ je manjše od $10^{-5}$
+- Množenje
+  - števili zmnoži, eksponenta seštej
+  - $2 \cdot 10^2 \cdot 1{,}5 \cdot 10^7 = 3 \cdot 10^9$

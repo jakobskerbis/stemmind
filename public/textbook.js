@@ -441,7 +441,7 @@ async function renderLesson(topicId) {
 
   const fallback = !lesson
     ? `<section class="card tb-section"><div class="explanation">${
-        L.explanation ? R(L.explanation) : `<p>Lekcija za to temo še nastaja.${L.demo ? " Medtem si oglej poskus spodaj" : ""}${L.practice ? ", reši nekaj nalog" : ""} ali vprašaj tutorja, ki ti temo razloži po korakih.</p>`
+        L.explanation ? R(L.explanation) : `<p>Lekcija za to temo še nastaja.${L.demo ? " Medtem si oglej poskus spodaj" : ""}${L.practice ? ", reši nekaj nalog" : ""} ali vprašaj inštruktorja, ki ti temo razloži po korakih.</p>`
       }</div></section>${SLOT}`
     : "";
 
@@ -493,7 +493,7 @@ async function renderLesson(topicId) {
     <h2>Kaj zdaj?</h2>
     <div class="actions">
       ${L.practice ? `<button type="button" class="primary" id="tb-practice">${ic("pencil")}Vadi naloge</button>` : ""}
-      <button type="button" class="secondary" id="tb-ask">${ic("message-circle")}Še ni jasno? Vprašaj tutorja</button>
+      <button type="button" class="secondary" id="tb-ask">${ic("message-circle")}Še ni jasno? Vprašaj inštruktorja</button>
     </div>
     <div class="tb-nav">
       ${L.prev ? `<button type="button" class="ghost" data-lesson="${esc(L.prev.id)}">← ${esc(L.prev.name)}</button>` : "<span></span>"}
@@ -508,7 +508,7 @@ async function renderLesson(topicId) {
     <p class="muted tb-sel-hint">${ic("message-circle")}Ti kakšen del ni jasen? Označi ga in pritisni »Razloži«.</p>
     ${L.goals ? `<p class="tb-goals"><b>Cilji:</b> ${esc(L.goals)}</p>` : ""}
     ${L.pretest_due ? `<section class="card tb-pretest"><h2>${ic("target")}${esc(t("pretest.title"))}</h2><p>${esc(t("pretest.lessonIntro"))}</p><button type="button" class="primary" id="tb-pretest">${ic("play")}${esc(t("pretest.start"))}</button></section>` : ""}
-    ${lesson && lesson.status !== "pregledano" ? `<p class="tb-draft">Osnutek: lekcijo mora še pregledati učitelj. Če opaziš napako, povej tutorju.</p>` : ""}
+    ${lesson && lesson.status !== "pregledano" ? `<p class="tb-draft">Osnutek: lekcijo mora še pregledati učitelj. Če opaziš napako, povej inštruktorju.</p>` : ""}
     ${stepMode ? `<div class="tb-progress" role="progressbar" aria-valuemin="1" aria-valuemax="${steps.length}"><span></span></div>${stepsHtml}${nextHtml}${stepper}` : `${sectionHtml}${fallback}${checksHtml}${nextHtml}`}
     </div><aside class="tb-side">${demoHtml}</aside></div>`;
   placeDemos(box);

@@ -1,6 +1,6 @@
 # Stroški AI na učenca
 
-Ocena: `node scripts/ocena-stroska.js` (z `--db` še dejanska poraba iz `data/evklid.db`). Skript ne kliče modela. Cene (oktober 2026, USD na milijon žetonov): Haiku 5.5 0,10 vhod / 0,50 izhod / 0,01 branje predpomnilnika; Opus 5.5 4 / 20 / 0,20.
+Ocena: `node scripts/ocena-stroska.js` (z `--db` še dejanska poraba iz `data/evklid.db`); skript ne kliče modela. Natančnost modelov: `node scripts/primerjava-modelov.js` (rešeni primeri iz lekcij, Haiku in Sonnet z navodili iz aplikacije, Opus oceni proti rešitvi; kliče API, `--dry` brez klicev, meja `--max-usd 5`). Cene (oktober 2026, USD na milijon žetonov): Haiku 5.5 0,10 vhod / 0,50 izhod / 0,01 branje predpomnilnika; Opus 5.5 4 / 20 / 0,20.
 
 ## Kje je bil strošek
 
@@ -28,6 +28,10 @@ En odgovor Haikuja stane okoli 0,0004 €, en odgovor Opusa okoli 0,07 €, tore
 - **Prompt**: razlage možnih vrednosti nastavitev so v stalnem (predpomnjenem) delu, v delu za učenca ostanejo samo vrednosti.
 - **Pregled**: Nastavitve → Poraba AI kaže strošek v €, povprečje na učenca, na odgovor, oceno za mesec, število odgovorov brez AI in porabo po modelih. Starš v zavihku Račun vidi delež mesečne omejitve za vsakega otroka (brez zneskov).
 - **Nastavitve iz klepeta** (j, 2026-10-29): orodji `get_settings` in `change_settings` (server/chat-settings.js, seznam nastavitev v public/settings-registry.js) sta stalni in pred sistemskim promptom, zato sta v istem predpomnjenem začetku (~1500 žetonov, pri Haiku branje iz predpomnilnika ~0,00002 $ na sporočilo). Drugi klic modela samo, ko učenec res spremeni nastavitev. Finančnih in osebnih podatkov orodji ne poznata.
+
+## Sprotno preverjanje odgovorov (j, 2026-10-30)
+
+j: »Kako vemo, da Haiku najprej ne da napačnega rezultata?« Koda (`server/live-check.js`) preveri vsak odgovor brez stroška: pred klicem reševalnik (`public/scan/solvecore.js`) reši enačbo, sistem, odvod ali račun z vsaj dvema operacijama iz učenčevega sporočila, model pa dobi preverjen rezultat v skriti opombi (~80 žetonov vhoda, samo v tisti potezi; predpomnjen začetek ostane enak); po odgovoru koda preračuna vsak račun in končne vrednosti neznank. Model se pokliče le ob najdeni napaki (en kratek »Popravek:« istega modela, vrsta `popravek`, ~0,001 $ pri Haikuju) in za pregled s Sonnetom, kjer koda ni preverila ničesar, tveganje pa je večje (tekmovanja, fakulteta, »Razloži podrobneje«): samo Haikujevi odgovori, ne v lahkem načinu, ne v brezplačnem paketu, ne v varčnem načinu proračuna (raven ≤ 0), največ `EVKLID_LIVE_CHECK_DAILY_USD` (0,30 $, j 2026-10-30; ~25 pregledov, največ ~9 $ na mesec) na dan, vrsta `preverjanje` (~0,005–0,02 $ na pregled, Sonnet razmišlja) šteje v mesečni proračun. `EVKLID_LIVE_CHECK=0` vse izklopi.
 
 ## Števec porabe za skrbnika (2026-10-29)
 

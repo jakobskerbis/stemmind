@@ -208,3 +208,10 @@ Pravilo pa ne velja, ko je število izbir odvisno od prejšnje izbire. Pri dvome
 - $12$
 - $16$
 > Prva ekipa igra s tremi, druga še z dvema, tretja še z eno: $3 + 2 + 1 = 6$. Rezultat $12$ dobiš, če vsako tekmo šteješ dvakrat.
+
+:::simboli
+\text{število možnosti} | število vseh možnosti | \text{število možnosti} = a \cdot b \cdot c \cdot \ldots | | pravilo produkta, če je v vsakem koraku enako število izbir
+a, \text{izbire v 1. koraku} | število izbir v 1. koraku | |
+b, \text{izbire v 2. koraku} | število izbir v 2. koraku | |
+c | število izbir v 3. koraku | |
+:::
