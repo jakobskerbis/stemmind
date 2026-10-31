@@ -21,6 +21,7 @@ import { WISHES } from "./wishes.js";
 import { ITEMS, SLOTS, DEFAULT_AVATAR, MULTI_MAX, avatarSvg, itemName, itemOf, itemRarity, isMulti, isNew, isNewDate, isWorn, worn, wear, takeOff, slotFull } from "../avatar.js";
 import { seasonOf } from "../zbirke.js";
 import { unlockedText } from "../zbirke-view.js";
+import { pageSlice, pageNums } from "./pages.js";
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const FILTER_KEY = "evklid.gamesFilter";
@@ -69,6 +70,7 @@ let filter = { subject: "MAT", area: "you", kind: "all", q: "" };
 const SUBJ_GLYPH = { MAT: "∑", FIZ: "⚛", KEM: "⚗", BIO: "❀", NAR: "☼", GEO: "⛰", RAC: "01", EKO: "€" };
 let game = null; // odprta igra
 let trOpen = false;
+let page = 0; // stran mreže iger (pages.js); ob vsaki spremembi izbire ali iskanja spet prva
 let trends = null; // glasovi tedna (samo skrbnik ali računalnik s strežnikom, server/games.js)
 let root = null;
 
@@ -173,6 +175,20 @@ function trendsCard() {
   return `<details class="card gm-trends"${trOpen ? " open" : ""}><summary>📋 ${esc(t("games.trTitle"))}</summary><p class="muted small">${esc(t("games.trOnly"))}</p>${body}</details>`;
 }
 
+// Številke strani: 1 … 4 5 [6] 7 8 … 275, puščici za prejšnjo in naslednjo.
+function pager(pages) {
+  if (pages < 2) return "";
+  // na ozkem zaslonu le en sosed na vsako stran, da gumbi ostanejo v eni vrstici
+  const nums = pageNums(page, pages, matchMedia("(max-width: 420px)").matches ? 1 : 2);
+  const btn = (n) => `<button type="button" data-page="${n}"${n === page ? ` class="active" aria-current="page"` : ""} aria-label="${esc(t("games.page", { n: n + 1 }))}">${n + 1}</button>`;
+  const parts = nums.map((n, i) => (i && n - nums[i - 1] > 1 ? `<span class="gm-gap" aria-hidden="true">…</span>` : "") + btn(n));
+  return `<nav class="gm-pager" aria-label="${esc(t("games.pages"))}">
+    <button type="button" data-page="${page - 1}"${page ? "" : " disabled"} aria-label="${esc(t("games.prevPage"))}">${icon("arrow-left")}</button>
+    ${parts.join("")}
+    <button type="button" data-page="${page + 1}"${page < pages - 1 ? "" : " disabled"} aria-label="${esc(t("games.nextPage"))}">${icon("arrow-right")}</button>
+  </nav>`;
+}
+
 function renderPortal() {
   const q = filter.q.trim().toLowerCase();
   const kid = kidList();
@@ -187,8 +203,8 @@ function renderPortal() {
   const pick = (c) => (q || c.subject === filter.subject) && (area === "you" ? forYou(c) : area === "all" || c.area === area);
   let total = 0;
   let paths = 0;
-  const sections = AREAS.filter((a) => q || a[3] === filter.subject).map(([id]) => {
-    const tiles = [];
+  // Najprej le seznam iger (brez HTML), nato HTML samo za igre na trenutni strani.
+  const groups = AREAS.filter((a) => q || a[3] === filter.subject).map(([id]) => {
     // Sosednji ploščici se razlikujeta po snovi in po vrsti igre (pisana mreža).
     const cs = CONCEPTS.filter((c) => c.area === id && pick(c));
     const path = [];
@@ -196,17 +212,20 @@ function renderPortal() {
     const shut = [];
     for (let r = 0; r < kinds.length; r++) cs.forEach((c, i) => {
       const e = kinds[(i + r) % kinds.length];
-      if (match(c, e)) (gameLock(e.id, c, LS) ? shut : onPath(e, c) ? path : open).push(tile(e, c));
+      if (match(c, e)) (gameLock(e.id, c, LS) ? shut : onPath(e, c) ? path : open).push([e, c]);
     });
-    tiles.push(...path, ...open, ...shut); // igre na poti najprej
     paths += path.length;
-    total += tiles.length;
-    if (!tiles.length) return "";
-    return `<section class="gm-sec"><h2><span class="gm-dot" style="background:${areaColor(id)}"></span>${esc(areaName(id))}<span class="gm-count">${tiles.length}</span></h2><div class="gm-grid">${tiles.join("")}</div></section>`;
-  }).join("");
+    const games = [...path, ...open, ...shut]; // igre na poti najprej
+    total += games.length;
+    return { id, games };
+  }).filter((x) => x.games.length);
+  const sl = pageSlice(groups, page);
+  page = sl.page;
+  const pages = sl.pages;
+  const sections = sl.parts.map(({ id, games, all }) => `<section class="gm-sec"><h2><span class="gm-dot" style="background:${areaColor(id)}"></span>${esc(areaName(id))}<span class="gm-count">${all}</span></h2><div class="gm-grid">${games.map(([e, c]) => tile(e, c)).join("")}</div></section>`).join("");
   // Tvoje igre iz otroštva: vsaka izbrana vrsta igre z dvema snovma, ki ju zdaj izbereš (predmet, področje).
   let kidSec = "";
-  if (kidEngines.length && filter.kind === "all" && !q) {
+  if (kidEngines.length && filter.kind === "all" && !q && !page) {
     const pool = CONCEPTS.filter((c) => pick(c));
     const tiles = pool.length ? kidEngines.flatMap((id, i) => [0, 1].map((j) => [ENGINES.find((e) => e.id === id), pool[(i * 7 + j * 3) % pool.length]])).filter(([e, c], k, all) => e && all.findIndex(([e2, c2]) => e2 === e && c2 === c) === k).slice(0, 12) : [];
     if (tiles.length) kidSec = `<section class="gm-sec gm-kidsec"><h2><span class="gm-kid-ic" aria-hidden="true">🕹️</span>${esc(t("games.kidTitle"))}<span class="gm-count">${tiles.length}</span><button type="button" class="ghost gm-kidedit" data-act="kid">${icon("pencil")}${esc(t("games.kidEdit"))}</button></h2><div class="gm-grid">${tiles.map(([e, c]) => tile(e, c)).join("")}</div></section>`;
@@ -234,12 +253,14 @@ function renderPortal() {
       ${q ? "" : trendsCard()}${kidAsk}${ctx.getStudent() && !q ? `<button type="button" class="ghost gm-kidlink gm-wishlink" data-act="wish">🗳️ ${esc(data.wish ? t("games.wishMine", { g: t(`games.w.${data.wish}`) }) : t("games.wishAsk"))}</button>` : ""}${kid && !kidEngines.length ? `<button type="button" class="ghost gm-kidlink" data-act="kid">🕹️ ${esc(t("games.kidLink"))}</button>` : ""}
       ${paths ? `<p class="gm-pathhint">${icon("compass")} ${esc(t("games.pathHint"))}</p>` : ""}
       ${kidSec}${total ? sections : `<p class="muted gm-none">${esc(t("games.none"))}</p>`}
+      ${pager(pages)}
     </div>`;
   root.querySelector(".gm-subjects")?.addEventListener("click", (ev) => {
     const b = ev.target.closest("button[data-val]");
     if (!b) return;
     filter.subject = b.dataset.val;
     if (!["you", "all"].includes(filter.area)) filter.area = "you";
+    page = 0;
     saveFilter();
     renderPortal();
   });
@@ -247,6 +268,7 @@ function renderPortal() {
     const b = ev.target.closest("button[data-val]");
     if (!b) return;
     filter.area = b.dataset.val;
+    page = 0;
     saveFilter();
     renderPortal();
   });
@@ -254,12 +276,14 @@ function renderPortal() {
     const b = ev.target.closest("button[data-val]");
     if (!b) return;
     filter.kind = b.dataset.val;
+    page = 0;
     saveFilter();
     renderPortal();
   });
   const input = root.querySelector(".gm-search input");
   input.addEventListener("input", () => {
     filter.q = input.value;
+    page = 0;
     const pos = input.selectionStart;
     renderPortal();
     const i2 = root.querySelector(".gm-search input");
@@ -267,6 +291,16 @@ function renderPortal() {
     i2.setSelectionRange(pos, pos);
   });
   root.querySelectorAll(".gm-tile").forEach((b) => b.addEventListener("click", () => openGame(b.dataset.game)));
+  root.querySelector(".gm-pager")?.addEventListener("click", (ev) => {
+    const b = ev.target.closest("button[data-page]");
+    if (!b || b.disabled) return;
+    page = +b.dataset.page;
+    renderPortal();
+    // na vrh mreže (pod iskanjem in izbiro), fokus na prvo igro nove strani (tipkovnica, bralnik zaslona)
+    const first = root.querySelector(".gm-kidsec, .gm-sec, .gm-none");
+    first?.scrollIntoView({ block: "start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    root.querySelector(".gm-sec .gm-tile")?.focus({ preventScroll: true });
+  });
   root.querySelector('[data-act="shop"]').addEventListener("click", () => renderShop("", true));
   root.querySelector('[data-act="wish"]')?.addEventListener("click", askWish);
   root.querySelector(".gm-trends")?.addEventListener("toggle", (e) => (trOpen = e.target.open));
@@ -293,6 +327,7 @@ async function saveChildhood(list, titles) {
     ctx.toast?.(err.message, null);
     return false;
   }
+  page = 0; // razdelek »Igre iz tvojega otroštva« je na prvi strani
   if (!game) renderPortal();
   return true;
 }

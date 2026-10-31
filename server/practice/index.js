@@ -11,6 +11,8 @@ import { DODATNE_MAT_SS34 } from "./generators/dodatne-mat-ss34.js";
 import { DODATNE_OS_FIZ_KEM } from "./generators/dodatne-os-fiz-kem.js";
 import { DODATNE_FIZ_SS } from "./generators/dodatne-fiz-ss.js";
 import { DODATNE_KEM_SS } from "./generators/dodatne-kem-ss.js";
+import { DODATNE_VRZELI_MAT } from "./generators/dodatne-vrzeli-mat.js";
+import { DODATNE_VRZELI_FIZ_KEM } from "./generators/dodatne-vrzeli-fiz-kem.js";
 import { NAR_GENERATORS } from "./generators/nar.js";
 import { BIO_GENERATORS } from "./generators/bio.js";
 import { TEK_MAT_OS } from "./generators/tek-mat-os.js";
@@ -42,6 +44,9 @@ export const GENERATORS = [
   ...DODATNE_OS_FIZ_KEM,
   ...DODATNE_FIZ_SS,
   ...DODATNE_KEM_SS,
+  // teme, dodane po primerjavi z učnimi načrti (2026-10-30)
+  ...DODATNE_VRZELI_MAT,
+  ...DODATNE_VRZELI_FIZ_KEM,
   // naravoslovje OŠ 6. in 7. razred
   ...NAR_GENERATORS,
   ...BIO_GENERATORS,

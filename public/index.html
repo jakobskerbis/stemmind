@@ -29,6 +29,7 @@
   <link rel="stylesheet" href="games.css">
   <link rel="stylesheet" href="zbirke.css">
   <link rel="stylesheet" href="schedule.css">
+  <link rel="stylesheet" href="lab.css">
   <link rel="stylesheet" href="corner.css">
   <link rel="stylesheet" href="xp.css">
   <link rel="stylesheet" href="touch.css">
@@ -46,6 +47,7 @@
       <button class="tab" data-view="chat"><i data-icon="message-circle"></i><span data-i18n="nav.chat">Inštruktor</span></button>
       <button class="tab" data-view="scan"><i data-icon="scan-line"></i><span data-i18n="scan.nav">Skeniraj</span></button>
       <button class="tab" data-view="graph"><i data-icon="calculator"></i><span data-i18n="nav.graph">Kalkulator</span></button>
+      <button class="tab" data-view="lab"><i data-icon="flask-conical"></i><span data-i18n="nav.lab">Laboratorij</span></button>
       <button class="tab" data-view="competition" id="competition-tab"><i data-icon="medal"></i><span data-i18n="nav.competition">Tekmovanja</span></button>
       <button class="tab" data-view="exams" id="exams-tab" hidden><i data-icon="clipboard-check"></i><span data-i18n="nav.examsSi">NPZ in matura</span></button>
       <button class="tab" data-view="games"><i data-icon="gamepad-2"></i><span data-i18n="nav.games">Igre</span></button>
@@ -77,12 +79,12 @@
   <div id="usage-pop" class="usage-pop card" role="dialog" aria-label="Poraba AI" data-i18n-aria="meter.heading" hidden></div>
   <div id="toast" class="toast" hidden></div>
   <div id="mock-banner" class="banner" hidden>
-    <i data-icon="info"></i><span><b data-i18n="mock.title">Preizkusni način.</b> <span class="long" data-i18n="mock.text">Brez API ključa inštruktor vrača pripravljene odgovore.</span></span>
+    <i data-icon="info"></i><span><b data-i18n="mock.title">Preizkusni način.</b> <span class="long" data-i18n="mock.text">Inštruktor zdaj odgovarja le s pripravljenimi vzorčnimi odgovori.</span></span>
   </div>
-  <div id="test-notice" class="banner test-notice" role="region" aria-label="Testna verzija" data-i18n-aria="beta.title" hidden>
+  <div id="test-notice" class="banner test-notice" role="region" aria-label="Testna različica" data-i18n-aria="beta.title" hidden>
     <i data-icon="info"></i>
-    <span class="tn-text"><b data-i18n="beta.title">Testna verzija.</b> <span class="long" data-i18n="beta.text">Evklid in inštruktor sta še v testni verziji, zato nekaj stvari še ne dela.</span></span>
-    <button type="button" class="ghost small tn-more" aria-expanded="false" aria-controls="test-notice-list" data-i18n="beta.more">Kaj še ne dela</button>
+    <span class="tn-text"><b data-i18n="beta.title">Testna različica.</b> <span class="long" data-i18n="beta.text">Evklid in inštruktor sta še v testni različici, zato nekaj stvari še ne deluje.</span></span>
+    <button type="button" class="ghost small tn-more" aria-expanded="false" aria-controls="test-notice-list" data-i18n="beta.more">Kaj še ne deluje</button>
     <button type="button" class="icon-btn tn-close" aria-label="Zapri obvestilo" title="Zapri obvestilo" data-i18n-aria="beta.close" data-i18n-title="beta.close"><i data-icon="x"></i></button>
     <ul id="test-notice-list" class="tn-list" hidden></ul>
   </div>
@@ -178,7 +180,7 @@
       <div id="messages" class="messages" aria-live="polite">
         <div class="empty"></div>
       </div>
-      <div id="chat-off" class="chat-off" role="status" data-i18n="chat.off" hidden>Klepet z inštruktorjem je začasno izklopljen. Ostali deli aplikacije delujejo.</div>
+      <div id="chat-off" class="chat-off" role="status" data-i18n="chat.off" hidden>Klepet z inštruktorjem je začasno izklopljen. Drugi deli aplikacije delujejo.</div>
       <form id="composer" class="composer">
         <div id="image-preview" class="image-preview" hidden>
           <img alt="Predogled fotografije" data-i18n-alt="chat.photoPreview">
@@ -383,9 +385,10 @@
       <button type="button" class="list-row" data-go="competition" id="me-competition" hidden><span class="ic"><i data-icon="medal"></i></span><span class="lr-text"><b data-i18n="nav.competition">Tekmovanja</b><small data-i18n="comp.meSub">Tekmovalni trening in poskusno tekmovanje</small></span><i data-icon="chevron-right"></i></button>
       <button type="button" class="list-row" data-go="scan"><span class="ic"><i data-icon="scan-line"></i></span><span class="lr-text"><b data-i18n="scan.title">Skeniraj nalogo</b><small data-i18n="scan.meSub">Fotografiraj nalogo in poglej rešitev po korakih</small></span><i data-icon="chevron-right"></i></button>
       <button type="button" class="list-row" data-go="schedule"><span class="ic"><i data-icon="calendar-days"></i></span><span class="lr-text"><b data-i18n="sch.title">Urnik</b><small data-i18n="sch.meSub">Ure v tednu in datumi testov</small></span><i data-icon="chevron-right"></i></button>
-      <button type="button" class="list-row" data-go="games"><span class="ic"><i data-icon="gamepad-2"></i></span><span class="lr-text"><b data-i18n="nav.games">Igre</b><small data-i18n="games.meSub">Matematika skozi igro</small></span><i data-icon="chevron-right"></i></button>
+      <button type="button" class="list-row" data-go="games"><span class="ic"><i data-icon="gamepad-2"></i></span><span class="lr-text"><b data-i18n="nav.games">Igre</b><small data-i18n="games.meSub">Učenje z igrami</small></span><i data-icon="chevron-right"></i></button>
       <button type="button" class="list-row" data-go="corner"><span class="ic"><i data-icon="newspaper"></i></span><span class="lr-text"><b data-i18n="corner.title">Moj kotiček</b><small data-i18n="corner.meSub">Novice o tem, kar te zanima</small></span><i data-icon="chevron-right"></i></button>
       <button type="button" class="list-row" data-go="graph"><span class="ic"><i data-icon="calculator"></i></span><span class="lr-text"><b data-i18n="nav.graph">Kalkulator</b><small data-i18n="sc.meSub">Znanstveni, grafični in pretvornik enot</small></span><i data-icon="chevron-right"></i></button>
+      <button type="button" class="list-row" data-go="lab"><span class="ic"><i data-icon="flask-conical"></i></span><span class="lr-text"><b data-i18n="nav.lab">Laboratorij</b><small data-i18n="lab.meSub">Virtualni poskusi iz fizike in kemije</small></span><i data-icon="chevron-right"></i></button>
       <button type="button" class="list-row" data-go="progress"><span class="ic"><i data-icon="chart-column"></i></span><span class="lr-text"><b data-i18n="nav.progress">Napredek</b><small data-i18n="me.progressSub">Šibke točke, aktivnost in teme</small></span><i data-icon="chevron-right"></i></button>
       <button type="button" class="list-row" data-go="league"><span class="ic"><i data-icon="trophy"></i></span><span class="lr-text"><b data-i18n="nav.league">Lige</b><small data-i18n="me.leagueSub">Tedenska lestvica, razred in prijatelji</small></span><i data-icon="chevron-right"></i></button>
       <button type="button" class="list-row" data-go="settings"><span class="ic"><i data-icon="settings"></i></span><span class="lr-text"><b data-i18n="nav.settings">Nastavitve</b><small data-i18n="me.settingsSub">Profil, šola, jezik, videz in barve</small></span><i data-icon="chevron-right"></i></button>
@@ -400,6 +403,13 @@
     <button type="button" class="ghost back me-back"><i data-icon="arrow-left"></i><span data-i18n="nav.me">Jaz</span></button>
     <h1 class="with-icon"><i data-icon="scan-line"></i> <span data-i18n="scan.title">Skeniraj nalogo</span></h1>
     <div class="scan-body"></div>
+  </main>
+
+  <!-- LABORATORIJ (public/laboratorij.js): vsi virtualni poskusi, po predmetih; poskus čez celo širino -->
+  <main id="view-lab" class="view narrow lab-view" hidden>
+    <button type="button" class="ghost back me-back"><i data-icon="arrow-left"></i><span data-i18n="nav.me">Jaz</span></button>
+    <h1 class="with-icon lab-h1"><i data-icon="flask-conical"></i> <span data-i18n="nav.lab">Laboratorij</span></h1>
+    <div id="lab-content"><p class="muted" data-i18n="common.loading">Nalagam …</p></div>
   </main>
 
   <!-- URNIK (public/schedule.js) -->

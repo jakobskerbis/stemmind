@@ -7,7 +7,7 @@
   document.getElementById("cta").href = href;
   document.getElementById("cta2").href = href;
   if (ime) {
-    document.getElementById("ask").textContent = ime + " bi rad(a) uporabljal(a) Evklid. Ker je mlajši od starosti, pri kateri lahko sam privoli v obdelavo osebnih podatkov (v Sloveniji 15 let), potrebuje vaše soglasje. Na tej strani je vse, kar potrebujete za odločitev.";
+    document.getElementById("ask").textContent = ime + " bi rad(a) uporabljal(a) Evklid. Otroci, mlajši od 15 let, v Sloveniji ne morejo sami privoliti v obdelavo osebnih podatkov, zato je potrebno vaše soglasje. Na tej strani je vse, kar potrebujete za odločitev.";
   }
   var region = ((navigator.language || "").split("-")[1] || "").toUpperCase();
   fetch("/api/account/prices" + (region ? "?country=" + region : ""))

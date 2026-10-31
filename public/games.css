@@ -301,3 +301,11 @@ body.gm-on .gm-host { flex: 1; min-height: 0; }
   .gm-items { grid-template-columns: repeat(3, 1fr); gap: 8px; }
   .gm-item .avatar-svg { width: 64px; height: 64px; }
 }
+
+/* Strani mreže iger (60 na stran, j 2026-10-30: manj zatikanja na tablici) */
+.gm-pager { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px; margin: 24px 0 8px; }
+.gm-pager button { min-width: 44px; min-height: 44px; padding: 0 10px; border-radius: 12px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-weight: 800; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+.gm-pager button.active { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+.gm-pager button:disabled { opacity: 0.4; cursor: default; }
+.gm-pager .gm-gap { color: var(--muted); padding: 0 2px; }
+[dir="rtl"] .gm-pager svg.i { transform: scaleX(-1); }
