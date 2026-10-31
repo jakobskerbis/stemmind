@@ -49,14 +49,20 @@ export function codeCheck(text) {
   return mismatches.length ? `račun se ne izide: ${mismatches[0].left} ≠ ${mismatches[0].right}` : null;
 }
 
-async function askModel(model, user, createFn) {
+// Sporočilo za preverjevalca (vprašanje + odgovor); uporablja ga tudi sprotno preverjanje (server/live-check.js).
+export function checkerUser({ question, answer, kind = "answer" }) {
+  const label = kind === "cards" ? "FLASHCARDS (question → answer)" : "TUTOR ANSWER";
+  return `STUDENT QUESTION:\n${String(question || "(none)").slice(0, 4000)}\n\n${label}:\n${String(answer)}`;
+}
+
+export async function askModel(model, user, createFn) {
   const create = createFn || ((p) => getClient().messages.create(p));
   const r = await create({ model, max_tokens: 8000, output_config: { effort: EFFORT }, system: SYSTEM, messages: [{ role: "user", content: user }] });
   const text = (r.content || []).filter((b) => b.type === "text").map((b) => b.text).join("").trim();
   // Odrezan (max_tokens) ali zavrnjen odgovor preverjevalca ni OK, tudi če se začne z »OK«.
   const cut = r.stop_reason && r.stop_reason !== "end_turn" && r.stop_reason !== "stop_sequence";
   const verdict = cut ? { ok: false, reason: `preverjevalec ni končal (${r.stop_reason})` } : parseVerdict(text);
-  return { verdict, usage: r.usage, model: r.model || model };
+  return { verdict, text, usage: r.usage, model: r.model || model };
 }
 
 /**
@@ -74,8 +80,7 @@ export async function verifyAnswer({ question, answer, kind = "answer", usage = 
   // Pravilo treh pregledov: koda in vsaj dva različna modela.
   const models = [...new Set(VERIFY_MODELS())];
   if (models.length < 2) return { ok: false, reason: "za preverjanje sta potrebna dva različna modela (EVKLID_VERIFY_MODELS)", cost: 0 };
-  const label = kind === "cards" ? "FLASHCARDS (question → answer)" : "TUTOR ANSWER";
-  const user = `STUDENT QUESTION:\n${String(question || "(none)").slice(0, 4000)}\n\n${label}:\n${String(answer)}`;
+  const user = checkerUser({ question, answer, kind });
   let cost = 0;
   try {
     // allSettled: tudi ko en klic pade, se strošek uspelega zabeleži (dnevna omejitev).

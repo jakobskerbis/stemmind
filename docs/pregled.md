@@ -37,8 +37,11 @@ Each reviewer fixes what it is sure about with small edits (or returns a list), 
 reruns pass 1. Merge only when all three passes are clean or every open item is written in the PR
 body with a reason.
 
-Small PRs (≤ ~30 changed lines, no new screen): passes 2 and 3 may be one reviewer agent covering both
-checklists, but it is still a different agent from the author, and pass 1 still runs.
+Small PRs (≤ ~30 changed lines, no new screen) and look-only changes (CSS, layout, UI wording, screenshots)
+that touch nothing about money, AI usage or cost, accounts, personal data or lesson content: passes 2 and 3
+may be one reviewer agent covering both checklists, but it is still a different agent from the author, and
+pass 1 still runs. Anything touching those areas always gets two separate reviewers (j, 2026-10-30: the
+second and third reviews keep catching money and cost bugs there).
 
 ## 2. Lessons (`content/lessons/**`)
 

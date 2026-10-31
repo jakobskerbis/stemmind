@@ -203,8 +203,9 @@ function lastUserText(messages) {
   const last = messages[messages.length - 1];
   if (!last) return "";
   if (typeof last.content === "string") return last.content;
+  // Skrita opomba s preverjenim rezultatom (server/live-check.js) ni del učenčevega besedila.
   return last.content
-    .filter((b) => b.type === "text")
+    .filter((b) => b.type === "text" && !b.text.startsWith("<preverjen_racun>"))
     .map((b) => b.text)
     .join(" ");
 }

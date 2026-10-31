@@ -69,3 +69,7 @@ Generators are code (no API cost); they are written and reviewed by Opus too. Au
 7. **MUST: phone:** works at 360 px width with no horizontal scroll, touch targets ≥ 36 px, dragging does not scroll the page.
 8. **MUST: no errors** in the console when mounted, and a »Ponastavi« (reset) button returns to the start state.
 9. Dark mode readable (colours from CSS variables, `palette(el)`).
+
+## 4. Odgovori inštruktorja v klepetu (sprotno preverjanje, j 2026-10-30)
+
+Prvi rezultat, ki ga učenec vidi, mora biti pravilen. Kadar naš preverjeni reševalnik nalogo iz učenčevega sporočila reši (enačba, sistem, odvod, račun z vsaj dvema operacijama), model dobi pravilen rezultat v skriti opombi in z njim preveri svoj račun; pri vodenju (način A) ga ne izda prezgodaj. Vsak odgovor koda nato preveri: vsak številski račun in končne vrednosti neznank. Ob neujemanju se odgovoru pripne en kratek »Popravek:« (največ enkrat na odgovor). Kjer koda nima česa preveriti, tveganje pa je večje (tekmovanja, fakulteta, »Razloži podrobneje«), Haikujev odgovor pregleda še Sonnet z navodili preverjevalca iz `server/verify.js`. Koda: `server/live-check.js`, preizkusi: `test/live-check.test.js`, stroški: `docs/stroski-ai.md`.

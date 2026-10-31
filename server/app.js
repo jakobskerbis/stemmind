@@ -9,7 +9,7 @@ import { fileURLToPath } from "node:url";
 import { buildSystemPrompt } from "./prompt.js";
 import { createStreamFilter, parseMeta, parseCards, stripMeta } from "./meta.js";
 import { studentResults } from "./results.js";
-import { streamReply, readHandwriting, isMockMode, MODEL, MODEL_DEEP, MODEL_MID, REFUSAL_TEXT, errorText, apiErrorCode } from "./claude.js";
+import { streamReply, readHandwriting, isMockMode, MODEL, MODEL_DEEP, MODEL_MID, REFUSAL_TEXT, errorText, apiErrorCode, modeParams } from "./claude.js";
 import { Usage, LIMITS, NOTES, windowHistory, recentHistory } from "./usage.js";
 import { pricingAdvice } from "./advice.js";
 import { codeHint } from "./hints.js";
@@ -38,6 +38,7 @@ import { compressedStatic, compressedJson } from "./compress.js";
 import { mountFeedback, feedbackAiOn, feedbackPromptOn, isLocalRequest } from "./feedback.js";
 import { mountReports, chatOff, messageCode } from "./reports.js";
 import { verifyAnswer, codeCheck } from "./verify.js";
+import { liveCheckOn, presolve, withNote, codeFindings, needsReview, reviewAnswer, correction, insertFix } from "./live-check.js";
 import { mountGraphs } from "./graphs.js";
 import { mountGames } from "./games.js";
 import { mountLab } from "./laboratorij.js";
@@ -274,6 +275,10 @@ export function createApp(store, opts = {}) {
   // (preizkusni način) so odgovori vnaprej pripravljeni: preveri jih samo koda.
   const verifyLive = () => !!opts.verifyFn || !isMockMode();
   const runVerify = opts.verifyFn || ((a) => verifyAnswer({ ...a, usage }));
+  // Sprotno preverjanje odgovorov (server/live-check.js). Brez API ključa kliče model samo vstavljena
+  // funkcija (preizkusi): popravek gre prek streamFn, pregled prek opts.reviewCreateFn.
+  const liveFixOn = () => !!opts.streamFn || !isMockMode();
+  const liveReviewOn = () => !!opts.reviewCreateFn || !isMockMode();
   const settleLater = (promise, done) =>
     Promise.resolve(promise)
       .then((v) => done(!!v?.ok, v?.reason || ""), (e) => done(false, e?.message || "napaka"))
@@ -559,6 +564,9 @@ export function createApp(store, opts = {}) {
       }
       const cached = win ? { text: win.text, hint: true } : hinted ? { text: hinted, hint: true } : key && store.db.prepare("SELECT text FROM answer_cache WHERE key = ? AND verified = 1 AND created_at >= datetime('now','-30 days')").get(key);
       if (note) send("delta", { text: note });
+      // Naloga, ki jo reši naš preverjeni reševalnik: model dobi pravilen rezultat v skriti opombi.
+      const pre = liveCheckOn() && !cached && !image && !win && !hinted ? presolve(text, { first: isFirst }) : null;
+      const history = deep && !routed.boosted ? recentHistory(store.apiHistory(conv.id)) : windowHistory(store.apiHistory(conv.id));
       const run = cached
         ? async ({ onText }) => {
             // Ime učenca je v predpomnilniku shranjeno kot {{IME}}.
@@ -573,7 +581,8 @@ export function createApp(store, opts = {}) {
         system,
         // Opus dobi samo zadnje izmenjave; Haiku daljše okno (predpomnjeno). Nadgrajen običajen
         // odgovor (proračun) ohrani celo okno, saj nadaljuje pogovor.
-        messages: deep && !routed.boosted ? recentHistory(store.apiHistory(conv.id)) : windowHistory(store.apiHistory(conv.id)),
+        // Opomba gre samo v ta klic (zadnja poteza), ne v shranjeno zgodovino.
+        messages: pre ? withNote(history, pre.note) : history,
         deep,
         mode,
         tools: SETTINGS_TOOLS,
@@ -589,17 +598,55 @@ export function createApp(store, opts = {}) {
       const { rest } = filter.end();
       if (rest) send("delta", { text: rest });
 
+      // Preverjanje odgovora (server/live-check.js): koda vedno, model samo, kjer je potrebno.
+      // Ob napaki en kratek »Popravek:«, ki se pripne odgovoru (prikaz in zgodovina).
+      const answerModel = result.model || (mode === "mid" ? MODEL_MID : deep ? MODEL_DEEP : MODEL);
+      let fix = "";
+      let extraCost = 0;
+      if (liveCheckOn() && !cached && result.text && result.stopReason !== "refusal" && !result.toolCalls && !settingsTools.state.used) {
+        const plain = stripMeta(result.text);
+        const found = codeFindings(plain, pre);
+        let issue = found.issue;
+        const risky = !!tekTopic || student.settings.track === "COMPETITION" || student.settings.educational_track === "UNIVERZA" || again;
+        if (
+          !issue &&
+          !image && // pregledovalec slike naloge ne vidi
+          liveReviewOn() &&
+          needsReview({ checked: found.checked, model: answerModel, lite, premium, risky, answerLength: plain.length, level: () => usage.budgetState().level, spentToday: () => usage.kindToday("preverjanje") })
+        ) {
+          try {
+            const rv = await reviewAnswer({ question: text, answer: plain, createFn: opts.reviewCreateFn, usage, studentId: student.id });
+            extraCost += rv.cost;
+            if (rv.reason) issue = `a reviewer reported: ${rv.reason}`;
+          } catch (e) {
+            if (!controller.signal.aborted) console.warn(`[evklid] sprotni pregled ni uspel: ${e?.message || e}`);
+          }
+        }
+        if (issue && liveFixOn()) {
+          try {
+            const c = await correction({ streamFn, mode, answer: plain, issue, language: student.settings.language || "sl", signal: controller.signal });
+            extraCost += usage.log(student.id, c.model || modeParams(c.mode).model, c.usage || {}, "popravek");
+            if (c.block) {
+              fix = c.block;
+              send("delta", { text: fix });
+            }
+          } catch (e) {
+            if (!controller.signal.aborted) console.warn(`[evklid] popravek ni uspel: ${e?.message || e}`);
+          }
+        }
+      }
+
       let meta = parseMeta(result.text);
       // Fotografija, ki ni učno gradivo (obraz, oseba, osebni dokument …): inštruktor jo zavrne z flag=photo,
       // slika pa se takoj odstrani iz shranjenega sporočila (j, 2026-10-30).
       if (image && meta?.flag === "photo") store.setMessageContent(userMsgId, withoutImages(userContent, PHOTO_REJECTED_TEXT), 2);
-      let display = (note || "") + stripMeta(result.text);
+      let display = (note || "") + stripMeta(result.text) + fix;
       // V zgodovino shranimo samo besedilo (brez blokov razmišljanja): manj žetonov
       // pri naslednjih klicih in nobenih težav ob krajšanju zgodovine.
-      let content = [{ type: "text", text: result.text || "…" }];
-      const cost = cached ? 0 : usage.log(student.id, result.model || (mode === "mid" ? MODEL_MID : deep ? MODEL_DEEP : MODEL), result.usage, routed.boosted ? "boost" : "chat");
+      let content = [{ type: "text", text: (fix ? insertFix(result.text, fix) : result.text) || "…" }];
+      const cost = (cached ? 0 : usage.log(student.id, answerModel, result.usage, routed.boosted ? "boost" : "chat")) + extraCost;
       if (settingsTools.state.proposal) send("proposal", settingsTools.state.proposal);
-      if (key && !cached && !result.toolCalls && !settingsTools.state.used && result.stopReason === "end_turn" && result.text) {
+      if (key && !cached && !fix && !result.toolCalls && !settingsTools.state.used && result.stopReason === "end_turn" && result.text) {
         // Drugim učencem gre odgovor šele po trojnem preverjanju (koda + dva AI pregleda, server/verify.js).
         const generic = student.name.length > 1 ? result.text.replaceAll(student.name, "{{IME}}") : result.text;
         const plain = stripMeta(result.text);
@@ -627,7 +674,7 @@ export function createApp(store, opts = {}) {
       const assistantId = store.addMessage(conv.id, "assistant", content, display);
       // Kartice za ponavljanje iz odgovora (ne pri zavrnitvi in ne pri opozorilih).
       // Kartice so vidne šele po trojnem preverjanju; z napačnim računom se sploh ne shranijo.
-      const parsedCards = result.stopReason !== "refusal" && (!meta || meta.flag === "none") ? parseCards(result.text) : [];
+      const parsedCards = result.stopReason !== "refusal" && !fix && (!meta || meta.flag === "none") ? parseCards(result.text) : [];
       const cardsText = parsedCards.map((c) => `${c.front} → ${c.back}`).join("\n");
       const liveCards = verifyLive();
       const cards =
