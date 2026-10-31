@@ -104,7 +104,7 @@ j (2026-10-31): okna, preurejanje vrstic in ločnice morajo delovati tudi pri vs
 - **Nov zavihek zgoraj** dobi svoj `<main id="view-…" class="view">`, ime v `WINDOW_VIEWS` (`server/chat-settings.js`, da ga inštruktor odpre z ukazom) in mora delovati v ozkem oknu (`@container okno` v `okna.css`, brez računanja na širino zaslona). Izjeme so le v `test/okna-vsi.test.js` z razlogom.
 - **Nova vrstica zavihkov ali načinov** uporabi `makeRowSortable`, **nov dvodelni pogled** `makeSplitter` (glej zgoraj).
 - **Nov videz ali tema** (barve, slog) uporablja le spremenljivke, zato okna, mehurček in ločnice samodejno dobijo njene barve; preveri jih na posnetku v svetlem in temnem načinu.
-- Samodejno: `test/okna-vsi.test.js` in korak `okna-vsi` v `scripts/preveri-aplikacijo.cjs` (vsak zavihek se odpre kot okno brez napak in vodoravnega drsenja; glavni pogled z dvema visokima stolpcema brez ločnice je napaka).
+- Samodejno: `test/okna-vsi.test.js` in korak `okna-vsi` v `scripts/preveri-aplikacijo.cjs` (vsak zavihek se odpre kot okno brez napak in vodoravnega drsenja; glavni pogled z dvema visokima deloma drug ob drugem, v mreži ali vrstici flex, brez ločnice je napaka; dve visoki kartici, ki nista dvodelni pogled, dobita `data-brez-locnice`).
 
 ## Besedilo vedno vidno
 
