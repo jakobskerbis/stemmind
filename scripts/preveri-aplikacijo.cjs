@@ -515,16 +515,16 @@ async function textbook(p, label) {
       if (!(await p.locator("#tb-alt-body .explanation").isVisible())) throw new Error("»Razloži drugače« ne pokaže razlage");
       alt = true;
     }
-    if (!steps || !(await p.locator("#tb-step-next").isVisible())) break;
+    if (!steps || !(await p.locator("#tb-step-next").isEnabled())) break;
     if (i === 1) {
       await click(p, "#tb-step-prev", { wait: 50 });
-      if ((await p.locator(".tb-step-count").innerText()).trim().split(" ")[0] !== "1") throw new Error("»Nazaj« v lekciji po korakih ne gre na 1. korak");
+      if (parseInt((await p.locator(".tb-step-count").innerText()).trim(), 10) !== 1) throw new Error("»Nazaj« v lekciji po korakih ne gre na 1. korak");
       await click(p, "#tb-step-next", { wait: 50 });
     }
     await click(p, "#tb-step-next", { wait: 50 });
     if (i === 0) await screen(p, `lekcija-korak-${label}`);
   }
-  if (steps && (await p.locator("#tb-step-next").isVisible())) throw new Error("lekcija po korakih ne pride do konca");
+  if (steps && (await p.locator("#tb-step-next").isEnabled())) throw new Error("lekcija po korakih ne pride do konca");
   if ((await p.locator(".tb-demo").count()) && !sim) throw new Error("simulacija lekcije ni bila vidna v nobenem koraku");
   // Nazaj na seznam in iskanje.
   await p.locator("#tb-back").scrollIntoViewIfNeeded();

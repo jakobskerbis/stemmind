@@ -478,17 +478,18 @@ async function renderLesson(topicId) {
     .join("");
   const stepper = stepMode
     ? `<div class="tb-stepper">
-        <button type="button" class="secondary" id="tb-step-prev">${ic("arrow-left")}${esc(t("tb.steps.prev"))}</button>
+        <button type="button" class="tb-step-btn" id="tb-step-prev" aria-label="${esc(t("tb.steps.prev"))}" title="${esc(t("tb.steps.prev"))}">${ic("arrow-left")}</button>
         <span class="tb-step-count" aria-live="polite"></span>
-        <button type="button" class="primary" id="tb-step-next">${esc(t("tb.steps.next"))}${ic("arrow-right")}</button>
+        <button type="button" class="tb-step-btn next" id="tb-step-next" aria-label="${esc(t("tb.steps.next"))}" title="${esc(t("tb.steps.next"))}">${ic("arrow-right")}</button>
       </div>`
     : "";
   const modeBtn = lesson
     ? `<button type="button" class="ghost tb-mode-btn" id="tb-mode">${ic(stepMode ? "file-text" : "layers")}${esc(t(stepMode ? "tb.steps.all" : "tb.steps.byStep"))}</button>`
     : "";
 
-  // »Kaj zdaj?«: po korakih je del zadnjega koraka, nad vrstico Nazaj / Naprej (ta je lepljiva in s senco
-  // prekrije prostor pod seboj, zato pod njo ne sme biti ničesar, sicer odreže naslov in rob kartice).
+  // »Kaj zdaj?«: po korakih je del zadnjega koraka, nad krogi Nazaj · 1/12 · Naprej (ti plavajo na dnu nad
+  // vsebino; vrstica zavzame svojo višino na koncu, zato zadnje vrstice odpeljemo nadnjo). Krogi so za mrežo,
+  // ne v levem stolpcu: na računalniku s poskusi desno je ← levo spodaj, številka na sredini in → desno spodaj.
   const nextHtml = `<section class="card tb-next"${stepMode ? " hidden" : ""}>
     <h2>Kaj zdaj?</h2>
     <div class="actions">
@@ -509,8 +510,8 @@ async function renderLesson(topicId) {
     ${L.goals ? `<p class="tb-goals"><b>Cilji:</b> ${esc(L.goals)}</p>` : ""}
     ${L.pretest_due ? `<section class="card tb-pretest"><h2>${ic("target")}${esc(t("pretest.title"))}</h2><p>${esc(t("pretest.lessonIntro"))}</p><button type="button" class="primary" id="tb-pretest">${ic("play")}${esc(t("pretest.start"))}</button></section>` : ""}
     ${lesson && lesson.status !== "pregledano" ? `<p class="tb-draft">Osnutek: lekcijo mora še pregledati učitelj. Če opaziš napako, povej inštruktorju.</p>` : ""}
-    ${stepMode ? `<div class="tb-progress" role="progressbar" aria-valuemin="1" aria-valuemax="${steps.length}"><span></span></div>${stepsHtml}${nextHtml}${stepper}` : `${sectionHtml}${fallback}${checksHtml}${nextHtml}`}
-    </div><aside class="tb-side">${demoHtml}</aside></div>`;
+    ${stepMode ? `<div class="tb-progress" role="progressbar" aria-valuemin="1" aria-valuemax="${steps.length}"><span></span></div>${stepsHtml}${nextHtml}` : `${sectionHtml}${fallback}${checksHtml}${nextHtml}`}
+    </div><aside class="tb-side">${demoHtml}</aside></div>${stepper}`;
   placeDemos(box);
   window.scrollTo(0, 0);
   // Gradiva (povzetek na eni strani, branje na glas, delovni list) naložimo zraven.
@@ -610,12 +611,12 @@ function wireSteps(box, lessonId, n) {
   const go = (k, scroll) => {
     cur = Math.max(0, Math.min(n - 1, k));
     all.forEach((el, i) => (el.hidden = i !== cur));
-    count.textContent = `${cur + 1} / ${n}`;
+    count.innerHTML = `<b>${cur + 1}</b><small>/${n}</small>`;
     count.setAttribute("aria-label", t("tb.steps.count", { n: cur + 1, m: n }));
     bar.setAttribute("aria-valuenow", String(cur + 1));
     bar.firstElementChild.style.width = `${((cur + 1) / n) * 100}%`;
     prev.disabled = cur === 0;
-    next.hidden = cur === n - 1;
+    next.disabled = cur === n - 1;
     end.hidden = cur !== n - 1;
     try {
       sessionStorage.setItem(key, String(cur));
@@ -629,6 +630,8 @@ function wireSteps(box, lessonId, n) {
     saved = Number(sessionStorage.getItem(key)) || 0;
   } catch {}
   go(saved < n ? saved : 0, false);
+  // Mehurček inštruktorja se umakne nad krog Naprej (okna.js).
+  window.dispatchEvent(new CustomEvent("evklid:stepper"));
 }
 
 // ---------- Referenčni material (fakultetni predmeti) ----------

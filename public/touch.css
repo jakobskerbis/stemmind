@@ -107,8 +107,8 @@
   body > #view-chat:not(.in-okno) .chat-back { display: inline-grid; place-items: center; }
   body > #view-chat:not(.in-okno) .composer { padding-bottom: max(10px, calc(4px + env(safe-area-inset-bottom))); }
   body.tb-peek > #view-chat:not(.in-okno) .composer { padding-bottom: 10px; margin-bottom: var(--tabbar-h, 0px); }
-  /* Koraki lekcije (Nazaj · 1/12 · Naprej) so pripeti na dno: odmik za varno območje, nad pokazano vrstico. */
-  body > #view-textbook:not(.in-okno) .tb-stepper { padding-bottom: max(10px, env(safe-area-inset-bottom)); transition: bottom 0.22s ease; }
-  body.tb-peek > #view-textbook:not(.in-okno) .tb-stepper { bottom: var(--tabbar-h, 0px); padding-bottom: 10px; }
+  /* Krogi lekcije (Nazaj · 1/12 · Naprej) plavajo na dnu: odmik za varno območje, nad pokazano vrstico. */
+  body > #view-textbook:not(.in-okno) .tb-stepper { padding-bottom: max(12px, calc(4px + env(safe-area-inset-bottom))); transition: bottom 0.22s ease; }
+  body.tb-peek > #view-textbook:not(.in-okno) .tb-stepper { bottom: var(--tabbar-h, 0px); padding-bottom: 12px; }
 }
 @media (prefers-reduced-motion: reduce) { .tabbar, .tb-stepper { transition: none !important; } }
