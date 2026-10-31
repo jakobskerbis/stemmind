@@ -104,7 +104,7 @@ Neobvezni slogi, vsak s pridihom enega obdobja. Pravila (j: »ne vsiljivo«, »s
 ## Gradniki (`public/ui.css`)
 
 - **Gumbi**: `button.primary` (modri, s spodnjo senco), `button.secondary` (bel z robom), `button.ghost`, `button.danger`, `.text-btn`. Povezava, ki je videti kot gumb: `a.btn-primary` / `a.btn-secondary`.
-- **Spustni meni**: navaden `<select>`. `public/dropdown.js` ga sam zamenja z zaobljenim seznamom v slogu aplikacije (tudi menije, ki se pojavijo pozneje, npr. v simulacijah). Vrednost, `change` in obrazci delujejo kot prej. `<select data-native>` ostane sistemski.
+- **Spustni meni**: navaden `<select>`. `public/dropdown.js` ga sam zamenja z zaobljenim seznamom v slogu aplikacije (tudi menije, ki se pojavijo pozneje, npr. v simulacijah). Vrednost, `change` in obrazci delujejo kot prej. `<select data-native>` ostane sistemski. Dolg meni (`data-search` ali vsaj 9 možnosti; `data-no-search` to izklopi) se odpre čez gumb: na mestu gumba je iskalno okence z izbrano možnostjo in kljukico, seznam pod njim pa se začne za izbrano možnostjo (j, 31. 10. 2026). Kratek meni ostane seznam pod gumbom.
 - **Preklopnik** (2–4 možnosti, ena izbrana, npr. predmet ali raven): `<div class="seg"><button class="active">…</button>…</div>`.
 - **Filtrirni žetoni** (vrstica, ki se na telefonu pomika vstran): `<div class="chip-row"><button class="active">…</button>…</div>`.
 - **Izbrana možnost** (kartica ali kljukica): moder rob in `--accent-soft` ozadje (`.lp-opt.on`, `label.check`).

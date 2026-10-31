@@ -2,6 +2,9 @@
 // Pravi <select> ostane skrit v strani: drži vrednost, deluje v obrazcih in sproži »change«,
 // zato ostala koda ne ve, da je meni zamenjan. Vsak <select>, ki se pojavi v strani, se zamenja sam.
 // Izjema: <select data-native> ostane sistemski.
+// Dolg seznam (z iskalnikom) se odpre čez gumb: izbrana možnost je v iskalnem okencu na vrhu,
+// seznam pod njim pa se začne za njo (j, 31. 10.).
+import { t } from "./i18n.js";
 
 const CHEVRON = '<svg class="dd-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
 const CHECK = '<svg class="dd-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
@@ -9,6 +12,8 @@ const proto = HTMLSelectElement.prototype;
 const valueProp = Object.getOwnPropertyDescriptor(proto, "value");
 const indexProp = Object.getOwnPropertyDescriptor(proto, "selectedIndex");
 const done = new WeakSet();
+// Od toliko možnosti naprej se seznam pomika, zato dobi iskalnik in izbrano možnost na vrhu.
+export const SEARCH_FROM = 9;
 let openMenu = null; // { sel, btn, list, items, active, close }
 let uid = 0;
 
@@ -82,40 +87,65 @@ function open(sel, btn) {
     const i = o.index;
     return `<div class="dd-opt" role="option" data-i="${i}" aria-selected="${i === current}"${o.disabled ? ' aria-disabled="true"' : ""}><span dir="auto">${esc(o.textContent)}</span>${CHECK}</div>`;
   }
-  // Dolg seznam (npr. jeziki) ima na vrhu iskalnik: <select data-search data-search-ph="Išči …">.
-  const searchable = sel.hasAttribute("data-search");
-  const empty = `<div class="dd-group dd-empty"${html ? " hidden" : ""}>${esc(sel.dataset.emptyText || "Ni možnosti")}</div>`;
-  list.innerHTML = (searchable ? `<div class="dd-search"><input type="search" autocomplete="off" placeholder="${esc(sel.dataset.searchPh || "…")}" aria-label="${esc(sel.dataset.searchPh || "…")}"></div>` : "") + html + empty;
+  // Dolg seznam (npr. jeziki ali vsak z vsaj SEARCH_FROM možnostmi) ima na vrhu iskalnik,
+  // v katerem piše izbrana možnost: <select data-search data-search-ph="Išči …">.
+  const searchable = isSearchable(sel);
+  const ph = sel.dataset.searchPh || tr("common.search", "Išči …");
+  const chosen = sel.options[current];
+  const shown = chosen && chosen.value !== "" ? chosen.textContent : "";
+  const empty = `<div class="dd-group dd-empty"${html ? " hidden" : ""}>${esc(sel.dataset.emptyText || tr("common.noOptions", "Ni možnosti"))}</div>`;
+  const search = `<div class="dd-search${shown ? " has-value" : ""}"><input type="search" autocomplete="off" placeholder="${esc(shown || ph)}" aria-label="${esc(shown ? `${shown}. ${ph}` : ph)}">${shown ? CHECK : ""}</div>`;
+  list.innerHTML = (searchable ? search : "") + html + empty;
   list.querySelectorAll(".dd-opt").forEach((el) => items.push(el));
+  if (searchable) list.classList.add("dd-searchable");
   document.body.append(list);
   btn.setAttribute("aria-expanded", "true");
   btn.setAttribute("aria-controls", list.id);
   btn.closest(".dd").classList.add("open");
-  place(btn, list);
-
   const state = { sel, btn, list, items, active: -1, search: list.querySelector(".dd-search input") };
+  const chosenEl = items.find((el) => Number(el.dataset.i) === current);
+  // Izbrana možnost je že v okencu, zato je v seznamu ni, dokler nič ne iščeš.
+  if (state.search && shown && chosenEl) {
+    chosenEl.hidden = true;
+    hideEmptyGroups(list);
+  }
+  place(btn, list, !!state.search);
   openMenu = state;
-  setActive(state, Math.max(0, items.findIndex((el) => Number(el.dataset.i) === current)), true);
+  if (state.search && chosenEl) {
+    // Seznam se začne za izbrano možnostjo (pri jezikih je ta prva, zato se začne na vrhu).
+    const k = items.indexOf(chosenEl);
+    const next = items.findIndex((el, j) => j > k && !el.hidden);
+    const at = next >= 0 ? next : items.findIndex((el) => !el.hidden);
+    // Enter brez iskanja pusti izbiro (tudi prazno »— izberi —«), puščica dol gre na naslednjo možnost.
+    setActive(state, k);
+    if (at >= 0) {
+      const head = list.querySelector(".dd-search");
+      const el = items[at];
+      const grp = el.previousElementSibling?.classList.contains("dd-group") && !el.previousElementSibling.hidden ? el.previousElementSibling : el;
+      const want = Math.max(0, grp.offsetTop - head.offsetHeight);
+      // Blizu konca seznama se ne da pomakniti dovolj: seznam raje skrajšamo, da ni odrezane vrstice.
+      const short = want - (list.scrollHeight - list.clientHeight);
+      if (short > 0) list.style.maxHeight = `${list.offsetHeight - short}px`;
+      list.scrollTop = want;
+    }
+  } else setActive(state, Math.max(0, items.findIndex((el) => Number(el.dataset.i) === current)), true);
   if (state.search) {
     const fold = (x) => x.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
     state.search.addEventListener("input", () => {
       const q = fold(state.search.value.trim());
       let first = -1;
       items.forEach((el, k) => {
-        el.hidden = !!q && !fold(el.textContent).includes(q);
+        el.hidden = q ? !fold(el.textContent).includes(q) : el === chosenEl && !!shown;
         if (!el.hidden && first < 0) first = k;
       });
-      // Skupine brez zadetkov skrijemo.
-      list.querySelectorAll(".dd-group:not(.dd-empty)").forEach((g) => {
-        let n = g.nextElementSibling, any = false;
-        while (n && !n.classList.contains("dd-group")) { if (!n.hidden) any = true; n = n.nextElementSibling; }
-        g.hidden = !any;
-      });
-      list.querySelector(".dd-empty").hidden = first >= 0;
-      if (first >= 0) setActive(state, first);
+      hideEmptyGroups(list);
+      list.querySelector(".dd-empty").hidden = first >= 0 || !q;
+      if (!q && shown && chosenEl) setActive(state, items.indexOf(chosenEl));
+      else if (first >= 0) setActive(state, first);
     });
     state.search.addEventListener("keydown", (e) => onKey(state, e, true));
-    state.search.addEventListener("focus", () => (state.searching = true));
+    // Le na telefonu (tipkovnica premakne zaslon) seznam med iskanjem ostane odprt ob pomikanju.
+    state.search.addEventListener("focus", () => (state.searching = matchMedia("(pointer: coarse)").matches));
     // Na zaslonu na dotik tipkovnica ne skoči gor sama; iskalnik odpre dotik.
     if (!matchMedia("(pointer: coarse)").matches) state.search.focus({ preventScroll: true });
   }
@@ -132,12 +162,59 @@ function open(sel, btn) {
   list.addEventListener("keydown", (e) => e.target === state.search || onKey(state, e));
 }
 
+const tr = (key, fallback) => {
+  const s = t(key);
+  return s && s !== key ? s : fallback;
+};
+
+export function isSearchable(sel) {
+  if (sel.hasAttribute("data-search")) return true;
+  if (sel.hasAttribute("data-no-search")) return false;
+  let n = 0;
+  for (const o of sel.options) if (!o.hidden) n++;
+  return n >= SEARCH_FROM;
+}
+
+// Skupine brez vidnih možnosti skrijemo.
+function hideEmptyGroups(list) {
+  list.querySelectorAll(".dd-group:not(.dd-empty)").forEach((g) => {
+    let n = g.nextElementSibling, any = false;
+    while (n && !n.classList.contains("dd-group")) { if (!n.hidden) any = true; n = n.nextElementSibling; }
+    g.hidden = !any;
+  });
+}
+
 // Seznam pod gumbom (ali nad njim, če spodaj ni prostora), nikoli čez rob zaslona.
-function place(btn, list) {
+// Seznam z iskalnikom pa leži čez gumb: iskalno okence je točno tam, kjer je bil gumb.
+function place(btn, list, overGap = false) {
   const r = btn.getBoundingClientRect();
   const vw = document.documentElement.clientWidth;
   const vh = window.visualViewport?.height || window.innerHeight;
   const gap = 6, margin = 12;
+  if (overGap) {
+    const pad = 7; // rob seznama (1 px) + odmik okenca (6 px)
+    const edge = 4;
+    const width = Math.min(Math.max(r.width + 2 * pad, 220), vw - 2 * edge);
+    const left = Math.min(Math.max(edge, r.left - pad), vw - edge - width);
+    list.style.width = `${width}px`;
+    list.style.left = `${left}px`;
+    // Okence točno nad gumbom, tudi ko seznam ob robu zaslona ne more biti simetričen.
+    list.style.setProperty("--dd-pad-s", `${Math.max(4, r.left - left - 1)}px`);
+    list.style.setProperty("--dd-pad-e", `${Math.max(4, left + width - r.right - 1)}px`);
+    list.style.setProperty("--dd-field-h", `${Math.max(40, r.height)}px`);
+    const natural = Math.min(list.scrollHeight + 2, 420);
+    const need = Math.min(natural, 260, vh - 2 * margin);
+    // Okence leži na gumbu. Le če pod njim ni prostora za nekaj vrstic, se seznam dvigne
+    // (okence ostane na vrhu seznama).
+    let top = r.top - pad;
+    if (vh - margin - top < need) top = vh - margin - need;
+    top = Math.max(margin, top);
+    list.style.top = `${top}px`;
+    list.style.maxHeight = `${Math.max(160, vh - margin - top)}px`;
+    list.classList.remove("up");
+    list.classList.add("over");
+    return;
+  }
   const width = Math.min(Math.max(r.width, 220), vw - 2 * margin);
   const left = Math.min(Math.max(margin, r.left), vw - margin - width);
   list.style.width = `${width}px`;
@@ -163,7 +240,9 @@ function setActive(state, i, center = false) {
   state.active = i;
   const el = state.items[i];
   el.classList.add("active");
-  state.list.setAttribute("aria-activedescendant", (el.id ||= `${state.list.id}-${i}`));
+  // Skrita izbrana možnost (je v iskalnem okencu) ni »trenutna« za bralnik zaslona.
+  if (el.hidden) state.list.removeAttribute("aria-activedescendant");
+  else state.list.setAttribute("aria-activedescendant", (el.id ||= `${state.list.id}-${i}`));
   if (center) state.list.scrollTop = el.offsetTop - state.list.clientHeight / 2 + el.offsetHeight / 2;
   else el.scrollIntoView({ block: "nearest" });
 }
