@@ -76,7 +76,8 @@
 @media (max-width: 760px) {
   .chat-head { padding-inline: 16px; gap: 6px; }
   .chat-head > .icon-only { width: 40px; min-width: 40px; height: 40px; min-height: 40px; display: inline-grid; place-items: center; }
-  .chat-head > #toggle-sidebar { margin-inline-start: -8px; border-color: transparent; background: none; box-shadow: none; }
+  .chat-head > :is(#toggle-sidebar, .chat-back) { border-color: transparent; background: none; box-shadow: none; }
+  body > #view-chat:not(.in-okno) .chat-head > .chat-back, .in-okno .chat-head > #toggle-sidebar { margin-inline-start: -8px; }
   .chat-head > .chat-calc { margin-inline-end: -8px; }
   .chat-head h1 { white-space: nowrap; text-overflow: ellipsis; }
   .messages { padding-inline: 16px; }
@@ -84,3 +85,30 @@
   .composer-row { gap: 2px; }
   .composer-row #input { padding-inline: 6px; }
 }
+
+/* ---------- Spodnja vrstica se umakne pri branju in gledanju (j, 2026-10-31) ----------
+   Telefon in tablica na dotik, vsi slogi: v klepetu z inštruktorjem (prazen ali s sporočili), v temi (lekcija, naloge,
+   vaja, simulacije), pri karticah za ponavljanje, v odprti lekciji Učbenika in v kalkulatorju (cel pogled). Igra med
+   igranjem, tipkovnica kalkulatorja, plošča za vnos, Oglasna deska in video gradiv jo že prekrijejo ali skrijejo.
+   Vrstica je takrat pritrjena pod spodnjim robom (ne vzame prostora); poteg navzdol ali kolešček gor jo pokaže
+   (body.tb-peek, app.js), poteg navzgor skrije. Na teh zaslonih je v glavi gumb Nazaj. app.js iz position: fixed
+   prepozna, da se vrstica umika, zato pogoje pišemo samo tu. */
+.chat-back { display: none; }
+@media (max-width: 760px), (max-width: 1240px) and (hover: none) and (pointer: coarse) {
+  body:is(:has(> #view-chat:not([hidden]):not(.in-okno)), :has(> #view-topic:not([hidden]):not(.in-okno)),
+    :has(> #view-cards:not([hidden]):not(.in-okno)), :has(> #view-graph:not([hidden]):not(.in-okno)),
+    :has(> #view-textbook:not([hidden]):not(.in-okno) .tb-lesson-grid)) > .tabbar {
+    position: fixed; inset-inline: 0; bottom: 0; z-index: 30;
+    transform: translateY(var(--tb-y, 100%)); visibility: var(--tb-vis, hidden);
+    transition: transform 0.22s ease, visibility 0s linear var(--tb-vd, 0.22s);
+  }
+  body.tb-peek, body:has(> #tour:not([hidden])) { --tb-y: 0%; --tb-vis: visible; --tb-vd: 0s; }
+  /* Klepet: gumb Nazaj v glavi; vrstica za pisanje na dnu z odmikom za varno območje, pokazana vrstica jo dvigne. */
+  body > #view-chat:not(.in-okno) .chat-back { display: inline-grid; place-items: center; }
+  body > #view-chat:not(.in-okno) .composer { padding-bottom: max(10px, calc(4px + env(safe-area-inset-bottom))); }
+  body.tb-peek > #view-chat:not(.in-okno) .composer { padding-bottom: 10px; margin-bottom: var(--tabbar-h, 0px); }
+  /* Koraki lekcije (Nazaj · 1/12 · Naprej) so pripeti na dno: odmik za varno območje, nad pokazano vrstico. */
+  body > #view-textbook:not(.in-okno) .tb-stepper { padding-bottom: max(10px, env(safe-area-inset-bottom)); transition: bottom 0.22s ease; }
+  body.tb-peek > #view-textbook:not(.in-okno) .tb-stepper { bottom: var(--tabbar-h, 0px); padding-bottom: 10px; }
+}
+@media (prefers-reduced-motion: reduce) { .tabbar, .tb-stepper { transition: none !important; } }

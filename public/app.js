@@ -10,7 +10,7 @@ import { dialectsFor } from "./dialects.js";
 hydrateIcons();
 import { initAccount, accountsOn, openAddChild, logout, openProfileLock, renderAccount } from "./account.js";
 import { showFull, closeFull, fullOpen } from "./razpri.js";
-import { initOkna, isFloating, openWindow, closeWindow, focusWindow, refreshBubble, chatReply, restoreWindows, windowsOn, tabHint, floatingViews } from "./okna.js";
+import { initOkna, isFloating, openWindow, closeWindow, focusWindow, refreshBubble, chatReply, restoreWindows, windowsOn, tabHint, floatingViews, syncTabbarH } from "./okna.js";
 import { initProfileMenu, refreshProfileButton, closeProfileMenu } from "./profile-menu.js";
 import { initQuickStart, closeQuickStart } from "./quick-start.js";
 import { openPrintable, stopReading } from "./gradiva.js";
@@ -141,6 +141,7 @@ function showView(name) {
   const away = (v) => name !== v && !isFloating(v); // pogled ni ne glavni ne v oknu
   if (away("textbook")) stopReading(); // branje povzetka na glas ne teče naprej brez gumba za ustavitev
   syncHistory(name);
+  if (name !== currentView) prevView = currentView;
   currentView = name;
   syncCompetitionTab();
   if (name === "path" || name === "competition" || name === "exams") setBack(name);
@@ -160,6 +161,7 @@ function showView(name) {
   if (name !== "topic") closePad();
   if (name !== "topic" && name !== "cards") setActiveMode(null);
   refreshBubble();
+  peekBar(false);
   window.scrollTo(0, 0);
 }
 // Priprava pogleda ob prikazu (glavni del ali premično okno); ne spremeni trenutnega pogleda in zgodovine.
@@ -191,6 +193,46 @@ function initView(name) {
   }
   if (name === "graph") showGraph();
 }
+// ---------- spodnja vrstica se pri branju umakne (telefon, tablica na dotik; touch.css) ----------
+// Kje se umakne, določa touch.css (vrstica je takrat position: fixed in skrita pod robom). Poteg navzdol (drsenje
+// nazaj gor) ali kolešček gor jo pokaže (body.tb-peek), poteg navzgor jo spet skrije. Med pisanjem (odprta
+// tipkovnica) se ne pokaže. Na vseh teh zaslonih je v glavi gumb Nazaj.
+const tabbarEl = $("#tabbar");
+const barAuto = () => !!tabbarEl && getComputedStyle(tabbarEl).position === "fixed";
+const typing = () => !!document.activeElement?.matches?.('textarea, [contenteditable="true"], input:not([type="checkbox"], [type="radio"], [type="range"], [type="button"], [type="submit"])');
+const NO_SWIPE = "#tabbar, canvas, input[type=range], .pad, .graph-slot, .demo, .okno, .tour";
+function peekBar(on) {
+  if (on && typing()) on = false;
+  if (document.body.classList.contains("tb-peek") !== on) document.body.classList.toggle("tb-peek", on);
+  syncTabbarH();
+}
+let swipe = null;
+document.addEventListener("touchstart", (e) => {
+  const t = e.touches[0];
+  swipe = e.touches.length === 1 && !e.target.closest?.(NO_SWIPE) ? { x: t.clientX, y: t.clientY } : null;
+}, { passive: true });
+document.addEventListener("touchmove", (e) => {
+  if (!swipe) return;
+  const t = e.touches[0];
+  const dy = t.clientY - swipe.y;
+  if (Math.abs(dy) < 24 || Math.abs(t.clientX - swipe.x) > Math.abs(dy)) return;
+  swipe = null;
+  requestAnimationFrame(() => barAuto() && peekBar(dy > 0));
+}, { passive: true });
+let wheelFrame = 0;
+document.addEventListener("wheel", (e) => {
+  if (wheelFrame || Math.abs(e.deltaY) < 4 || e.target.closest?.(NO_SWIPE)) return;
+  const up = e.deltaY < 0;
+  wheelFrame = requestAnimationFrame(() => {
+    wheelFrame = 0;
+    if (barAuto()) peekBar(up);
+  });
+}, { passive: true });
+document.addEventListener("focusin", () => document.body.classList.contains("tb-peek") && typing() && peekBar(false));
+// Odprta lekcija v Učbeniku (vrstica se umakne) ali nazaj na kazalo: pogled ostane isti, vsebina se zamenja.
+new MutationObserver(() => peekBar(false)).observe($("#view-textbook"), { childList: true });
+$("#chat-back").addEventListener("click", () => showView(!["chat", "onboard", "auth"].includes(prevView) && !isFloating(prevView) ? prevView : "path"));
+
 // Zavihek pogleda v premičnem oknu okno le prinese v ospredje (branje, vnos in drsenje v njem ostanejo).
 document.querySelectorAll(".tab").forEach((t) => t.addEventListener("click", () => (isFloating(t.dataset.view) ? focusWindow(t.dataset.view) : showView(t.dataset.view))));
 
@@ -199,6 +241,7 @@ document.querySelectorAll(".tab").forEach((t) => t.addEventListener("click", () 
 // trenutni pogled (1). Nazaj najprej zapre odprto okno (kalkulator, navodila) ali lekcijo,
 // s podstrani »Jaz« (Nastavitve, Napredek …) vodi na »Jaz«, sicer na Učno pot.
 let currentView = "path";
+let prevView = "path"; // za gumb Nazaj v glavi klepeta (telefon)
 let fromBack = false;
 let skipPop = 0;
 let overlayEntry = false; // zapis v zgodovini samo za okno, odprto na Učni poti

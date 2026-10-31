@@ -65,6 +65,16 @@ function canFloat(name) {
   return !!tab && !tab.hidden && !!document.getElementById(`view-${name}`);
 }
 
+// Višina spodnje vrstice za liste (--tabbar-h). Pri branju se vrstica umakne (position: fixed, touch.css) in šteje
+// samo, ko je pokazana (body.tb-peek, app.js).
+export function syncTabbarH() {
+  const bar = $("#tabbar");
+  if (!bar) return;
+  const cs = getComputedStyle(bar);
+  const shown = cs.display !== "none" && (cs.position !== "fixed" || document.body.classList.contains("tb-peek"));
+  document.documentElement.style.setProperty("--tabbar-h", `${shown ? bar.offsetHeight : 0}px`);
+}
+
 // Vsebinski del zaslona: pod zgornjo vrstico, nad spodnjo vrstico zavihkov.
 function area() {
   const top = Math.max(0, $(".topbar")?.getBoundingClientRect().bottom || 0);
@@ -651,8 +661,7 @@ export function initOkna(opts) {
   makeRowSortable($("#tabbar"), "tabbar", { item: ".tab" });
   // Spodnji list stoji nad spodnjo vrstico zavihkov, da navigacija ostane uporabna (okna.css, --tabbar-h).
   const tabbar = $("#tabbar");
-  if (tabbar && "ResizeObserver" in window)
-    new ResizeObserver(() => document.documentElement.style.setProperty("--tabbar-h", `${tabbar.offsetParent ? tabbar.offsetHeight : 0}px`)).observe(tabbar);
+  if (tabbar && "ResizeObserver" in window) new ResizeObserver(syncTabbarH).observe(tabbar);
   makeRowSortable($("#modebar"), "modebar", { item: "button" });
   document.querySelectorAll(".calc-modes").forEach((row) => makeRowSortable(row, "calc-modes", { item: "button" }));
   mountSetting(document.getElementById("okna-card"));
