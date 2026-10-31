@@ -275,9 +275,10 @@ function abcHtml() {
   const toNum = S.layers.some((l) => layerId(l) === "num") ? key("123", { a: "layer", v: "num" }, { cls: "fn w15 sm" }) : "";
   const comma = key(lay.comma, { a: "char", v: lay.comma }, { hint: lay.variants[lay.comma]?.[0] || "" });
   const dot = key(".", { a: "char", v: "." }, { hint: lay.variants["."]?.[0] || "" });
-  return `<div class="tk-row"${lay.rtl ? ' dir="rtl"' : ""}>${r1.map(letter).join("")}</div>
-    <div class="tk-row"${lay.rtl ? ' dir="rtl"' : ""}>${r2.map(letter).join("")}</div>
-    <div class="tk-row"${lay.rtl ? ' dir="rtl"' : ""}>${shift}${r3.map(letter).join("")}${bsKey()}</div>
+  // Vrstice so vedno od leve proti desni (tudi arabščina: ض levo zgoraj kot na telefonu; tipkovnica.css).
+  return `<div class="tk-row">${r1.map(letter).join("")}</div>
+    <div class="tk-row">${r2.map(letter).join("")}</div>
+    <div class="tk-row">${shift}${r3.map(letter).join("")}${bsKey()}</div>
     <div class="tk-row">${toNum}${slot}${comma}${spaceKey()}${dot}${goKey()}</div>`;
 }
 
@@ -639,18 +640,23 @@ function wireBoard() {
     down = null;
     d.b.classList.remove("down");
     if (e.type !== "pointerup") return;
+    // Na dotik po »touchend« (spodaj): tipka mora biti takrat še v tipkovnici, da se klik prekliče.
+    const run = (fn) => (e.pointerType === "touch" ? setTimeout(fn, 0) : fn());
     if (d.pop) {
       const v = at?.closest(".tk-pop button");
-      if (v) popInsert(v.dataset.v);
+      if (v) run(() => popInsert(v.dataset.v));
       return;
     }
     if (d.moved || at?.closest("button") !== d.b) return;
     closePop();
-    act(d.a);
+    run(() => act(d.a));
   };
   board.addEventListener("pointerup", up);
   board.addEventListener("pointercancel", up);
   board.addEventListener("contextmenu", (e) => e.preventDefault());
+  // Dejanje je že ob dvigu prsta; telefonov »click« (in miškini dogodki) za tem bi zadel, kar je pod
+  // tipkovnico, ko se ta skrije ali spremeni višino (⌄, Preveri, druga plast), npr. vrstico kalkulatorja.
+  board.addEventListener("touchend", (e) => e.cancelable && e.preventDefault(), { passive: false });
   board.addEventListener("click", (e) => {
     const pb = e.target.closest(".tk-pop button");
     if (e.detail > 0) return; // dotik in miška: obdelano ob dvigu (pointerup); tukaj samo Enter/preslednica na tipki

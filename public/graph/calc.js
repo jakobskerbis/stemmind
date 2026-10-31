@@ -1065,6 +1065,7 @@ export function createCalculator(root, opts) {
       if (m === "ask") askTutor();
       if (m === "keypad") {
         const f = lastField?.isConnected ? lastField : list.querySelector(".gc-input");
+        f?.closest(".gc-row")?.classList.add("editing"); // polje vrstice je skrito, dokler vrstica ni v urejanju
         if (f) toggleKeyboard(f);
       }
       if (m === "settings") openSettings($('[data-act="settings"]'));

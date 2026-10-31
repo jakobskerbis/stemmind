@@ -70,6 +70,7 @@ test("touch-browser checks", { skip }, async (t) => {
         const i = await page.evaluate((l) => [...document.querySelectorAll("#tipkovnica .tk-k")].findIndex((b) => b.firstChild?.textContent === l), label);
         assert.ok(i >= 0, `tipka ${label}`);
         await page.locator("#tipkovnica .tk-k").nth(i).tap();
+        await page.waitForTimeout(20); // na dotik tipka deluje takoj po »touchend« (public/tipkovnica.js)
       },
     });
     await page.tap(".gc-input");
@@ -78,9 +79,10 @@ test("touch-browser checks", { skip }, async (t) => {
     assert.equal(await page.locator(`${kb} .tk-rows`).getAttribute("data-layer"), "num", "kalkulator začne s 123");
     // ABC: črke iz naše tipkovnice, polje obdrži fokus (prej je ABC odprl telefonovo tipkovnico)
     await page.locator(`${kb} .tk-tab`, { hasText: "ABC" }).tap();
-    assert.equal(await page.locator(`${kb} .tk-rows`).getAttribute("data-layer"), "abc");
+    await page.waitForSelector(`${kb} .tk-rows[data-layer="abc"]`);
     await key("y").tap();
     await page.locator(`${kb} .tk-tab`, { hasText: "123" }).tap();
+    await page.waitForSelector(`${kb} .tk-rows[data-layer="num"]`);
     for (const k of ["=", "2", "x"]) await key(k).tap();
     assert.equal(await page.inputValue(".gc-input"), "y=2x");
     // predloga z @: kazalec gre v oklepaj
@@ -91,7 +93,7 @@ test("touch-browser checks", { skip }, async (t) => {
     assert.deepEqual(st, { focused: true, inputmode: "none", open: true });
     // ⌄ skrije tipkovnico
     await page.tap(`${kb} .tk-hide`);
-    assert.equal(await page.evaluate(() => document.querySelector("#tipkovnica").hidden), true);
+    await page.waitForSelector(kb, { state: "hidden" });
     assert.deepEqual(errors, []);
     await page.close();
 

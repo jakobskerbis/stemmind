@@ -208,6 +208,7 @@ Lastna tipkovnica na zaslonu (`public/tipkovnica.js`, `tipkovnica.css`, podatki 
 - **Vedenje**: tipke ne vzamejo fokusa, najmanj 44 px. Tipkovnica ostane odprta med polji in se zapre z ⌄, Esc ali odhodom z zaslona. 🌐 velja za polje, dokler se ne dotakneš drugje (ne ob `focusout`, #247). Odprta tipkovnica doda `body.tk-open` (spodnji odmik `--tk-h`, polje se enkrat pomakne v vidni del) in skrije spodnjo vrstico zavihkov in pasove.
 - **Nastavitve → Vnos**: Evklidova tipkovnica Vedno / Samo za matematiko / Nikoli, Predlogi besed (izklopljeno), Tresljaj tipk (vklopljeno); `localStorage` `evklid.tipkovnica`, inštruktor jih spremeni iz klepeta (`keyboard*` v `settings-registry.js`).
 - Barve samo iz spremenljivk (v zgodovinskih slogih plošča v barvi menija), temni način, RTL, zmanjšano gibanje in `forced-colors`.
+- **RTL**: vrstice tipk so vedno od leve proti desni kot na tipkovnici telefona (arabščina ض levo zgoraj, ⌫ desno; oklepaji in < > se ne zrcalijo), zrcalijo se samo zavihki plasti in ⌄. Izbrana plast ima poleg barve še črto spodaj.
 
 ## Vnos v Inštruktorju
 
