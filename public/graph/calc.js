@@ -1075,6 +1075,7 @@ export function createCalculator(root, opts) {
       if (m === "ask") askTutor();
       if (m === "keypad") {
         forceKeypad = !keypadOn;
+        if (forceKeypad) sysKeyboard = false;
         showKeypad(!keypadOn);
       }
       if (m === "settings") openSettings($('[data-act="settings"]'));
@@ -1284,14 +1285,21 @@ export function createCalculator(root, opts) {
     f.dispatchEvent(new Event("input", { bubbles: true }));
     navigator.vibrate?.(6);
   });
+  // Način ABC (sistemska tipkovnica) ostane, dokler se učenec ne dotakne nečesa izven kalkulatorja.
+  // Ne izklopi ga izguba fokusa: telefon ob odpiranju tipkovnice polje včasih za hip odfokusira
+  // in naslednji dotik polja bi sicer spet prikazal našo tipkovnico (»glitch«, j 31. 10.).
   let sysKeyboard = false;
+  document.addEventListener(
+    "pointerdown",
+    (e) => {
+      if (sysKeyboard && root.isConnected && !root.contains(e.target)) sysKeyboard = false;
+    },
+    true,
+  );
   function maybeKeypad(on) {
     if (on) {
       if ((isTouch() && !sysKeyboard) || forceKeypad) showKeypad(true);
-    } else {
-      if (!forceKeypad) showKeypad(false);
-      sysKeyboard = false;
-    }
+    } else if (!forceKeypad) showKeypad(false);
   }
   function showKeypad(on) {
     if (keypadOn === on && !keypad.hidden === on) return;
