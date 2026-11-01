@@ -75,6 +75,7 @@ export function stripMeta(text) {
     .replace(META_LOOSE_RE, "")
     .replace(/<<\s*(?:META|KARTICA)\b[\s\S]*$/, "") // nedokončan blok (npr. odrezan odgovor)
     .replace(/^[ \t]*```[ \t]*\n(?:[ \t]*\n)*[ \t]*```[ \t]*$/gm, "") // prazen blok kode, v katerem je bila META
+    .replace(/^[ \t]*`+[ \t]*$/gm, "") // prazne oznake kode okoli odstranjene META
     .replace(/\n{3,}/g, "\n\n")
     .replace(/\s+$/, "");
 }
