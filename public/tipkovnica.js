@@ -228,7 +228,7 @@ function ctxChips() {
   const mail = !url && (S.field?.type === "email" || /\bemail\b/.test(auto0));
   if (url || mail) {
     const paste = chip(t("tk.paste"), { a: "paste" }, "paste");
-    return { words: false, html: paste + (url ? URL_CHIPS : EMAIL_CHIPS).map(([l, v]) => chip(l, { a: "ins", v })).join("") };
+    return { words: false, html: paste + (url ? URL_CHIPS : EMAIL_CHIPS).map(([l, v]) => chip(l, { a: "lit", v })).join("") };
   }
   if (prefs.words && S.layer === "abc" && words) {
     const w = currentWord();
@@ -283,7 +283,7 @@ function abcHtml() {
   const [r1, r2, r3] = lay.rows;
   const shift = lay.caseless ? "" : key("⇧", { a: "sh" }, { cls: `fn w15 shift${S.shift ? " on" : ""}${S.shift === 2 ? " lock" : ""}`, aria: t("tk.shift") });
   const email = /\bemail\b/.test(String(S.field?.getAttribute("autocomplete") || "") + " " + String(orig(S.field) || ""));
-  const slot = email ? key("@", { a: "ins", v: "@" }, { cls: "fn" }) : lay.globe ? key("🌐", { a: "globe" }, { cls: "fn", aria: t("tk.globe") }) : key("-", { a: "ins", v: "-" }, { cls: "fn" });
+  const slot = email ? key("@", { a: "lit", v: "@" }, { cls: "fn" }) : lay.globe ? key("🌐", { a: "globe" }, { cls: "fn", aria: t("tk.globe") }) : key("-", { a: "ins", v: "-" }, { cls: "fn" });
   const toNum = S.layers.some((l) => layerId(l) === "num") ? key("123", { a: "layer", v: "num" }, { cls: "fn w15 sm" }) : "";
   const comma = key(lay.comma, { a: "char", v: lay.comma }, { hint: lay.variants[lay.comma]?.[0] || "" });
   const dot = key(".", { a: "char", v: "." }, { hint: lay.variants["."]?.[0] || "" });
@@ -389,36 +389,38 @@ function sel(f) {
   return null;
 }
 
-function insertText(f, ins) {
+function insertText(f, ins, literal = false) {
   if (f.isContentEditable) {
-    const at = ins.indexOf("@");
-    const text = ins.replace("@", "");
+    const at = literal ? -1 : ins.indexOf("@");
+    const text = literal ? ins : ins.replace("@", "");
     document.execCommand("insertText", false, text);
     if (at >= 0) for (let i = 0; i < text.length - at; i++) getSelection()?.modify?.("move", "backward", "character");
     return;
   }
   const r = sel(f);
   if (!r) {
-    // type=number: brez kazalca, pišemo na konec
-    const v = (numShadow.get(f) ?? String(f.value)) + ins.replace("@", "");
+    // type=number (in email): brez kazalca, pišemo na konec
+    const v = (shadow(f) ?? String(f.value)) + (literal ? ins : ins.replace("@", ""));
     numShadow.set(f, v);
     f.value = v;
     fire(f, "insertText", ins);
     return;
   }
   const [s, e] = r;
-  const out = applyTemplate(f.value, s, e, ins, f.maxLength ?? -1);
+  const out = applyTemplate(f.value, s, e, ins, f.maxLength ?? -1, literal);
   if (!out.text && ins) return;
   f.setRangeText(out.text, s, e, "end");
   f.setSelectionRange(out.caret, out.caret);
   fire(f, "insertText", out.text);
 }
+// vpisano besedilo v type=number (»3.«); pri drugih poljih (e-pošta) šteje vrednost, ki jo lahko spremeni tudi obrazec
+const shadow = (f) => (f.type === "number" ? numShadow.get(f) : undefined);
 
 function backspace(f) {
   if (f.isContentEditable) return document.execCommand("delete");
   const r = sel(f);
   if (!r) {
-    const v = (numShadow.get(f) ?? String(f.value)).slice(0, -1);
+    const v = (shadow(f) ?? String(f.value)).slice(0, -1);
     numShadow.set(f, v);
     f.value = v;
     return fire(f, "deleteContentBackward");
@@ -505,7 +507,7 @@ const buzz = () => {
 async function paste(f) {
   try {
     const txt = await navigator.clipboard.readText();
-    if (txt) insertText(f, txt.trim());
+    if (txt) insertText(f, txt.trim(), true);
   } catch {
     const p = document.createElement("div");
     p.className = "tk-pop tk-say";
@@ -536,7 +538,7 @@ function act(a) {
   const f = target();
   if (!f) return;
   const before = S.shift;
-  if (a.a === "ins") insertText(f, a.v);
+  if (a.a === "ins" || a.a === "lit") insertText(f, a.v, a.a === "lit");
   else if (a.a === "char") {
     const u = a.v.toLocaleUpperCase(currentLang());
     insertText(f, S.shift && u.length === 1 ? u : a.v);

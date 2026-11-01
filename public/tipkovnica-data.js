@@ -153,12 +153,12 @@ export function usesOwnKeyboard(el, mode = "always", { math = false, inputmode }
  * Vstavi predlogo v besedilo: »@« je mesto kazalca, tja gre označeno besedilo (označiš 16, pritisneš √ → √(16)).
  * Vrne { value, caret, text } (text = vstavljeni del).
  */
-export function applyTemplate(value, start, end, ins, maxLength = -1) {
+export function applyTemplate(value, start, end, ins, maxLength = -1, literal = false) {
   const v = String(value ?? "");
   const s = Math.max(0, Math.min(start ?? v.length, v.length));
   const e = Math.max(s, Math.min(end ?? s, v.length));
   const sel = v.slice(s, e);
-  const at = ins.indexOf("@");
+  const at = literal ? -1 : ins.indexOf("@"); // literal: »@« je znak (e-pošta, prilepljena povezava), ne mesto kazalca
   let text = at < 0 ? ins : ins.slice(0, at) + sel + ins.slice(at + 1);
   if (maxLength >= 0) {
     const room = maxLength - (v.length - (e - s));

@@ -222,4 +222,7 @@ test("telefonova tipkovnica samo za prijavne podatke; povezave in ostala e-pošt
   assert.equal(fieldKind(el({ type: "email", autocomplete: "email" }, form(true))), null);
   assert.equal(fieldKind(el({ type: "email", autocomplete: "email" }, form(false))), "text");
   assert.equal(fieldKind(el({ type: "text", autocomplete: "username" })), null);
+  // čip »@«, @gmail.com in prilepljena povezava: »@« je znak, ne mesto kazalca
+  assert.deepEqual(applyTemplate("ana", 3, 3, "@gmail.com", -1, true), { value: "ana@gmail.com", caret: 13, text: "@gmail.com" });
+  assert.equal(applyTemplate("", 0, 0, "https://expo.dev/@j/a", -1, true).value, "https://expo.dev/@j/a");
 });
