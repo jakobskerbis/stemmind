@@ -4,7 +4,7 @@ import { ticker, lcd, dataTable, dataGraph, conclusion, eventLog, notes, fixed }
 import { OhmBench, LOADS, AM_RANGES, VM_RANGES, NAPAJALNIK, UPOR, POENOSTAVITVE, fitOrigin } from "./lab-model.js";
 
 // Barvne oznake uporov (4 obročki: dve števki, množitelj, toleranca ±5 % = zlata).
-const BANDS = { R47: ["#f2c500", "#8e44ad", "#000", "#c9a227"], R100: ["#7b4a12", "#000", "#7b4a12", "#c9a227"], R220: ["#d62728", "#d62728", "#7b4a12", "#c9a227"], R470: ["#f2c500", "#8e44ad", "#7b4a12", "#c9a227"] };
+export const BANDS = { R47: ["#f2c500", "#8e44ad", "#000", "#c9a227"], R100: ["#7b4a12", "#000", "#7b4a12", "#c9a227"], R220: ["#d62728", "#d62728", "#7b4a12", "#c9a227"], R470: ["#f2c500", "#8e44ad", "#7b4a12", "#c9a227"] };
 // Stalna os toka za vsak porabnik: največji tok pri 12 V, zaokrožen navzgor.
 const YMAX = { R47: 300, R100: 150, R220: 75, R470: 30, L6: 150 };
 const POS = [["zaporedno", "zaporedno"], ["vzporedno", "vzporedno"], ["brez", "odklopljen"]];
@@ -145,12 +145,7 @@ export function labOhm(el, { load = "R100" } = {}) {
 
   // ---------------------------------------------------------------- risanje kroga
   const X0 = 50, X1 = 300, Y0 = 40, Y1 = 210, YC = 125;
-  function meter(x, y, letter, kind) {
-    const g = s("g", { class: "lab-meter" }, svg);
-    s("circle", { cx: x, cy: y, r: 17, class: "lab-meter-body" }, g);
-    s("text", { x, y: y + 1, class: "lbl", "text-anchor": "middle", "dominant-baseline": "middle" }, g, letter);
-    if (kind === "A" && B.fuseOf().blown) s("path", { d: `M${x - 9},${y + 11} l18,-22`, class: "lab-broken" }, g);
-  }
+  const meter = (x, y, letter, kind) => drawMeter(svg, x, y, letter, kind === "A" && B.fuseOf().blown);
   function draw() {
     svg.replaceChildren();
     const wire = (d) => s("path", { d, class: "lab-wire" }, svg);
@@ -178,18 +173,12 @@ export function labOhm(el, { load = "R100" } = {}) {
     // porabnik
     const L = LOADS[B.load], p = B.part;
     if (L.type === "R") {
-      const T = p.T;
-      s("rect", { x: X1 - 10, y: YC - 30, width: 20, height: 60, rx: 7, class: p.burnt ? "lab-burnt" : "lab-res" }, svg);
-      if (!p.burnt) BANDS[B.load].forEach((c, i) => s("rect", { x: X1 - 10, y: YC - 20 + i * 10 + (i === 3 ? 6 : 0), width: 20, height: 5, fill: c }, svg));
-      if (!p.burnt && T > 40) s("rect", { x: X1 - 10, y: YC - 30, width: 20, height: 60, rx: 7, class: "fill-danger", opacity: Math.min(0.7, (T - 40) / 300) }, svg);
+      drawResistor(svg, X1, YC, B.load, p);
       label(svg, X1 - 18, YC, `${L.nom} Ω`, "lbl small", "end");
-      if (p.burnt) smoke(X1, YC - 34), label(svg, X1 - 18, YC + 18, "zgorel", "lbl small", "end");
-      else if (T > 90) label(svg, X1 - 18, YC + 18, "vroč!", "lbl small", "end");
+      if (p.burnt) label(svg, X1 - 18, YC + 18, "zgorel", "lbl small", "end");
+      else if (p.T > 90) label(svg, X1 - 18, YC + 18, "vroč!", "lbl small", "end");
     } else {
-      const b = B.brightness();
-      if (b > 0.01) s("circle", { cx: X1, cy: YC, r: 18 + 22 * Math.min(1, b), class: "lab-glow", opacity: Math.min(0.85, 0.15 + 0.6 * b) }, svg);
-      s("circle", { cx: X1, cy: YC, r: 16, class: "lab-bulb" }, svg);
-      s("path", { d: p.burnt ? `M${X1 - 11},${YC - 11} l7,7 M${X1 + 11},${YC + 11} l-7,-7 M${X1 + 11},${YC - 11} l-22,22` : `M${X1 - 11},${YC - 11} l22,22 M${X1 + 11},${YC - 11} l-22,22`, class: "lab-filament" }, svg);
+      drawLamp(svg, X1, YC, B.brightness(), p.burnt);
       label(svg, X1 - 22, YC, "6 V", "lbl small", "end");
       if (p.burnt) label(svg, X1, YC + 36, "pregorela", "lbl small");
     }
@@ -197,13 +186,40 @@ export function labOhm(el, { load = "R100" } = {}) {
     partBtn.hidden = !p.burnt;
     partBtn.textContent = L.type === "R" ? "Vzemi nov upornik" : "Vzemi novo žarnico";
   }
-  function smoke(x, y) {
-    for (let i = 0; i < 3; i++) s("circle", { cx: x + (i - 1) * 7, cy: y - i * 9, r: 5 + i * 2, class: "lab-smoke", style: `animation-delay:${i * 0.4}s` }, svg);
-  }
+
 
   graph.setAxes({ y: [0, YMAX[B.load]] });
   redrawGraph();
   readMeters();
   draw();
   ticker(el, tick, 100);
+}
+
+// ---------------------------------------------------------------- deli kroga (tudi lab-elektrika.js)
+// Merilnik: krog s črko; pregorela varovalka je prečrtana.
+export function drawMeter(svg, x, y, letter, blown = false) {
+  const g = s("g", { class: "lab-meter" }, svg);
+  s("circle", { cx: x, cy: y, r: 17, class: "lab-meter-body" }, g);
+  s("text", { x, y: y + 1, class: "lbl", "text-anchor": "middle", "dominant-baseline": "middle" }, g, letter);
+  if (blown) s("path", { d: `M${x - 9},${y + 11} l18,-22`, class: "lab-broken" }, g);
+  return g;
+}
+// Upornik z barvnimi obročki (20 × 60, pokončen ali ležeč), rdeč, ko je vroč; zgorel je črn in se kadi.
+export function drawResistor(svg, x, y, id, part, { horiz = false } = {}) {
+  const g = s("g", horiz ? { transform: `rotate(-90 ${x} ${y})` } : {}, svg);
+  s("rect", { x: x - 10, y: y - 30, width: 20, height: 60, rx: 7, class: part.burnt ? "lab-burnt" : "lab-res" }, g);
+  if (!part.burnt) BANDS[id]?.forEach((c, i) => s("rect", { x: x - 10, y: y - 20 + i * 10 + (i === 3 ? 6 : 0), width: 20, height: 5, fill: c }, g));
+  if (!part.burnt && part.T > 40) s("rect", { x: x - 10, y: y - 30, width: 20, height: 60, rx: 7, class: "fill-danger", opacity: Math.min(0.7, (part.T - 40) / 300) }, g);
+  if (part.burnt) drawSmoke(svg, x, y - (horiz ? 14 : 34));
+  return g;
+}
+// Žarnica: sij raste s svetlostjo b (1 = nazivna); pregorela ima pretrgano nitko.
+export function drawLamp(svg, x, y, b, burnt, r = 16) {
+  if (b > 0.01) s("circle", { cx: x, cy: y, r: r + 2 + 22 * Math.min(1, b), class: "lab-glow", opacity: Math.min(0.85, 0.15 + 0.6 * b) }, svg);
+  s("circle", { cx: x, cy: y, r, class: "lab-bulb" }, svg);
+  const k = r * 0.69;
+  s("path", { d: burnt ? `M${x - k},${y - k} l7,7 M${x + k},${y + k} l-7,-7 M${x + k},${y - k} l${-2 * k},${2 * k}` : `M${x - k},${y - k} l${2 * k},${2 * k} M${x + k},${y - k} l${-2 * k},${2 * k}`, class: b > 0.02 && !burnt ? "lab-filament lab-fil-hot" : "lab-filament" }, svg);
+}
+export function drawSmoke(svg, x, y) {
+  for (let i = 0; i < 3; i++) s("circle", { cx: x + (i - 1) * 7, cy: y - i * 9, r: 5 + i * 2, class: "lab-smoke", style: `animation-delay:${i * 0.4}s` }, svg);
 }

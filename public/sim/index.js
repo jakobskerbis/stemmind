@@ -151,6 +151,8 @@ export const ENGINES = {
   "lab-ohm": ["lab-fiz.js", "labOhm"],
   "lab-co2": ["lab-kem.js", "labCo2"],
   "lab-titracija": ["lab-titracija.js", "labTitracija"],
+  "lab-vezava": ["lab-elektrika.js", "labVezava"],
+  "lab-prevodnost": ["lab-elektrika.js", "labPrevodnost"],
   // teme, dodane po primerjavi z učnimi načrti (2026-10-30)
   logika: ["vrzeli.js", "logika"], prostor: ["vrzeli.js", "prostor"], "koord-trikotnik": ["vrzeli.js", "koordTrikotnik"],
   "vezava-vzmeti": ["vrzeli.js", "vezavaVzmeti"], izmenicni: ["vrzeli.js", "izmenicni"], "em-spekter": ["vrzeli.js", "emSpekter"], zvezde: ["vrzeli.js", "zvezde"], domine: ["vrzeli.js", "domine"],

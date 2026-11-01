@@ -15,8 +15,8 @@ consequences of mistakes and answers a conclusion question. Brief: j, point 8 of
 3. **Mistakes have consequences** that a real lab would show: overrange (OL), blown fuse, burnt resistor,
    short circuit (supply current limit), foam overflow, popped stopper, missing goggles.
 4. **Table + graph + conclusion question** (one correct option, an explanation for every option).
-5. **Simplifications are written in the sim** (`POENOSTAVITVE`, `POENOSTAVITVE_TITRACIJA`, »Kaj je poenostavljeno?«) and here.
-6. **Test against literature** in `test/laboratorij.test.js` (titration: `test/laboratorij-titracija.test.js`) with the allowed deviation stated.
+5. **Simplifications are written in the sim** (`POENOSTAVITVE`, `POENOSTAVITVE_TITRACIJA`, `POENOSTAVITVE_ELEKTRIKA`, »Kaj je poenostavljeno?«) and here.
+6. **Test against literature** in `test/laboratorij.test.js` (titration: `test/laboratorij-titracija.test.js`, electricity: `test/laboratorij-elektrika.test.js`) with the allowed deviation stated.
 7. **Review:** pass 1 automatic, pass 2 an Opus expert check of the science and function, pass 3 look/phone/pedagogy
    (`docs/pregled.md`). Dangerous experiments are only simulated; a short video only when no realistic
    simulation is possible; home experiments get a safety note and an equipment list.
@@ -31,6 +31,8 @@ consequences of mistakes and answers a conclusion question. Brief: j, point 8 of
 | `public/sim/lab-kem.js` | `labCo2` (engine `lab-co2`), `flaskLevel` |
 | `public/sim/lab-model-titracija.js` | titration model, no DOM: `TitrBench`, `solvePH` (charge balance), indicators, burette/pipette/pH meter |
 | `public/sim/lab-titracija.js` | `labTitracija` (engine `lab-titracija`) |
+| `public/sim/lab-model-elektrika.js` | models, no DOM: `VezBench` (series/parallel/mixed netlist, reuses the `lab-model.js` meters, fuse, resistors, lamp, supply), `tester`, `MATERIALI` |
+| `public/sim/lab-elektrika.js` | `labVezava` (engine `lab-vezava`), `labPrevodnost` (engine `lab-prevodnost`); circuit parts `drawMeter`, `drawResistor`, `drawLamp` shared with `labOhm` (`lab-fiz.js`) |
 
 Engines are registered in `public/sim/index.js` and shown at topics through `public/sim/katalog.js`.
 The »Laboratorij« tab (`public/laboratorij.js`, `server/laboratorij.js`, `GET /api/students/:id/lab`) lists every `lab-` engine
@@ -78,7 +80,30 @@ equivalence volume; careful titrations recover c within ±0,3 % (10 seeds, three
 titration, and that dilution shrinks after each top-up; air bubble adds its volume (±0,1 mL); wet pipette −0,5 to −1,1 %,
 flask rinsed with sample +1,5 to +2,5 %, flask wet with water ±0,3 %; topping up never lowers the level, volume is conserved, the level stops at 50 mL; pipette, burette and pH meter within spec over 500 seeds; drops and flow; deterministic seed.
 
+### `lab-vezava` – series and parallel circuits (FIZ-OS-9 električni krog; FIZ-SS-2 električna vezja)
+Same supply, multimeter, fuses, 0,5 W resistors (47/100/220/470 Ω ±5 %) and 6 V / 0,1 A lamps as `lab-ohm` (each lamp ±5 % resistance, ocena; brightness ∝ P^(3,4/1,6)), plus a wire (0,02 Ω, ocena) and an
+empty socket. Series or parallel with 2–3 elements, or mixed 1 + (2 ∥ 3); ammeter and voltmeter each in series or in parallel, at the supply
+(series = main line, parallel = supply terminals) or at element 1–3. Netlist solved by nodal analysis with lamp iteration. Summary per circuit
+(type, parts, U₀): I = I₁ + I₂, U = U₁ + U₂, U/I vs the total from the colour code; graph measured U/I vs computed R_total with y = x;
+three conclusion questions (series voltages, parallel currents, lamps dim in series and a removed lamp breaks only a series circuit).
+Mistakes: voltmeter in series (I ≈ 0), ammeter in parallel (fuse), wire across a branch (1 A current limit), 47 Ω at 12 V burns, lamps at 12 V in parallel burn.
+Tests (`test/laboratorij-elektrika.test.js`): nominal totals; Kirchhoff sums in the model to 10⁻⁶ (series sum includes the 1 Ω ammeter burden);
+measured U/I = R_true + R_ammeter within the summed meter specs and R_true within ±5 % of the colour code (200 seeds, 5 circuits);
+lamps: parallel 0,9–1,1 of nominal and two parallel lamps differ in current by < 11 %, series 0,05–0,15 ((3/6)^3,4 = 0,095), removed lamp: series off, parallel unchanged ±0,02; the mistakes above; deterministic seed.
+
+### `lab-prevodnost` – metals and non-metals, what conducts? (NAR-OS-7 elementi in spojine; KEM-OS-8 kovine)
+Tester: 4,5 V flat battery (internal resistance 1,5 Ω, ocena), E10 lamp 3,8 V / 0,3 A (same lamp rules as ZARNICA) or a red LED (1,8 V) with 150 Ω,
+two crocodile clips, optional ammeter (200 mA / 10 A; ~0,3 A through a metal shows OL on 200 mA). Samples 6 cm long: Cu, Al, Fe wire Ø 1 mm,
+pencil lead Ø 0,5 mm, sulfur, glass, plastic, wood, rubber, paper, solid salt (1 cm² section); liquids between two copper plates (cell constant 50 m⁻¹, ocena):
+NaCl 1/5/20 %, tap, distilled and sugar water. Data: ρ Cu 1,68·10⁻⁸, Al 2,65·10⁻⁸, Fe 9,7·10⁻⁸, S 2·10¹⁵ Ω m (CRC); NaCl solutions 1,6 / 7,0 / 19,6 S/m
+(CRC, concentrative properties); estimates: pencil lead 3·10⁻⁵ Ω m, insulators 10¹⁰–10¹⁴ Ω m, tap water 0,05 S/m, distilled water on air 10⁻⁴ S/m,
+decomposition voltage 2,1 V (bubbles), visibility limits (lamp 3 % of nominal light, LED 0,05 mA). Magnet, lustre and bend buttons; the student
+sorts each sample into kovina / nekovina / drugo and checks (graphite conducts but is a non-metal; copper is a metal though not magnetic).
+Graph: current vs salt % (lamp and LED). Tests: R of copper from ρ; metals light, graphite and 20 % salt water weakly, 1 % salt water not with the lamp
+but with the LED (and bubbles), insulators and distilled/sugar water dark with both (< 0,1 mA); current rises with concentration; copper 0,3 A ± 10 %, and with the 200 mA range (1 Ω) below 1,5 In so the F 200 mA fuse holds (IEC 60127-2);
+brightness Cu > graphite > 5 % salt; only iron is magnetic; metals and non-metals classified as in the textbook.
+
 ## Next (from j's list)
-KEM: flame test, electrolysis of water. FIZ: pendulum and stopwatch,
-density and buoyancy in a measuring cylinder, refraction through a lens, heating water with a thermometer.
-NAR: the same engines on NAR-OS-6/7 topics. Each one: model + test first, then UI, then the three reviews.
+FIZ: heater power and efficiency (`lab-grelnik`, planned: 12 V / 50 W immersion heater, water on a balance, lid and stirring, Q = mcΔT vs W = UIt),
+pendulum and stopwatch, density and buoyancy in a measuring cylinder, refraction through a lens. KEM: flame test, electrolysis of water.
+NAR: the same engines on more NAR-OS-6/7 topics. Each one: model + test first, then UI, then the three reviews.

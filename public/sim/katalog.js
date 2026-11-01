@@ -130,7 +130,7 @@ export const SIM_TOPICS = {
   "NAR-OS-6/raznolikost-organizmov": ["uvrsti", "Rastline, živali, glive, bakterije", { set: "kraljestva" }],
   "NAR-OS-6/rastline-in-okolje": ["uvrsti", "Prilagoditve rastlin", { set: "prilagoditve-rastlin" }],
   "NAR-OS-7/zgradba-snovi": [["uvrsti", "Kaj povedo pojavi o delcih?", { set: "zgradba-snovi" }], ["delci", "Delci v trdnem, tekočem in plinastem stanju", { mode: "snovi" }]],
-  "NAR-OS-7/elementi-in-spojine": [["razvrsti", "Element, spojina ali zmes?", { set: "zmesi" }], ["uvrsti", "Element, spojina ali zmes?", { set: "elementi" }]],
+  "NAR-OS-7/elementi-in-spojine": [["razvrsti", "Element, spojina ali zmes?", { set: "zmesi" }], ["uvrsti", "Element, spojina ali zmes?", { set: "elementi" }], ["lab-prevodnost", "Laboratorij: kovine in nekovine"]],
   "NAR-OS-7/fizikalne-in-kemijske-spremembe": ["uvrsti", "Fizikalna ali kemijska sprememba?", { set: "spremembe" }],
   "NAR-OS-7/zgradba-in-delovanje-zivali": ["uvrsti", "Organi in organski sistemi", { set: "organski-sistemi" }],
   "NAR-OS-7/prehranjevanje-in-prebava": ["uvrsti", "Kako se žival prehranjuje?", { set: "prehrana" }],
@@ -318,7 +318,7 @@ export const SIM_TOPICS = {
   "FIZ-OS-9/prenos-toplote": ["prenos", "Prevajanje, konvekcija in sevanje"],
   "FIZ-OS-9/elektricni-naboj": ["naboji", "Električni naboj z drgnjenjem", { mode: "drgnjenje" }],
   "FIZ-OS-9/elektricni-tok-in-napetost": [["ohm", "Tok in napetost v električnem krogu"], ["lab-ohm", "Laboratorij: izmeri tok in napetost"]],
-  "FIZ-OS-9/elektricni-krog": ["krog-el", "Zaporedna in vzporedna vezava žarnic", { mode: "zarnice" }],
+  "FIZ-OS-9/elektricni-krog": [["krog-el", "Zaporedna in vzporedna vezava žarnic", { mode: "zarnice" }], ["lab-vezava", "Laboratorij: zaporedna in vzporedna vezava"]],
   "FIZ-OS-9/upor-in-ohmov-zakon": [["ohm", "Ohmov zakon v električnem krogu"], ["lab-ohm", "Laboratorij: izmeri Ohmov zakon"]],
   "FIZ-OS-9/elektricno-delo-in-moc": ["poraba", "Poraba električne energije doma"],
   "FIZ-OS-9/magneti-in-magnetno-polje": ["magnet", "Magnetno polje in kompas", { mode: "magnet" }],
@@ -336,7 +336,7 @@ export const SIM_TOPICS = {
   "KEM-OS-8/kemijska-reakcija": ["enacbe", "Kemijska reakcija: atomi se preuredijo"],
   "KEM-OS-8/urejanje-kemijskih-enacb": ["enacbe", "Urejanje kemijskih enačb"],
   "KEM-OS-8/energija-pri-reakcijah": ["energija-reakcije", "Eksotermne in endotermne reakcije"],
-  "KEM-OS-8/kovine": ["reaktivnost", "Reaktivnost kovin", { mode: "kisline" }],
+  "KEM-OS-8/kovine": [["reaktivnost", "Reaktivnost kovin", { mode: "kisline" }], ["lab-prevodnost", "Laboratorij: kaj prevaja električni tok?"]],
   "KEM-OS-8/nekovine": [["periodni", "Kovine, polkovine in nekovine", { highlight: "vrste" }], ["razvrsti", "Lastnosti kovin in nekovin", { set: "kovine" }]],
   "KEM-OS-8/kisline-in-baze": [["ph", "Kisline, baze in pH"], ["lab-co2", "Laboratorij: soda bikarbona in kislina"]],
   "KEM-OS-8/ph-lestvica": ["ph", "pH lestvica"],
@@ -381,7 +381,7 @@ export const SIM_TOPICS = {
   "FIZ-SS-2/elektricni-naboj-in-coulombov-zakon": ["naboji", "Coulombov zakon", { mode: "coulomb" }],
   "FIZ-SS-2/elektricno-polje": ["naboji", "Električno polje točkastih nabojev", { mode: "polje" }],
   "FIZ-SS-2/elektricni-tok": [["ohm", "Električni tok in Ohmov zakon"], ["lab-ohm", "Laboratorij: upornik in žarnica"]],
-  "FIZ-SS-2/elektricna-vezja": ["krog-el", "Zaporedna in vzporedna vezava upornikov", { mode: "uporniki" }],
+  "FIZ-SS-2/elektricna-vezja": [["krog-el", "Zaporedna in vzporedna vezava upornikov", { mode: "uporniki" }], ["lab-vezava", "Laboratorij: Kirchhoffova zakona in skupna upornost"]],
   "FIZ-SS-2/prevajanje-toplote-in-sevanje": [["prenos", "Prevajanje, konvekcija in sevanje"], ["zvezde", "Stefanov zakon: sevanje vročega telesa"]],
   // ---------------------------------------------------------------- FIZ SŠ 3
   "FIZ-SS-3/magnetno-polje": ["magnet", "Magnetno polje magneta, žice in tuljave", { mode: "zica" }],
@@ -552,6 +552,16 @@ export const LAB_INFO = {
     subject: "KEM",
     title: "Titracija kisline z NaOH",
     desc: "Napolni bireto, odpipetiraj vzorec, izberi indikator, titriraj po kapljicah do končne točke in izračunaj neznano koncentracijo kisline.",
+  },
+  "lab-vezava": {
+    subject: "FIZ",
+    title: "Zaporedna in vzporedna vezava",
+    desc: "Veži upornike in žarnice zaporedno, vzporedno ali mešano, izmeri tokove v vejah in napetosti na elementih ter odkrij, kako se seštevajo.",
+  },
+  "lab-prevodnost": {
+    subject: "NAR",
+    title: "Kovine in nekovine: kaj prevaja tok?",
+    desc: "S preizkuševalnikom z baterijo in žarnico preizkusi kovine, grafit, izolatorje in raztopine, preveri magnet, sijaj in upogib ter snovi razvrsti.",
   },
 };
 export const labKey = (id, opts = {}) => (opts && Object.keys(opts).length ? `${id}:${JSON.stringify(opts)}` : id);
