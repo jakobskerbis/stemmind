@@ -2,6 +2,20 @@
 
 Trenutni prompt je v `prompts/system_prompt.md`.
 
+## 2026-11-01: inštruktor kot pedagog v vsaki situaciji (čaka na j-jev pregled)
+
+Stalni del prompta (nad `EVKLID:NASTAVITVE`) je prenovljen tako, da inštruktor v vsaki situaciji ravna po raziskavah o učenju. Del pod vrstico je nespremenjen, META in KARTICA sta enaka.
+
+- **Kako poučuješ** (Rosenshine, Dunlosky idr.): dodano »učenec dela, ti vodiš« (ICAP: kar učenec sam izreče, si zapomni), visok delež uspeha (~4 od 5 nalog), pomoč odvisna od uspeha (Woodovo odvisno vodenje), metakognicija (prepričanost, lastno preverjanje, kaj zna in kaj ne), pohvala postopka namesto lastnosti (Dweck).
+- **Lestvica pomoči** v načinu A (po AutoTutorju: vprašanje → splošen namig → natančen namig → korak skupaj), vsakič le ena stopnička, po uspehu nazaj navzdol; prejšnja pravila »vsaj dva poskusa« in »dvakrat obtičal« ostajajo.
+- **Pedagoške situacije** (nov razdelek): »ne vem«, spodrsljaj proti napačni predstavi (izreči pravilo, protiprimer, novo pravilo v okvir, podobna naloga: konceptualna sprememba), pravilen odgovor, ugibanje, frustracija in strah (priznati občutek, hiter uspeh, napaka pripisana koraku: raziskave o matematični tesnobi), napreden učenec (manj zgledov, več problemov: obratni učinek strokovnosti), domača naloga za oddajo in časovna stiska (brez moraliziranja, prvo nalogo skupaj, naslednje sam), priprava na test (reševanje namesto branja, mešane naloge, razporeditev po dnevih, dan prej lažja ponovitev), po testu (napake po vzroku), »zakaj se to učimo«, več vprašanj hkrati, učne težave, konec pogovora. Vanj je prestavljeno prejšnje »Ponavljanje / priprava na test«.
+- **Pravilnost**: če učenec meni, da se inštruktor moti, ta pošteno preveri, napako prizna in popravi.
+- **Pravila po predmetu**: pri MAT, FIZ, KEM in BIO seznam pogostih napačnih predstav, na katere je inštruktor pozoren.
+- **Šola in raven**: ton in samostojnost po stopnji (OŠ 1–5 igrivo, OŠ 6–9 pogosto preverjanje in spodbuda, SŠ kot starejši kolega z več prostora za lasten poskus, UNIVERZA kolegialno, daljše izpeljave do ~120 besed, več dokazov in razprave o več poteh), skladno z načrtom delitve na OŠ/SŠ/faks.
+- **Oblika**: brez emojijev (izjemi 📌 v okviru »Zapomni si« in besedilo ščita), po `docs/besedila.md`.
+- Stalni del je zrasel z 28,8 na približno 35,8 tisoč znakov (ocena ~9,6 → ~11,9 tisoč žetonov). Ker je predpomnjen, stane branje približno 0,0002 $ več na sporočilo pri privzetem modelu.
+- Test `test/prompt.test.js` preverja, da novi razdelki ostanejo v predpomnjenem delu in da v stalnem delu ni drugih emojijev.
+
 ## 2026-10-30: tehniški in medicinski programi
 
 - Uvodni odstavek in razdelek UNIVERZA zdaj omenjata študente prvih (predkliničnih) letnikov medicine, dentalne medicine, veterinarstva in farmacije (enoviti magistrski programi, oznaka EMŠ). Pri teh programih tutor poudari mehanizme, strokovno izrazje in povezavo med zgradbo in delovanjem, o zdravljenju konkretnih ljudi ali živali pa ne svetuje.

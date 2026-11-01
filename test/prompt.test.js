@@ -31,3 +31,14 @@ test("systemBlocks without a marker returns one block", () => {
   assert.deepEqual(systemBlocks("samo besedilo"), [{ type: "text", text: "samo besedilo" }]);
   assert.ok(!"samo besedilo".includes(SPLIT_MARKER));
 });
+
+test("pedagogical rules (hint ladder, situations, per-level tone, misconceptions) stay in the cached part; no emojis beyond the two markers", () => {
+  const p = buildSystemPrompt({ settings: normalizeSettings({}) });
+  const [stat] = p.split(SPLIT_MARKER);
+  for (const re of [/Lestvica pomoči/, /## Pedagoške situacije/, /napačna predstava/i, /Frustracija, strah, obupavanje/, /Napreden učenec/, /Domača naloga za oddajo/, /Priprava na test, NPZ, maturo ali kolokvij/, /Pogoste napačne predstave/, /Kolegialen ton/, /Če učenec meni, da se motiš/]) {
+    assert.match(stat, re);
+  }
+  // Brez emojijev v besedilu inštruktorja: edini dovoljeni sta oznaka okvira in ščit (docs/besedila.md).
+  const emoji = stat.replace(/📌|🛡️/g, "").match(/\p{Extended_Pictographic}/gu) || [];
+  assert.deepEqual(emoji, []);
+});
