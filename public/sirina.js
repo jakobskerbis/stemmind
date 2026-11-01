@@ -1,7 +1,9 @@
 // Široke formule in tabele v lekciji (j 2026-10-31: na telefonu so se skrivali stolpci in konci formul).
 // Kar je preširoko za kartico, najprej malo pomanjšamo (do 80 %). Kar je še vedno preširoko, se pomika
 // vstran, desni rob pa zbledi, da se vidi, da se nadaljuje. Formula sredi besedila se nikoli ne prelomi
-// v dve vrstici; če je širša od vrstice, se zmanjša ali dobi svoj drsnik, da ne gleda čez rob kartice. Preverja scripts/preveri-videz-lekcij.cjs.
+// v dve vrstici sredi izraza. Če formula ne gre v vrstico, jo zložimo pri enačajih: leva stran zgoraj,
+// spodaj vsak »= …« v svoji vrstici, enačaji poravnani (j 2026-11-01). Šele kar je še vedno preširoko, se
+// zmanjša ali pomika. Preverja scripts/preveri-videz-lekcij.cjs.
 
 export const MIN = 0.8;
 const BOX = ".katex-display, .md-table-wrap";
@@ -14,6 +16,136 @@ function rob(el) {
   const vec = el.scrollWidth > el.clientWidth + 1 && getComputedStyle(el).overflowX !== "visible";
   el.classList.toggle("tb-drsnik", vec);
   el.classList.toggle("tb-konec", !vec || Math.abs(el.scrollLeft) + el.clientWidth >= el.scrollWidth - 2);
+}
+
+// Relacije, pri katerih zložimo predolgo formulo (le na vrhnji ravni, ne v ulomku ali oklepaju {…}).
+const REL = new Set(["\\approx", "\\le", "\\leq", "\\ge", "\\geq", "\\neq", "\\ne", "\\equiv", "\\doteq", "\\sim", "\\simeq", "\\to", "\\rightarrow", "\\Rightarrow", "\\Leftrightarrow", "\\iff", "\\implies", "\\longrightarrow", "\\rightleftharpoons", "\\propto", "\\lt", "\\gt"]);
+const LOCI = new Set(["\\quad", "\\qquad"]);
+// Sklep (⇒, ⇔) začne novo izjavo, ki se v novi vrstici začne s puščico: »2h = 15« / »⇒ h = 7,5«.
+const SKLEP = new Set(["\\Rightarrow", "\\implies", "\\iff", "\\Leftrightarrow", "\\Longrightarrow", "\\Longleftrightarrow"]);
+
+// TeX formule → TeX z vrsticami v »aligned«, ali null, če formule ni kje zložiti.
+// stopnja 1: le izjave, ločene s \quad, gredo vsaka v svojo vrstico.
+// stopnja 2: še leva stran v svoji vrstici in pod njo vsak »= …« (zamaknjen, enačaji drug pod drugim).
+export function zlozTex(tex, stopnja = 2) {
+  if (/\\begin\{|\\\\|&/.test(tex)) return null; // že ima vrstice ali poravnavo
+  // Kemijska enačba v enem \mathrm{…}: zložimo vsebino, vsak del spet v \mathrm.
+  let ovoj = (x) => x;
+  const mr = /^\s*\\mathrm\{([\s\S]*)\}\s*$/.exec(tex);
+  if (mr && uravnotezen(mr[1])) {
+    tex = mr[1];
+    ovoj = (x) => `\\mathrm{${x}}`;
+  }
+  const izjave = [[{ rel: "", t: "" }]]; // izjave → deli (prvi del je leva stran, ostali se začnejo z relacijo)
+  let depth = 0;
+  for (let i = 0; i < tex.length; ) {
+    const c = tex[i];
+    let tok = c === "\\" ? /^\\(?:[a-zA-Z]+|[\s\S])/.exec(tex.slice(i))[0] : c;
+    const iz = izjave[izjave.length - 1];
+    const zadnji = iz[iz.length - 1];
+    // \left( in \right) štejeta kot en oklepaj skupaj z ločilom; navadni ( [ tudi (»(a \ge 0)« ostane celo)
+    if (tok === "\\left" || tok === "\\right") {
+      depth += tok === "\\left" ? 1 : -1;
+      tok += /^\s*(?:\\[a-zA-Z]+|\\.|.)/.exec(tex.slice(i + tok.length))?.[0] || "";
+    } else if ("{([".includes(tok) || tok === "\\{" || tok === "\\lbrace") depth++;
+    else if ("})]".includes(tok) || tok === "\\}" || tok === "\\rbrace") depth = Math.max(0, depth - 1);
+    // Ne za _ ali ^ (v_\to) in ne za \not (\not\equiv): tam relacija spada k prejšnjemu.
+    const prej = zadnji.t.trimEnd();
+    const lahko = depth === 0 && prej && !/(?:[_^]|\\not)$/.test(prej);
+    if (lahko && SKLEP.has(tok)) {
+      izjave.push([{ rel: "", t: `${tok} ` }]);
+      i += tok.length;
+      continue;
+    }
+    if (lahko && (tok === "=" || tok === "<" || tok === ">" || REL.has(tok))) iz.push({ rel: tok, t: "" });
+    else if (depth === 0 && LOCI.has(tok) && iz.some((d) => d.t.trim())) {
+      izjave.push([{ rel: "", t: "" }]);
+      i += tok.length;
+      continue;
+    } else zadnji.t += tok;
+    i += tok.length;
+  }
+  const del = (d) => `${d.rel ? `${d.rel} ` : ""}${ovoj(d.t.trim())}`;
+  const vrstice = [];
+  for (const iz of izjave) {
+    const deli = iz.filter((d) => d.t.trim());
+    if (deli.length < 2) {
+      if (deli.length) vrstice.push(`&${del(deli[0])}`);
+      continue;
+    }
+    // Leva stran v svoji vrstici, nato vsak »= …« v svoji (j 2026-11-01), enačaji drug pod drugim.
+    if (stopnja < 2) vrstice.push(`&${deli.map(del).join(" ")}`);
+    else vrstice.push(`&${del(deli[0])}`, ...deli.slice(1).map((d) => `&\\quad {}${del(d)}`));
+  }
+  if (vrstice.length < 2) return null;
+  return `\\begin{aligned}${vrstice.join(" \\\\ ")}\\end{aligned}`;
+}
+
+function uravnotezen(x) {
+  let d = 0;
+  for (const c of x.replace(/\\[{}]/g, "")) if ((d += c === "{" ? 1 : c === "}" ? -1 : 0) < 0) return false;
+  return d === 0;
+}
+
+const izvirnik = new WeakMap(); // zložena formula → njen izvirni HTML
+const izvirniTex = new WeakMap(); // zložena formula → njen izvirni TeX
+function zamenjaj(k, html) {
+  const t = document.createElement("span");
+  t.innerHTML = html;
+  const n = t.firstElementChild;
+  k.replaceWith(n);
+  return n;
+}
+const locilo = new WeakMap(); // zložena formula → ločilo, ki smo ga vzeli iz besedila za njo
+function obnovi(k) {
+  const h = izvirnik.get(k);
+  if (!h) return k;
+  const p = locilo.get(k);
+  if (p) k.after(p); // ločilo nazaj v besedilo
+  return zamenjaj(k, h);
+}
+function zlozi(k, stopnja) {
+  const tex = (izvirnik.has(k) ? izvirniTex.get(k) : null) ?? k.querySelector("annotation")?.textContent;
+  let al = tex && globalThis.katex && zlozTex(tex, stopnja);
+  if (!al) return null;
+  // Formula sredi besedila je zložena v svoji vrstici: pika ali vejica za njo gre na konec zadnje vrstice,
+  // da ne ostane sama v novi vrstici.
+  const inline = !k.parentElement?.closest(".katex-display");
+  let p = locilo.get(k) || "";
+  const nx = k.nextSibling;
+  const vzemi = inline && !p && nx?.nodeType === 3 && /^[.,;:!?]/.test(nx.data);
+  if (vzemi) p = nx.data[0];
+  if (p) al = al.replace(/\\end\{aligned\}$/, `\\text{${p}}\\end{aligned}`);
+  let html;
+  try {
+    html = globalThis.katex.renderToString(al, { throwOnError: true, strict: "ignore", trust: (c) => c.command === "\\htmlData" });
+  } catch {
+    return null;
+  }
+  if (vzemi) nx.data = nx.data.slice(1); // šele ko se je izrisala, sicer bi se ločilo izgubilo
+  const orig = izvirnik.get(k) ?? k.outerHTML;
+  const n = zamenjaj(k, html);
+  n.classList.add("tb-zlozena");
+  izvirnik.set(n, orig);
+  izvirniTex.set(n, tex);
+  if (p) locilo.set(n, p);
+  return n;
+}
+
+// Formula, ki ne gre v širino w: malo pomanjšaj (do 90 %), sicer zloži pri enačajih; kar je še preširoko,
+// pomanjšaj do MIN. Vrne (morda novo) formulo.
+function prilagodiFormulo(k, w, meri) {
+  k = obnovi(k);
+  k.style.fontSize = "";
+  const need = meri(k);
+  if (need <= w + 1) return k;
+  // Najprej le izjave v svoje vrstice, nato še enačaji; vsakič vzamemo prvo, ki gre v vrstico.
+  for (const st of [1, 2]) {
+    if (meri(k) <= w + 1 || w / meri(k) >= 0.9) break;
+    k = zlozi(k, st) || k;
+  }
+  pomanjsaj(k, w, () => meri(k));
+  return k;
 }
 
 // Pomanjšaj `cilj`, dokler `meri()` ne pade pod `w` ali do MIN.
@@ -34,8 +166,13 @@ function okvir(el) {
   const w = el.clientWidth;
   if (!w || sirine.get(el) === w) return;
   sirine.set(el, w);
-  const cilj = el.matches(".katex-display") ? el.querySelector(":scope > .katex") : el.querySelector(":scope > table");
-  if (cilj) pomanjsaj(cilj, w, () => el.scrollWidth);
+  if (el.matches(".katex-display")) {
+    const k = el.querySelector(":scope > .katex");
+    if (k) prilagodiFormulo(k, w, () => el.scrollWidth);
+  } else {
+    const t = el.querySelector(":scope > table");
+    if (t) pomanjsaj(t, w, () => el.scrollWidth);
+  }
   rob(el);
 }
 
@@ -45,15 +182,14 @@ function vrstica(el) {
   if (!cw || sirine.get(el) === cw) return;
   sirine.set(el, cw);
   const w = cw - 8; // prostor za ločilo za formulo (vejica, pika), ki ostane v isti vrstici
-  for (const k of el.querySelectorAll(":scope .katex")) {
-    if (k.closest(".katex-display, table")) continue;
+  for (let k of el.querySelectorAll(":scope .katex")) {
+    if (k.parentElement?.closest(".katex-display, table, .katex")) continue;
     k.classList.remove("tb-dolga");
-    k.style.fontSize = "";
-    // Formula se ne prelomi v novo vrstico (j 2026-10-31, textbook.css), zato šteje njena cela širina.
-    const del = () => k.getBoundingClientRect().width;
-    if (del() <= w + 1) continue;
-    pomanjsaj(k, w, del);
-    if (del() > w + 1) k.classList.add("tb-dolga");
+    // Formula se ne prelomi sredi izraza (textbook.css), zato šteje njena cela širina.
+    // Zložena formula je blok z max-width 100 %, zato štejemo tudi njeno vsebino (scrollWidth).
+    const sirina = (x) => Math.max(x.getBoundingClientRect().width, x.scrollWidth);
+    k = prilagodiFormulo(k, w, sirina);
+    if (sirina(k) > w + 1) k.classList.add("tb-dolga");
   }
 }
 

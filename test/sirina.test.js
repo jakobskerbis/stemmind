@@ -61,3 +61,19 @@ test("a setting with only a few values is buttons, not a slider (axis sliders st
   assert.match(kit, /sl\.classList\.add\("axis-slider"\);\n\s+sl\.sync\?\.\(\);/);
   assert.match(pub("textbook.css"), /\.demo-slider\.as-choice \.demo-choice/);
 });
+
+test("a formula that does not fit is folded at its equals signs: left side on top, each »= …« below", async () => {
+  const { zlozTex } = await import("../public/sirina.js");
+  assert.equal(zlozTex("a = b + c = d"), "\\begin{aligned}&a \\\\ &\\quad {}= b + c \\\\ &\\quad {}= d\\end{aligned}");
+  assert.equal(zlozTex("s = v t"), "\\begin{aligned}&s \\\\ &\\quad {}= v t\\end{aligned}");
+  // relacije v ulomku, oklepaju ali {…} ostanejo na mestu
+  assert.equal(zlozTex("F = \\dfrac{a = b}{c}"), "\\begin{aligned}&F \\\\ &\\quad {}= \\dfrac{a = b}{c}\\end{aligned}");
+  assert.equal(zlozTex("\\left( x = 1 \\right) + (a \\ge 0)"), null);
+  // stopnja 1: le izjave, ločene s \quad, vsaka v svoji vrstici
+  assert.equal(zlozTex("x^2 = 4 \\qquad (x > 0)", 1), "\\begin{aligned}&x^2 = 4 \\\\ &(x > 0)\\end{aligned}");
+  // kemijska enačba v enem \mathrm
+  assert.equal(zlozTex("\\mathrm{CaCO_3 \\to CaO + CO_2}"), "\\begin{aligned}&\\mathrm{CaCO_3} \\\\ &\\quad {}\\to \\mathrm{CaO + CO_2}\\end{aligned}");
+  // ni kje zložiti ali že ima vrstice
+  assert.equal(zlozTex("x + y"), null);
+  assert.equal(zlozTex("\\begin{aligned}a&=b\\end{aligned}"), null);
+});
