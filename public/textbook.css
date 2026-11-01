@@ -66,6 +66,8 @@
 @media print { .textbook :is(.katex-display, .md-table-wrap) { -webkit-mask-image: none; mask-image: none; } }
 /* Formula v besedilu se nikoli ne prelomi v dve vrstici (j 2026-10-31: »(p + | q)√b«); preširoko ureja sirina.js. */
 .textbook .katex { white-space: nowrap; }
+/* Zložena formula (sirina.js, j 2026-11-01): leva stran zgoraj, vsak »= …« spodaj. Sredi besedila je v svoji vrstici. */
+.textbook :is(p, li, dd, blockquote, h2, h3) .katex.tb-zlozena:not(.katex-display > .katex) { display: block; width: fit-content; max-width: 100%; margin: 6px 0; }
 .textbook .katex.tb-dolga { display: inline-block; max-width: 100%; overflow-x: auto; overflow-y: hidden; vertical-align: middle; padding: 2px 0 4px; }
 .textbook .explanation code { overflow-wrap: anywhere; }
 .textbook .explanation pre { max-width: 100%; overflow-x: auto; }
