@@ -112,3 +112,6 @@
   body.tb-peek > #view-textbook:not(.in-okno) .tb-stepper { bottom: var(--tabbar-h, 0px); padding-bottom: 12px; }
 }
 @media (prefers-reduced-motion: reduce) { .tabbar, .tb-stepper { transition: none !important; } }
+
+/* Pogled je lahko v spodnji vrstici (npr. Laboratorij): takrat brez »← Jaz«. */
+.me-back[hidden] { display: none !important; }

@@ -1119,11 +1119,16 @@ async function phone(browser, app) {
     await closeTour(p, "vse");
     if ((await currentView(p)) !== "view-path") throw new Error("po vodiču ni odprta Učna pot");
   });
-  for (const v of ["textbook", "chat", "competition"]) {
+  // Četrto mesto spodnje vrstice je Laboratorij (j, 1. 11.); Tekmovanja so pod »Jaz«.
+  for (const v of ["textbook", "chat", "lab"]) {
     await step(p, `zavihek-${v}`, async () => {
       await barTab(p, v, { wait: 300 });
       if ((await currentView(p)) !== `view-${v}`) throw new Error(`zavihek ${v} se ni odprl`);
       await screen(p, v);
+      if (v === "lab") {
+        if (!(await p.locator('#tabbar .tab[data-view="lab"]').evaluate((b) => b.classList.contains("active")))) throw new Error("Laboratorij v spodnji vrstici ni označen");
+        if (await p.locator("#view-lab > .me-back").isVisible()) throw new Error("Laboratorij v spodnji vrstici ima gumb »← Jaz«");
+      }
     });
   }
   // Klepet: spodnja vrstica umaknjena, vrstica za pisanje na dnu; kolešček gor jo pokaže, Nazaj v glavi vodi nazaj.
@@ -1136,7 +1141,7 @@ async function phone(browser, app) {
     const over = await p.evaluate(() => document.querySelector("#composer").getBoundingClientRect().bottom - document.querySelector("#tabbar").getBoundingClientRect().top);
     if (over > 1) throw new Error(`pokazana spodnja vrstica prekrije vrstico za pisanje (${over} px)`);
     await click(p, "#chat-back", { wait: 400 });
-    if ((await currentView(p)) !== "view-competition") throw new Error(`Nazaj v klepetu vodi na ${await currentView(p)}`);
+    if ((await currentView(p)) !== "view-lab") throw new Error(`Nazaj v klepetu vodi na ${await currentView(p)}`);
   });
   await step(p, "jaz", async () => {
     await barTab(p, "me", { wait: 300 });

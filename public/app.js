@@ -321,9 +321,9 @@ window.addEventListener("popstate", () => {
   }
 });
 
-const ME_VIEWS = ["me", "progress", "league", "settings", "account", "feedback", "graph", "games", "corner", "schedule", "zbirke", "scan", "lab"];
-// Tekmovanja in »NPZ in matura« si na telefonu delita četrto mesto spodnje vrstice; tisti, ki ga tam ni, je pod »Jaz«.
-const meView = (name) => ME_VIEWS.includes(name) || (!!name && name === offTabbarPrep());
+const ME_VIEWS = ["me", "progress", "league", "settings", "account", "feedback", "graph", "games", "corner", "schedule", "zbirke", "scan"];
+// Četrto mesto spodnje vrstice: Laboratorij ali »NPZ in matura« (ko je cilj NPZ/matura); kar ni tam, je pod »Jaz«.
+const meView = (name) => ME_VIEWS.includes(name) || (!!name && offTabbarViews().includes(name));
 // Zbirke in učni pass: odpre pogled, po želji s predmetom v pogledu »preglej« (from = pogled za Nazaj).
 let zbOpen = {};
 function openZbirke(item = null, from = null) {
@@ -1950,11 +1950,11 @@ const siExams = () => !!state.student && !regionalExams() && Object.hasOwn(SI_EX
 const examMode = () => regionalExams() || state.backTo === "exams";
 const prepLabel = () => (regionalExams() ? t("nav.exams") : t("nav.competition"));
 const prepBack = () => (examMode() ? t("exam.back") : t("result.toCompetitions"));
-// Telefon: na četrtem mestu »NPZ in matura«, ko je cilj NPZ ali matura, sicer Tekmovanja.
+// Telefon: na četrtem mestu »NPZ in matura«, ko je cilj NPZ ali matura, sicer Laboratorij (j, 1. 11.); Tekmovanja so pod Jaz.
 const examsInTabbar = () => siExams() && ["npz", "matura"].includes(state.student.settings.goal);
-function offTabbarPrep() {
-  if (!siExams()) return null;
-  return examsInTabbar() ? "competition" : "exams";
+function offTabbarViews() {
+  if (!state.student) return ["competition"];
+  return examsInTabbar() ? ["competition", "lab"] : siExams() ? ["competition", "exams"] : ["competition"];
 }
 const meBackHtml = () => `<button type="button" class="ghost back me-back">${icon("arrow-left")}<span>${t("nav.me")}</span></button>`;
 function syncCompetitionTab() {
@@ -1967,17 +1967,19 @@ function syncCompetitionTab() {
   $("#competition-tab").querySelector("i, svg").outerHTML = icon(regionalExams() ? "clipboard-check" : "medal");
   const m = $("#competition-tab-m");
   const exams = examsInTabbar();
-  m.hidden = noComp;
-  m.dataset.view = exams ? "exams" : "competition";
+  m.hidden = false;
+  m.dataset.view = exams ? "exams" : "lab";
   const ms = m.querySelector("span");
   // Na ozki spodnji vrstici kratko: »NPZ« v OŠ, »Matura« v SŠ (zgoraj »NPZ in matura«).
   const short = state.student?.settings.educational_track === "OSNOVNA_SOLA" ? "goal.npz" : "goal.matura";
-  ms.dataset.i18n = exams ? short : regionalExams() ? "nav.exams" : "nav.competition";
-  ms.textContent = exams ? t(short) : prepLabel();
-  m.querySelector("i, svg").outerHTML = icon(exams || regionalExams() ? "clipboard-check" : "medal");
+  ms.dataset.i18n = exams ? short : "nav.lab";
+  ms.textContent = exams ? t(short) : t("nav.lab");
+  m.querySelector("i, svg").outerHTML = icon(exams ? "clipboard-check" : "flask-conical");
   m.classList.toggle("active", currentView === m.dataset.view);
   $("#me-exams").hidden = !siExams() || exams;
-  $("#me-competition").hidden = noComp || !exams;
+  $("#me-competition").hidden = noComp;
+  $("#me-lab").hidden = !exams;
+  $("#view-lab > .me-back").hidden = !exams;
 }
 // Gumb »nazaj« na temi oziroma pri seriji nalog vodi tja, od koder je učenec prišel.
 function setBack(view) {
@@ -2639,7 +2641,7 @@ async function loadCompetition(key = state.compKey) {
     : `<p class="muted small-note">${t("comp.historyEmpty")}</p>`;
   const learning = c.units.flatMap((u) => u.topics).filter((t) => t.status !== "new").length;
   box.innerHTML = `
-    ${offTabbarPrep() === "competition" ? meBackHtml() : ""}
+    ${meBackHtml()}
     <h1>${t("comp.title")}</h1>
     <div class="comp-pickers">
       ${seg(["MAT", "FIZ", "KEM"].map((k) => [k, SUBJECT_NAMES[k] || k]), c.subject, "data-comp-subject")}
@@ -2775,7 +2777,7 @@ async function loadExams(key = state.examKey, exam = null) {
     : [...c.exams.own, ...(ownIds.includes(c.exam) ? [] : [{ id: c.exam, name: c.name }])].map((x) => [x.id, x.name]);
   const m = c.mock;
   box.innerHTML = `
-    ${si && offTabbarPrep() === "exams" ? meBackHtml() : ""}
+    ${si && offTabbarViews().includes("exams") ? meBackHtml() : ""}
     <h1>${si ? t("nav.examsSi") : t("exam.title")}</h1>
     <div class="comp-pickers">
       ${seg(examSeg, c.exam, "data-exam")}
