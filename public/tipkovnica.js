@@ -225,8 +225,11 @@ function goKey(cls = "w2") {
 function ctxChips() {
   if (prefs.words && S.layer === "abc" && words) {
     const w = currentWord();
-    const empty = !String(S.field?.value ?? S.field?.textContent ?? "").trim();
-    const list = w ? suggest(words, w) : (starts?.[empty ? "start" : "next"] || []);
+    const v = String(S.field?.value ?? S.field?.textContent ?? "");
+    const r = S.field && sel(S.field);
+    // vezne besede samo za presledkom (za »2« ali »?« bi se zlepile: »2je«)
+    const kind = !v.trim() ? "start" : r && /\s$/.test(v.slice(0, r[0])) ? "next" : null;
+    const list = w ? suggest(words, w) : (kind && starts?.[kind]) || [];
     return { words: true, html: list.map((x) => chip(x, { a: "word", v: x }, "word")).join("") };
   }
   let list = val(S.cfg.ctx, S.field);
