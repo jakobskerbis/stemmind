@@ -2,7 +2,7 @@
 
 Skupna pravila videza, da je aplikacija povsod enaka. Nove dele sestavi iz gradnikov spodaj, ne iz novih različic istega.
 
-**Vse platforme so vedno vizualno usklajene** (j, 1. 11. 2026): splet (računalnik, telefon, tablica) in mobilna aplikacija (`mobile/`, Android in iPhone) imajo enake barve, pisavo, ikone, oblike in slog. Kdor spremeni videz spleta (barve, slog, pisavo, ikone, gradnik), v isti spremembi enako uredi tudi aplikacijo (`mobile/src/lib/theme.ts`, zasloni v `mobile/src/app/`) ali v PR zapiše, zakaj ne gre. Razlike so dovoljene samo tam, kjer jih zahteva sistem telefona (sistemska opozorila, gumb nazaj, spodnja vrstica z zavihki).
+**Vse platforme so vedno usklajene, po videzu in po delovanju** (j, 1. 11. 2026): splet (računalnik, telefon, tablica) in mobilna aplikacija (`mobile/`, Android in iPhone) imajo enake barve, pisavo, ikone, oblike in slog ter enake funkcije (kar zna splet, zna tudi aplikacija, in obratno). Kdor spremeni videz ali doda oziroma spremeni funkcijo na spletu, v isti spremembi enako uredi tudi aplikacijo (`mobile/src/lib/theme.ts`, zasloni v `mobile/src/app/`) ali v PR zapiše, zakaj ne gre, in to doda na seznam razlik v `docs/mobilna-aplikacija.md`. Razlike so dovoljene samo tam, kjer jih zahteva sistem telefona (sistemska opozorila, gumb nazaj, spodnja vrstica z zavihki).
 
 ## Barve in mere
 
