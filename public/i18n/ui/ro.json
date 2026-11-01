@@ -527,6 +527,7 @@
   "set.xpGoalNote": "Aproximativ 15 XP pentru fiecare problemă rezolvată. Când atingi obiectivul, aplicația te felicită.",
   "off.noConnection": "Nu există conexiune la internet.",
   "off.serverBusy": "Evklid nu răspunde acum, poate se actualizează. Încearcă din nou peste un minut.",
+  "off.updating": "Evklid se actualizează. O clipă, continui automat …",
   "off.serverDown": "Aplicația nu este disponibilă acum. Se va deschide singură imediat ce revine.",
   "off.banner": "Ești offline. Poți exersa exercițiile salvate pe dispozitiv ({n}).",
   "off.bannerEmpty": "Ești offline. Când revii online, exercițiile vor fi salvate pe dispozitiv.",

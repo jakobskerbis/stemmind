@@ -521,6 +521,7 @@
   "set.xpGoalNote": "About 15 XP for each solved task. When you reach the goal, the app congratulates you.",
   "off.noConnection": "No internet connection.",
   "off.serverBusy": "Evklid isn't responding right now, it may be updating. Try again in a minute.",
+  "off.updating": "Evklid is updating. Just a moment, I'll continue automatically …",
   "off.serverDown": "The app is not reachable right now. It will open by itself as soon as it is back.",
   "off.banner": "You're offline. You can practise tasks saved on this device ({n}).",
   "off.bannerEmpty": "You're offline. Once you're back online, practice tasks will be saved to this device.",

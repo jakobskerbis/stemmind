@@ -521,6 +521,7 @@
   "set.xpGoalNote": "Environ 15 XP par exercice résolu. Quand tu atteins l'objectif, l'appli te félicite.",
   "off.noConnection": "Pas de connexion Internet.",
   "off.serverBusy": "Evklid ne répond pas pour le moment, il est peut-être en cours de mise à jour. Réessaie dans une minute.",
+  "off.updating": "Evklid se met à jour. Un instant, je continue automatiquement …",
   "off.serverDown": "L’application n’est pas joignable pour le moment. Elle s’ouvrira d’elle-même dès qu’elle sera de retour.",
   "off.banner": "Tu es hors connexion. Tu peux t'entraîner avec les exercices enregistrés sur l'appareil ({n}).",
   "off.bannerEmpty": "Tu es hors connexion. Dès que tu seras de nouveau connecté, des exercices seront enregistrés sur l'appareil.",

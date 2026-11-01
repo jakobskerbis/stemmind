@@ -533,6 +533,7 @@
   "set.xpGoalNote": "Około 15 XP za każde rozwiązane zadanie. Gdy osiągniesz cel, aplikacja ci pogratuluje.",
   "off.noConnection": "Brak połączenia z internetem.",
   "off.serverBusy": "Evklid teraz nie odpowiada, może właśnie się aktualizuje. Spróbuj ponownie za minutę.",
+  "off.updating": "Evklid się aktualizuje. Chwilę, kontynuuję automatycznie …",
   "off.serverDown": "Aplikacja jest teraz niedostępna. Otworzy się sama, gdy znów będzie dostępna.",
   "off.banner": "Jesteś offline. Możesz ćwiczyć zadania zapisane na urządzeniu ({n}).",
   "off.bannerEmpty": "Jesteś offline. Gdy znów będziesz online, zadania do ćwiczeń zapiszą się na urządzeniu.",

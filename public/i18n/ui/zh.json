@@ -515,6 +515,7 @@
   "set.xpGoalNote": "每解出一道题约得 15 XP。达成目标时，应用会为你庆祝。",
   "off.noConnection": "没有网络连接。",
   "off.serverBusy": "Evklid 现在没有响应，可能正在更新。请一分钟后再试。",
+  "off.updating": "Evklid 正在更新。请稍等，会自动继续 …",
   "off.serverDown": "目前无法访问应用。恢复后会自动打开。",
   "off.banner": "你已离线。可以练习保存在设备上的题目（{n}）。",
   "off.bannerEmpty": "你已离线。重新联网后，练习题会保存到设备上。",

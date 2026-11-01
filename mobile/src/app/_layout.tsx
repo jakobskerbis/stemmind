@@ -12,7 +12,7 @@ import { t, useLanguage } from "@/lib/i18n";
 import { font, fonts, setFontsReady, useTheme } from "@/lib/theme";
 import { watchPurchases } from "@/lib/billing";
 import { useAppUpdates } from "@/lib/updates";
-import { api, setTakenHandler } from "@/lib/api";
+import { api, setBusyListener, setTakenHandler } from "@/lib/api";
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
@@ -59,6 +59,13 @@ function Root() {
     return () => setTakenHandler(null);
   }, [select]);
 
+  // Strežnik se ravno znova zaganja (objava nove različice): »Evklid se posodablja …«, kot pasica na spletu.
+  const [serverBusy, setServerBusy] = useState(false);
+  useEffect(() => {
+    setBusyListener(setServerBusy);
+    return () => setBusyListener(null);
+  }, []);
+
   // Dotik obvestila odpre učno pot.
   useEffect(() => {
     const sub = Notifications.addNotificationResponseReceivedListener(() => {
@@ -96,6 +103,12 @@ function Root() {
           <Stack.Screen name="delete-account" options={{ title: t("mob.deleteAccount"), presentation: "modal" }} />
         </Stack.Protected>
       </Stack>
+      {serverBusy ? (
+        <View pointerEvents="none" accessibilityLiveRegion="polite" style={{ position: "absolute", left: 16, right: 16, bottom: 32, flexDirection: "row", alignItems: "center", gap: 10, backgroundColor: th.surface, borderColor: th.border, borderWidth: 1, borderRadius: 12, padding: 12 }}>
+          <ActivityIndicator color={th.accent} />
+          <Text style={[{ color: th.text, flex: 1 }, font(400)]}>{t("off.updating")}</Text>
+        </View>
+      ) : null}
       {/* Prenos novega APK; gumb nazaj prekliče prenos. */}
       <Modal transparent visible={updating !== null} animationType="fade" statusBarTranslucent onRequestClose={cancelUpdate}>
         <View style={{ flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: "rgba(0,0,0,0.4)", padding: 24 }}>
