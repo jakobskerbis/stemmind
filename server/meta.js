@@ -124,8 +124,8 @@ export function createStreamFilter() {
           }
         }
       }
-      // Presledke in prelome na koncu zadrži, dokler ne vemo, ali jim sledi META.
-      while (safeEnd > emitted && /\s/.test(buffer[safeEnd - 1])) safeEnd--;
+      // Presledke, prelome in oznake kode na koncu zadrži, dokler ne vemo, ali jim sledi META.
+      while (safeEnd > emitted && /[\s`]/.test(buffer[safeEnd - 1])) safeEnd--;
       if (safeEnd <= emitted) return "";
       const out = buffer.slice(emitted, safeEnd);
       emitted = safeEnd;
