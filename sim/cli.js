@@ -46,7 +46,15 @@ export function runClaude({ system, prompt, schema = null, model, effort = "medi
   const c = findClaude();
   if (!c) throw new Error("Claude Code (ukaz `claude`) ni nameščen ali ni v PATH. Namesti: npm install -g @anthropic-ai/claude-code, nato `claude` in prijava.");
   const args = [...c.pre, "-p", "--tools", "", "--strict-mcp-config", "--no-session-persistence", "--output-format", "json", "--model", model, "--effort", toEffort(effort)];
-  if (system) args.push("--system-prompt", system);
+  // V prazni mapi, da Claude Code ne naloži CLAUDE.md in nastavitev projekta; sistemski prompt
+  // prek datoteke, ker je kot argument na Windows predolg (ENAMETOOLONG).
+  const cwd = path.join(os.tmpdir(), "evklid-sim-cli");
+  fs.mkdirSync(cwd, { recursive: true });
+  const sysFile = system ? path.join(cwd, `system-${process.pid}-${Date.now()}-${Math.random().toString(36).slice(2)}.md`) : null;
+  if (sysFile) {
+    fs.writeFileSync(sysFile, system);
+    args.push("--system-prompt-file", sysFile);
+  }
   if (schema) args.push("--json-schema", JSON.stringify(schema));
   // Brez API ključa v okolju, sicer bi Claude Code zaračunal API namesto naročnine.
   const env = { ...process.env };
@@ -54,9 +62,6 @@ export function runClaude({ system, prompt, schema = null, model, effort = "medi
   delete env.ANTHROPIC_AUTH_TOKEN;
   delete env.ANTHROPIC_BASE_URL;
   return new Promise((resolve, reject) => {
-    // V prazni mapi, da Claude Code ne naloži CLAUDE.md in nastavitev projekta.
-    const cwd = path.join(os.tmpdir(), "evklid-sim-cli");
-    fs.mkdirSync(cwd, { recursive: true });
     const child = spawn(c.cmd, args, { env, cwd, stdio: ["pipe", "pipe", "pipe"], windowsHide: true });
     let out = "";
     let err = "";
@@ -72,6 +77,7 @@ export function runClaude({ system, prompt, schema = null, model, effort = "medi
     });
     child.on("close", (code) => {
       clearTimeout(timer);
+      if (sysFile) fs.rm(sysFile, { force: true }, () => {});
       let r;
       try {
         r = JSON.parse(out.trim().split("\n").filter((l) => l.startsWith("{")).at(-1) || "{}");
