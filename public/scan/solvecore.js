@@ -1594,7 +1594,12 @@ function solveNumeric(ast) {
     if (n.k === "call" && n.args.length !== 1) manyArgs = true;
     if (n.k === "call" && (INV_TRIG.has(n.f) || (DIRECT_TRIG.has(n.f) && !hasUnit(n.args[0] || {})))) ambiguous = true;
   });
-  if (manyArgs) return null;
+  // arcsin znotraj večjega izraza (2·arcsin 1): stopinje kot navadno število bi dale napačen rezultat
+  let innerArc = false;
+  walkTree(unwrap(ast), (n) => {
+    if (n !== unwrap(ast) && n.k === "call" && INV_TRIG.has(n.f)) innerArc = true;
+  });
+  if (manyArgs || innerArc) return null;
   // samo arkus funkcija (arcsin 0,5): rezultat je kot, zato ima enoto
   const top = unwrap(ast);
   const angleOut = top.k === "call" && INV_TRIG.has(top.f);
@@ -1611,12 +1616,11 @@ function solveNumeric(ast) {
   }
   const deg = line(withUnit(ast, "deg"), true);
   const rad = line(withUnit(ast, "rad"), false);
-  if (!deg && !rad) return null;
+  if (!deg) return null; // tan 90 ne obstaja v stopinjah: radiani niso pravi glavni rezultat
   const steps = [];
   if (deg) steps.push(step(T("scan.s.angleDeg"), deg.tex, { why: T("scan.w.angleDeg") }));
   if (rad) steps.push(step(T("scan.s.angleRad"), rad.tex, { why: T("scan.w.angleRad") }));
-  const main = deg || rad;
-  return result({ kind: "arith", numeric: true, problemTex: tex(ast), answer: { tex: main.tex, approx: deg && rad ? rad.tex : null }, methods: [{ id: "calc", steps }], verified: true });
+  return result({ kind: "arith", numeric: true, problemTex: tex(ast), answer: { tex: deg.tex, approx: rad ? rad.tex : null }, methods: [{ id: "calc", steps }], verified: true });
 }
 
 // ---------------------------------------------------------------------------
@@ -2184,6 +2188,8 @@ export function solve(text, { goal = null, complex = false } = {}) {
         } catch (err) {
           // funkcije in konstante (sin 15, log 2, π): približek kot na kalkulatorju, brez AI
           if (!(err instanceof AlgebraError) || err.message !== "func") throw err;
+          // 2e3 razčlenjevalnik bere kot 2·e·3 – znanstvenega zapisa ne ugibamo
+          if (/\d\s*e\s*[-+]?\d/i.test(prep(text))) throw err;
           r = solveNumeric(info.ast);
         }
         break;

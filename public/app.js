@@ -84,8 +84,8 @@ const api = async (url, opts = {}) => {
   if (!res || (res.status === 503 && res.headers.get("X-Offline")) || serverDown(res)) {
     const local = fromPack(url, opts);
     if (local !== undefined) return local;
-    // Internet deluje, strežnik pa ne odgovori (npr. med objavo nove različice): ne pišemo »Ni povezave z internetom«.
-    throw new Error(navigator.onLine === false ? t("off.noConnection") : t("off.serverBusy"));
+    // Gostitelj odgovori, naš strežnik pa ne (npr. med objavo nove različice): ne pišemo »Ni povezave z internetom«.
+    throw new Error(!res || navigator.onLine === false ? t("off.noConnection") : t("off.serverBusy"));
   }
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));

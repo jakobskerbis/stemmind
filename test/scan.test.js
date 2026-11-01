@@ -189,7 +189,8 @@ test("functions without AI: calculator value, angle without unit in degrees and 
   assert.equal(flat(ans("arcsin(0.5)").answer.tex), flat("\\arcsin\\left(0{,}5\\right) = 30^{\\circ}"));
   // nedefinirano ali neskončno: ne ugibamo
   // sin(0,5) je lahko sin 0,5 ali funkcija z dvema argumentoma: ne ugibamo
-  for (const t of ["tan(90°)", "log(-1)", "arcsin(2)", "sin(0,5)"]) assert.equal(solve(t).ok, false, t);
+  // tan 90 v stopinjah ne obstaja; arcsin v večjem izrazu; 2e3 ni Eulerjevo število
+  for (const t of ["tan(90°)", "tan(90)", "log(-1)", "arcsin(2)", "sin(0,5)", "2*arcsin(1)", "arctan(1)+1", "2e3+sin(1)"]) assert.equal(solve(t).ok, false, t);
   // korenov brez funkcij še vedno ne zaokrožujemo (AI zna delno korenjenje)
   assert.equal(solve("sqrt(8)").ok, false);
 });
