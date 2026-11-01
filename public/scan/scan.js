@@ -546,7 +546,8 @@ async function solveAi() {
     render();
   } catch (err) {
     if (seq !== aiSeq || S.mode !== "solution") return;
-    S.ai = { error: err?.message || t("scan.aiFail"), retry: true };
+    // inštruktor (AI) trenutno ni na voljo: prijazno sporočilo namesto tehnične kode
+    S.ai = { error: err?.body?.unavailable ? t("scan.tutorDown") : err?.message || t("scan.aiFail"), retry: true };
     render();
   }
 }

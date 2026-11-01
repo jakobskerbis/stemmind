@@ -186,3 +186,6 @@ obeh trgovin za vsebino, ki jo ustvari AI.
   `X-App-Session` so namenoma brez imena aplikacije, da preimenovanje ne pokvari nameščenih različic.
 - Skeniranje: zavihek Skeniraj zdaj pošlje fotografijo inštruktorju. Ko bo združen reševalnik po korakih
   (ločena nit), naj zavihek najprej pokliče njegov API.
+  Razlika do spleta (1. 11. 2026): splet reši izraze s funkcijami (sin 15 v stopinjah in radianih, ln 2)
+  brez AI s `public/scan/solvecore.js` in ob nedosegljivem inštruktorju pokaže `scan.tutorDown`; aplikacija
+  tega ekrana še nima. Enako je že v obeh: sporočilo `off.serverBusy`, ko strežnik med objavo ne odgovori.
