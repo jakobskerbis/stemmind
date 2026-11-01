@@ -84,14 +84,16 @@ export function Body({ children, muted, small, style, center }: { children: Reac
   return <Text style={[{ color: muted ? th.muted : th.text, ...font(), fontSize: small ? 14 : 16, lineHeight: small ? 20 : 23, textAlign: center ? "center" : undefined }, style]}>{children}</Text>;
 }
 
-type ButtonProps = { title: string; onPress?: () => void; kind?: "primary" | "secondary" | "ghost" | "danger"; icon?: IconName; loading?: boolean; disabled?: boolean; style?: StyleProp<ViewStyle> };
-export function Button({ title, onPress, kind = "primary", icon, loading, disabled, style }: ButtonProps) {
+// iconOnly: samo ikona (npr. kalkulator ob Namigu), title je napis za bralnik zaslona.
+type ButtonProps = { title: string; onPress?: () => void; kind?: "primary" | "secondary" | "ghost" | "danger"; icon?: IconName; loading?: boolean; disabled?: boolean; iconOnly?: boolean; style?: StyleProp<ViewStyle> };
+export function Button({ title, onPress, kind = "primary", icon, loading, disabled, iconOnly, style }: ButtonProps) {
   const th = useTheme();
   const bg = kind === "primary" ? th.accent : kind === "danger" ? th.danger : "transparent";
   const fg = kind === "primary" ? th.accentText : kind === "danger" ? th.dangerText : th.accent;
   return (
     <Pressable
       accessibilityRole="button"
+      accessibilityLabel={iconOnly ? title : undefined}
       accessibilityState={{ disabled: !!disabled || !!loading, busy: !!loading }}
       disabled={disabled || loading}
       onPress={() => {
@@ -105,7 +107,7 @@ export function Button({ title, onPress, kind = "primary", icon, loading, disabl
           backgroundColor: bg,
           borderWidth: kind === "secondary" ? 1.5 : 0,
           borderColor: th.accent,
-          paddingHorizontal: 18,
+          paddingHorizontal: iconOnly ? 14 : 18,
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "center",
@@ -116,8 +118,8 @@ export function Button({ title, onPress, kind = "primary", icon, loading, disabl
         style,
       ]}
     >
-      {loading ? <ActivityIndicator color={fg} /> : icon ? <Icon name={icon} size={18} color={fg} /> : null}
-      <Text style={{ color: fg, fontSize: 17, ...font(700) }}>{title}</Text>
+      {loading ? <ActivityIndicator color={fg} /> : icon ? <Icon name={icon} size={iconOnly ? 22 : 18} color={fg} /> : null}
+      {iconOnly ? null : <Text style={{ color: fg, fontSize: 17, ...font(700) }}>{title}</Text>}
     </Pressable>
   );
 }

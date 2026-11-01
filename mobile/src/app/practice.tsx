@@ -61,6 +61,9 @@ export default function Practice() {
   const student = useStudent();
   const sid = student.id;
   const { mode = "topic", topic } = useLocalSearchParams<{ mode?: "topic" | "daily" | "review"; topic?: string }>();
+  // Predmet kot calcSubject() na spletu: iz oznake teme, sicer iz nastavitev učenca.
+  const subject = (topic && /^[A-Z]+/.exec(topic)?.[0]) || student.settings?.subject || "MAT";
+  const openCalc = () => router.push({ pathname: "/calculator", params: { mode: subject === "KEM" ? "pse" : "sci", subject } });
 
   const [example, setExample] = useState<Task | null>(null);
   const [task, setTask] = useState<Task | null>(null);
@@ -278,6 +281,8 @@ export default function Practice() {
               <Button title={steps.length ? t("task.hintMore") : t("task.hintBtn")} kind="secondary" icon={{ ios: "lightbulb", android: "lightbulb" }} onPress={hint} style={{ flex: 1 }} />
             ) : null}
             {!offline ? <Button title={t("task.askTutor")} kind="ghost" icon={{ ios: "bubble.left", android: "chat_bubble_outline" }} loading={helping} onPress={() => help(result?.correct === false ? undefined : "explain")} style={{ flex: 1 }} /> : null}
+            {/* Kalkulator kot na spletu (openCalcOverlay): pri kemiji periodni sistem, sicer znanstveni. Potrebuje povezavo. */}
+            {!offline ? <Button title={t("nav.graph")} iconOnly kind="secondary" icon={{ ios: "plus.forwardslash.minus", android: "calculate" }} onPress={openCalc} /> : null}
           </View>
           {result?.correct === false && !offline && result.attemptsLeft ? <Body muted small center>{t("task.attemptsLeft", { n: result.attemptsLeft })}</Body> : null}
         </View>
