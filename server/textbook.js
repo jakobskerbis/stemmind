@@ -113,6 +113,15 @@ export function expandFormulaBlocks(md, mode = "html") {
     return `<details class="tb-formula"><summary>Pokaži formulo</summary>\n\n${inner}\n\n</details>`;
   });
 }
+// Rešitev rešenega primera (od »**Rešitev:**« do naslednjega naslova) je v aplikaciji skrita za
+// gumbom »Pokaži rešitev«, da učenec najprej poskusi sam (j, 1. 11. 2026). Samo v načinu html.
+const SOLUTION_RE = /^\*\*Rešitev:\*\*[ \t]*([^\n]*)\n([\s\S]*?)(?=^#{2,3}[ \t]|(?![\s\S]))/gm;
+export function hideSolutions(md) {
+  return String(md ?? "").replace(SOLUTION_RE, (_, first, body) => {
+    const inner = `${first.trim()}\n\n${body.trim()}`.trim();
+    return `<details class="tb-solution"><summary>Pokaži rešitev</summary>\n\n${inner}\n\n</details>\n\n`;
+  });
+}
 // Vmesno vprašanje v razlagi (»Premisli«): vprašanje, vrstica »---«, odgovor.
 //   :::premisli
 //   Kaj se zgodi z gostoto, če kocko prerežemo na pol?
@@ -133,7 +142,8 @@ export function expandThinkBlocks(md, mode = "html") {
     }</div>`;
   });
 }
-const withFormulas = (parts, mode) => parts.map((x) => ({ ...x, md: expandFormulaBlocks(x.md, mode) }));
+const withFormulas = (parts, mode) =>
+  parts.map((x) => ({ ...x, md: mode === "html" ? hideSolutions(expandFormulaBlocks(x.md, mode)) : expandFormulaBlocks(x.md, mode) }));
 
 function lessonFile(topicId) {
   const [pathKey, slug] = topicId.split("/");

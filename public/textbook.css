@@ -86,6 +86,12 @@
 .tb-formula[open] > summary::before { content: "− "; }
 .tb-formula[open] > summary { border-bottom: 1px solid var(--border); margin-bottom: 6px; }
 .tb-formula p { margin: 6px 0; }
+/* Rešitev rešenega primera: gumb »Pokaži rešitev« (server/textbook.js hideSolutions); enako v aplikaciji. */
+.tb-solution { margin: 10px 0; }
+.tb-solution > summary { display: inline-flex; align-items: center; min-height: 40px; padding: 6px 16px; border-radius: 999px; cursor: pointer; font-weight: 700; color: var(--accent); background: var(--accent-soft); list-style: none; }
+.tb-solution > summary::-webkit-details-marker { display: none; }
+.tb-solution > summary:hover { filter: brightness(0.97); }
+.tb-solution[open] > summary { margin-bottom: 6px; }
 .tb-alt { margin-top: 12px; }
 .tb-alt-tabs { flex-wrap: wrap; margin: 12px 0 8px; }
 .tb-alt-body { background: var(--surface-2); border-radius: 12px; padding: 4px 14px; }
