@@ -212,3 +212,10 @@ test("predlogi besed: vrstica nikoli ni prazna (začetki in vezne besede za sl i
     assert.ok(ZACETKI[lang]?.next?.length >= 3, `${lang}: vezne besede`);
   }
 });
+
+test("polje za povezavo (type=url ali inputmode=url) dobi telefonovo tipkovnico zaradi lepljenja", () => {
+  const el = (attrs) => ({ tagName: "INPUT", type: attrs.type || "text", getAttribute: (k) => attrs[k] ?? null, hasAttribute: () => false, closest: () => null });
+  assert.equal(fieldKind(el({ type: "url" })), null);
+  assert.equal(fieldKind(el({ type: "text", inputmode: "url" })), null);
+  assert.equal(fieldKind(el({ type: "text" })), "text");
+});

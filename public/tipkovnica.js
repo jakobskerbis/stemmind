@@ -707,6 +707,14 @@ export function initKeyboard() {
     vv.addEventListener("scroll", sedi);
     sedi();
   }
+  // Nikoli dve tipkovnici hkrati: če se odpre telefonova (zaslon se skrajša za več kot 150 px), se naša skrije.
+  let polna = innerHeight, sirina = innerWidth;
+  addEventListener("resize", () => {
+    if (innerWidth !== sirina) { sirina = innerWidth; polna = innerHeight; return; } // obrat zaslona
+    polna = Math.max(polna, innerHeight);
+    const sistemska = polna - Math.min(innerHeight, vv?.height ?? innerHeight) > 150;
+    if (sistemska && S.open && touch()) hideKeyboard();
+  });
 
   document.addEventListener(
     "pointerdown",

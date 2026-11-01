@@ -105,7 +105,8 @@ export const TUTOR_CHIPS = [["x²", "²"], ["√", "√(@)"], ["a/b", "(@)/()"],
 export const EMAIL_CHIPS = [["@", "@"], [".si", ".si"], [".com", ".com"], ["@gmail.com", "@gmail.com"]];
 
 // ---------- katera polja dobijo našo tipkovnico ----------
-const NO_KB_TYPES = new Set(["email", "password", "file", "date", "datetime-local", "month", "week", "time", "color", "range", "checkbox", "radio", "submit", "button", "reset", "image", "hidden"]);
+// url: povezave se lepijo, telefonova tipkovnica ima odložišče (j, 1. 11.: polje za APK)
+const NO_KB_TYPES = new Set(["email", "password", "url", "file", "date", "datetime-local", "month", "week", "time", "color", "range", "checkbox", "radio", "submit", "button", "reset", "image", "hidden"]);
 const NUM_TYPES = new Set(["number", "tel"]);
 const NUM_MODES = new Set(["numeric", "decimal", "tel"]);
 const LOGIN = /\b(username|current-password|new-password|one-time-code)\b/;
@@ -125,6 +126,7 @@ export function fieldKind(el, inputmode = el?.getAttribute?.("inputmode")) {
   if (tag === "INPUT") {
     const type = String(el.type || el.getAttribute?.("type") || "text").toLowerCase();
     if (NO_KB_TYPES.has(type)) return null;
+    if (String(inputmode || "").toLowerCase() === "url") return null;
     if (NUM_TYPES.has(type) || NUM_MODES.has(String(inputmode || "").toLowerCase())) return "num";
     return "text";
   }
