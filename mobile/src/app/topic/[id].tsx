@@ -52,16 +52,22 @@ export default function Topic() {
   if (error || !L) return <ErrorView message={error?.message || ""} onRetry={reload} retryLabel={t("mob.retry")} />;
   const lesson = L.lesson;
 
+  // »Razloži« ob označenem besedilu lekcije: isto sporočilo kot na spletu (public/textbook.js, MAX_QUOTE 800).
+  const explain = (sel: string) => {
+    if (starting) return;
+    const quote = sel.length > 800 ? `${sel.slice(0, 800)} …` : sel;
+    learnWithTutor(t("mob.explainAsk", { name: L.name, quote }));
+  };
   const setMode = (v: boolean) => {
     tap();
     setByStep(v);
     Storage.setItemSync(STEP_PREF, v ? "1" : "0");
   };
-  const learnWithTutor = async () => {
+  const learnWithTutor = async (send = t("topic.startMsg", { name: L.name })) => {
     setStarting(true);
     try {
       const conv = await api<{ id: number }>(`/api/students/${student.id}/conversations`, { body: { topic_id: L.id } });
-      router.push({ pathname: "/chat/[id]", params: { id: String(conv.id), send: t("topic.startMsg", { name: L.name }) } });
+      router.push({ pathname: "/chat/[id]", params: { id: String(conv.id), send } });
     } catch (err) {
       Alert.alert((err as Error).message);
     } finally {
@@ -102,7 +108,7 @@ export default function Topic() {
       ) : null}
 
       {!lesson ? (
-        <Card>{L.explanation ? <RichText text={L.explanation} /> : <Body>{t("topic.noExplanation")}</Body>}</Card>
+        <Card>{L.explanation ? <RichText text={L.explanation} onExplain={explain} /> : <Body>{t("topic.noExplanation")}</Body>}</Card>
       ) : byStep && cur ? (
         <>
           <View style={{ gap: 6 }}>
@@ -112,7 +118,7 @@ export default function Topic() {
           {cur.type === "text" ? (
             <Card>
               {cur.title ? <Title size={19}>{cur.title}</Title> : null}
-              <RichText key={step} text={cur.md} />
+              <RichText key={step} text={cur.md} onExplain={explain} />
             </Card>
           ) : (
             <Checks checks={cur.checks.map((i) => lesson.checks![i])} title={cur.final ? t("mob.checkYourself") : t("tb.steps.quick")} interactive={L.interactive} />
@@ -127,7 +133,7 @@ export default function Topic() {
           {lesson.sections.map((s, i) => (
             <Card key={i}>
               {s.title ? <Title size={19}>{s.title}</Title> : null}
-              <RichText text={s.md} />
+              <RichText text={s.md} onExplain={explain} />
             </Card>
           ))}
           {lesson.checks?.length ? <Checks checks={lesson.checks} title={t("mob.checkYourself")} interactive={L.interactive} /> : null}
@@ -142,7 +148,7 @@ export default function Topic() {
               <Chip key={i} label={a.title} active={alt === i} onPress={() => setAlt(alt === i ? null : i)} />
             ))}
           </View>
-          {alt != null ? <RichText key={alt} text={lesson.alternatives[alt].md} /> : null}
+          {alt != null ? <RichText key={alt} text={lesson.alternatives[alt].md} onExplain={explain} /> : null}
         </Card>
       ) : null}
 
@@ -151,7 +157,7 @@ export default function Topic() {
       {!lesson || !byStep || lastStep ? (
         <View style={{ gap: 10, marginTop: 4 }}>
           {L.practice ? <Button title={t("topic.practice")} icon={{ ios: "pencil.and.list.clipboard", android: "edit_note" }} onPress={() => router.push({ pathname: "/practice", params: { mode: "topic", topic: L.id } })} /> : null}
-          <Button title={t("topic.learn")} kind="secondary" icon={{ ios: "bubble.left.and.bubble.right", android: "forum" }} loading={starting} onPress={learnWithTutor} />
+          <Button title={t("topic.learn")} kind="secondary" icon={{ ios: "bubble.left.and.bubble.right", android: "forum" }} loading={starting} onPress={() => learnWithTutor()} />
           <Button title={t("topic.known")} kind="ghost" onPress={markKnown} />
           <View style={{ flexDirection: "row", gap: 10 }}>
             {L.prev ? <NavLink label={L.prev.name} dir="prev" onPress={() => goTo(L.prev)} /> : <View style={{ flex: 1 }} />}

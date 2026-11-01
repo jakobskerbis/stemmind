@@ -2,22 +2,26 @@
 // izriše WebView brez drsenja, ki je visok toliko kot vsebina (povezave se odprejo v brskalniku).
 // html: že pripravljen HTML (npr. slika k nalogi). Ko se besedilo spreminja (odgovor inštruktorja
 // prihaja sproti), WebView ostane naložen in se zamenja le vsebina, brez utripanja.
+// onExplain (samo besedilo lekcije, ne klepet): v meniju označenega besedila je »Razloži«, kot na spletu
+// gumb ob izboru v public/textbook.js. Android ob lastnih postavkah skrije sistemske, zato tam še »Kopiraj«.
 import React, { memo, useEffect, useMemo, useRef, useState } from "react";
-import { Text, useWindowDimensions, View } from "react-native";
+import { Clipboard, Platform, Text, useWindowDimensions, View } from "react-native";
 import { WebView } from "react-native-webview";
 import * as WebBrowser from "expo-web-browser";
 import { docHtml, isPlain, MEASURE_JS, toHtml } from "@/lib/rich";
-import { useTheme } from "@/lib/theme";
+import { font, useTheme } from "@/lib/theme";
+import { t } from "@/lib/i18n";
 
-type Props = { text: string; html?: string; ai?: boolean; streaming?: boolean; size?: number; center?: boolean; minHeight?: number };
+type Props = { text: string; html?: string; ai?: boolean; streaming?: boolean; size?: number; center?: boolean; minHeight?: number; onExplain?: (selected: string) => void };
 
 const replaceJs = (body: string) => `(function(){var c=document.getElementById('c');if(c)c.innerHTML=${JSON.stringify(body)};})();true;`;
 
-function RichTextImpl({ text, html: rawHtml, ai = false, streaming = false, size = 17, center = false, minHeight = 0 }: Props) {
+function RichTextImpl({ text, html: rawHtml, ai = false, streaming = false, size = 17, center = false, minHeight = 0, onExplain }: Props) {
   const th = useTheme();
   // Velikost pisave v WebView sledi nastavitvi telefona (Dynamic Type, Android »Velikost pisave«), kot pri Text.
   const { fontScale } = useWindowDimensions();
-  const plain = !rawHtml && isPlain(text);
+  // Z »Razloži« vedno WebView: naravni Text nima lastnih postavk v meniju izbora.
+  const plain = !rawHtml && !onExplain && isPlain(text);
   const body = useMemo(() => (plain ? "" : (rawHtml ?? toHtml(text, { ai, streaming }))), [plain, rawHtml, text, ai, streaming]);
   const [height, setHeight] = useState(minHeight || size * 1.6);
   const ref = useRef<React.ComponentRef<typeof WebView>>(null);
@@ -35,7 +39,7 @@ function RichTextImpl({ text, html: rawHtml, ai = false, streaming = false, size
   }, [body]);
 
   if (plain) {
-    return <Text style={{ color: th.text, fontSize: size, lineHeight: size * 1.5, textAlign: center ? "center" : undefined }} selectable>{text.trim()}</Text>;
+    return <Text style={{ color: th.text, fontSize: size, lineHeight: size * 1.5, textAlign: center ? "center" : undefined, ...font() }} selectable>{text.trim()}</Text>;
   }
   return (
     <View style={{ height, minHeight }}>
@@ -66,6 +70,13 @@ function RichTextImpl({ text, html: rawHtml, ai = false, streaming = false, size
         allowsLinkPreview={false}
         textInteractionEnabled
         setSupportMultipleWindows={false}
+        menuItems={onExplain ? [{ key: "explain", label: t("mob.explain") }, ...(Platform.OS === "android" ? [{ key: "copy", label: t("sc.copy") }] : [])] : undefined}
+        onCustomMenuSelection={onExplain ? (e: { nativeEvent: { key: string; selectedText: string } }) => {
+          const sel = e.nativeEvent.selectedText.replace(/[ \t]+/g, " ").trim();
+          if (sel.length < 2) return;
+          if (e.nativeEvent.key === "copy") Clipboard.setString(sel);
+          else onExplain(sel);
+        } : undefined}
         accessible
       />
     </View>

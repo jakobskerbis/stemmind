@@ -368,6 +368,19 @@ test("download page offers the APK when it exists and works without login", asyn
   );
 });
 
+test("calculator page for the app works without login and loads only the calculator modules", async () => {
+  await withServer(async ({ base }) => {
+    const res = await fetch(`${base}/kalkulator?mode=pse&lang=en&theme=dark`);
+    assert.equal(res.status, 200);
+    assert.match(res.headers.get("content-type"), /text\/html/);
+    const page = await res.text();
+    assert.match(page, /<script type="module" src="kalkulator\.js"><\/script>/);
+    assert.doesNotMatch(page, /src="app\.js"|<script>/); // brez celotne aplikacije in brez vrinjenih skript (CSP)
+    assert.match(res.headers.get("content-security-policy"), /script-src 'self'/);
+    for (const f of ["kalkulator.js", "kalkulator-nastavi.js", "graph/sci.js", "graph/calc.js", "graph/tools.js"]) assert.equal((await fetch(`${base}/${f}`)).status, 200, f);
+  });
+});
+
 // Iz brskalnika v aplikacijo brez ponovne prijave (server/mobile/app-link.js).
 test("app link: signed-in phone browser opens the app signed in, with its open profile, once", async () => {
   await withServer(async ({ base, store, appClient }) => {

@@ -13,7 +13,8 @@ const isTouch = () => typeof matchMedia !== "undefined" && matchMedia("(hover: n
 
 /**
  * Ustvari kalkulator v elementu root.
- * opts: { t(key, vars), icon(name), locale(), storageKey(), api?, studentId(), toast(msg), askTutor(text), symbols?(panel, field) }
+ * opts: { t(key, vars), icon(name), locale(), storageKey(), api?, studentId(), toast(msg), askTutor?(text), canExport?, symbols?(panel, field) }
+ * Brez api ni »Moji grafi« (stran /kalkulator brez prijave), brez askTutor ni »Vprašaj inštruktorja«.
  */
 export function createCalculator(root, opts) {
   const { t, icon } = opts;
@@ -57,7 +58,7 @@ export function createCalculator(root, opts) {
         <button type="button" class="gc-btn gc-playall" data-act="playall" data-on="false" hidden></button>
         <span class="gc-bar-sp"></span>
         <button type="button" class="gc-btn gc-text-btn" data-act="examples" title="${esc(t("gc.examples"))}">${icon("sparkles")}<span>${esc(t("gc.examples"))}</span></button>
-        <button type="button" class="gc-btn gc-text-btn" data-act="graphs" title="${esc(t("gc.myGraphs"))}">${icon("folder-open")}<span>${esc(t("gc.myGraphs"))}</span></button>
+        ${opts.api ? `<button type="button" class="gc-btn gc-text-btn" data-act="graphs" title="${esc(t("gc.myGraphs"))}">${icon("folder-open")}<span>${esc(t("gc.myGraphs"))}</span></button>` : ""}
         <button type="button" class="gc-btn" data-act="more" title="${esc(t("gc.more"))}" aria-label="${esc(t("gc.more"))}">${icon("ellipsis-vertical")}</button>
       </div>
       <div class="gc-list" role="list"></div>
@@ -1051,8 +1052,8 @@ export function createCalculator(root, opts) {
 
   function openMore(anchor) {
     const html = `
-      <button type="button" class="gc-menu-row" data-m="export">${icon("image-down")}<span>${esc(t("gc.export"))}</span></button>
-      <button type="button" class="gc-menu-row" data-m="ask">${icon("message-circle")}<span>${esc(t("gc.ask"))}</span></button>
+      ${opts.canExport === false ? "" : `<button type="button" class="gc-menu-row" data-m="export">${icon("image-down")}<span>${esc(t("gc.export"))}</span></button>`}
+      ${opts.askTutor ? `<button type="button" class="gc-menu-row" data-m="ask">${icon("message-circle")}<span>${esc(t("gc.ask"))}</span></button>` : ""}
       <button type="button" class="gc-menu-row" data-m="keypad" aria-pressed="${keyboardOpenFor(root)}">${icon("keyboard")}<span>${esc(t("gc.keypad"))}</span></button>
       <button type="button" class="gc-menu-row" data-m="settings">${icon("wrench")}<span>${esc(t("gc.settings"))}</span></button>
       <div class="gc-pop-sep"></div>
