@@ -77,8 +77,16 @@ export const setTakenHandler = (fn: ((studentId: number) => void) | null) => {
 type Opts = { method?: string; body?: unknown; signal?: AbortSignal; stream?: boolean };
 
 const BUSY_WAIT = [2000, 3000, 5000, 8000, 10000, 12000, 15000, 15000]; // skupaj ~70 s
+// čakanje, ki ga prekliče signal zahteve (zapuščen zaslon)
+const pause = (ms: number, signal?: AbortSignal) =>
+  new Promise<void>((ok, fail) => {
+    const abort = () => (clearTimeout(id), fail(Object.assign(new Error("aborted"), { name: "AbortError" })));
+    const id = setTimeout(() => (signal?.removeEventListener("abort", abort), ok()), ms);
+    if (signal?.aborted) abort();
+    else signal?.addEventListener("abort", abort, { once: true });
+  });
 export const hostBusy = (res: Response) =>
-  [502, 503, 504, 530].includes(res.status) && !/json/i.test(res.headers.get("content-type") || "");
+  [502, 503, 504].includes(res.status) && !/json/i.test(res.headers.get("content-type") || "");
 // Zaslon lahko med čakanjem pokaže »Evklid se posodablja …« (setBusyListener).
 let onBusy: ((busy: boolean) => void) | null = null;
 export const setBusyListener = (fn: ((busy: boolean) => void) | null) => {
@@ -96,25 +104,27 @@ export async function request(path: string, opts: Opts = {}) {
   if (opts.body !== undefined) headers["content-type"] = "application/json";
   let res!: Response;
   // Med objavo nove različice gostitelj ~1 minuto vrača 502/503 brez JSON: tiho ponovimo (kot splet, public/app.js).
-  for (let i = 0; ; i++) {
-    try {
-      res = (await fetch(API_URL + path, {
-        method: opts.method || (opts.body !== undefined ? "POST" : "GET"),
-        headers,
-        body: opts.body !== undefined ? JSON.stringify(opts.body) : undefined,
-        signal: opts.signal,
-        credentials: "omit",
-      })) as unknown as Response;
-    } catch (err: any) {
-      if (err?.name === "AbortError") throw err;
-      throw new ApiError(0, { offline: true }, t("off.noConnection"));
+  try {
+    for (let i = 0; ; i++) {
+      try {
+        res = (await fetch(API_URL + path, {
+          method: opts.method || (opts.body !== undefined ? "POST" : "GET"),
+          headers,
+          body: opts.body !== undefined ? JSON.stringify(opts.body) : undefined,
+          signal: opts.signal,
+          credentials: "omit",
+        })) as unknown as Response;
+      } catch (err: any) {
+        if (err?.name === "AbortError") throw err;
+        throw new ApiError(0, { offline: true }, t("off.noConnection"));
+      }
+      if (!hostBusy(res) || i >= BUSY_WAIT.length) break;
+      onBusy?.(true);
+      await pause(BUSY_WAIT[i], opts.signal);
     }
-    if (!hostBusy(res) || i >= BUSY_WAIT.length) break;
-    onBusy?.(true);
-    await new Promise((r) => setTimeout(r, BUSY_WAIT[i]));
-    if (opts.signal?.aborted) throw Object.assign(new Error("aborted"), { name: "AbortError" });
+  } finally {
+    onBusy?.(false);
   }
-  onBusy?.(false);
   const s = res.headers.get("x-app-session");
   if (s !== null) await setSession(s && s !== "-" ? s : null);
   if (res.status === 401) {

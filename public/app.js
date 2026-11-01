@@ -58,7 +58,7 @@ const fromPack = (url, opts) => (state.student ? offlineApi(state.student.id, ur
 function serverDown(res) {
   const code = res.headers.get("ngrok-error-code");
   const ours = /json/i.test(res.headers.get("content-type") || "");
-  const down = !!(code && code !== "ERR_NGROK_6024") || (!ours && [502, 504, 530].includes(res.status));
+  const down = !!(code && code !== "ERR_NGROK_6024") || (!ours && [502, 503, 504, 530].includes(res.status));
   if (down !== serverIsDown) {
     serverIsDown = !!down;
     setTimeout(() => syncOfflineBanner(), 0);
@@ -68,7 +68,21 @@ function serverDown(res) {
 let serverIsDown = false;
 
 // Med objavo nove različice: tiho ponovimo, pasica »Evklid se posodablja …« (public/restart-retry.js).
-const fetchThroughRestart = (url, init) => fetchRetry(url, init, { busy: serverDown });
+// Samo stran gostitelja 502/503/504 (Render med ponovnim zagonom); izpad tunela (ngrok, 530) gre takoj na vaje brez povezave.
+const restarting = (res) => !res.headers.get("ngrok-error-code") && !/json/i.test(res.headers.get("content-type") || "") && [502, 503, 504].includes(res.status);
+let serverUpdating = false;
+function setUpdating(on) {
+  if (on === serverUpdating) return;
+  serverUpdating = on;
+  setTimeout(() => syncOfflineBanner(), 0);
+}
+async function fetchThroughRestart(url, init) {
+  try {
+    return await fetchRetry(url, init, { busy: (r) => (restarting(r) && (setUpdating(true), true)) });
+  } finally {
+    setUpdating(false);
+  }
+}
 
 const api = async (url, opts = {}) => {
   if (/\/tasks\/off-/.test(url)) {
@@ -1073,12 +1087,12 @@ function syncOfflineBanner() {
   const box = $("#offline-banner");
   if (!box || !state.student) return;
   const sid = state.student.id;
-  const off = !navigator.onLine || serverIsDown;
+  const off = !navigator.onLine || serverIsDown || serverUpdating;
   const n = packTaskCount(sid);
   const pending = pendingCount(sid);
   box.hidden = !off && !pending;
   // internet deluje, strežnik pa se ravno znova zaganja (objava nove različice)
-  const updating = serverIsDown && navigator.onLine !== false;
+  const updating = serverUpdating && navigator.onLine !== false;
   box.innerHTML = updating
     ? `${icon("refresh-cw")}<span>${t("off.updating")}</span>`
     : off
