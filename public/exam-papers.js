@@ -68,7 +68,7 @@ function rowHtml(e, i, tutor, local) {
   const expl = e.ours ? "" : `<span class="pp-expl">${icon("notebook-pen")}${esc(t("pp.oursSoon"))}</span>`;
   // »Rešuj z inštruktorjem«: pogovor z inštruktorjem, ki ve, katero polo učenec rešuje (nalogo pošlje s fotografijo ali prepisom).
   const help = tutor ? `<button type="button" class="secondary small pp-tutor" data-pp-tutor="${i}">${icon("message-circle")}<span>${esc(t("pp.tutor"))}</span></button>` : "";
-  // »Odpri prenešeno polo«: PDF, ki ga je učenec prenesel z ric.si, ostane v napravi (public/paper-viewer.js).
+  // »Odpri preneseno polo«: PDF, ki ga je učenec prenesel z ric.si, ostane v napravi (public/paper-viewer.js).
   const open = local ? `<label class="btn-secondary small pp-file pp-local">${icon("folder-open")}<span>${esc(t("pp.openLocal"))}</span><input type="file" accept="application/pdf,.pdf" data-pp-local="${i}"></label>` : "";
   return `<li class="pp-row"><div class="pp-when"><b>${e.year}</b><span>${esc(termText(e))}</span></div><div class="pp-files">${files}${help}${open}</div>${expl}</li>`;
 }

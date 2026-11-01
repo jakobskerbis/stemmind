@@ -2906,7 +2906,7 @@ async function paperTutor(entry, subjectName) {
     toast(err.message);
   }
 }
-// Prenešena pola ostane v pomnilniku (ta seja, ta učenec): po »Pomoč pri tej nalogi« jo »Odpri prenešeno polo« pri isti
+// Prenesena pola ostane v pomnilniku (ta seja, ta učenec): po »Pomoč pri tej nalogi« jo »Odpri preneseno polo« pri isti
 // poli odpre znova pri isti strani, brez ponovne izbire datoteke. Zapiranje pole ali menjava profila jo pozabi.
 let keptPaper = null;
 function openLocalPaper(entry, file, subjectName, page = 0) {
@@ -2928,7 +2928,7 @@ async function newTutorChat() {
   showView("chat");
   await openConversation(conv.id);
 }
-// »Pomoč pri tej nalogi« v prenešeni poli (public/paper-viewer.js): nov pogovor, v enem sporočilu izrez naloge
+// »Pomoč pri tej nalogi« v preneseni poli (public/paper-viewer.js): nov pogovor, v enem sporočilu izrez naloge
 // (slika kot pri fotografiji) in besedilo iz pole. Pošlje se samo ta naloga, ker jo je učenec izbral.
 async function paperTask(entry, subjectName, task) {
   if (!entry || !task?.image) return;

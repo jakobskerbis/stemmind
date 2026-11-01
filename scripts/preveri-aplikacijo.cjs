@@ -760,22 +760,22 @@ async function examsView(p, label) {
   await p.fill("#input", "");
   await tab(p, "exams");
   await expectVisible(p, '#exam-papers .pp-row', "pretekle pole po vrnitvi");
-  // »Odpri prenešeno polo«: majhen PDF (ne prava pola RIC) se odpre v napravi, naloga dobi »Pomoč pri tej nalogi«.
-  // EVKLID_PREVERI_POLA=<pot do prenešene pole>: ročni preizkus s pravo polo (samo lokalno, nikoli v repozitorij).
+  // »Odpri preneseno polo«: majhen PDF (ne prava pola RIC) se odpre v napravi, naloga dobi »Pomoč pri tej nalogi«.
+  // EVKLID_PREVERI_POLA=<pot do prenesene pole>: ročni preizkus s pravo polo (samo lokalno, nikoli v repozitorij).
   const real = process.env.EVKLID_PREVERI_POLA;
   const pdf = real ? { name: "pola.pdf", mimeType: "application/pdf", buffer: fs.readFileSync(real) } : { name: "pola.pdf", mimeType: "application/pdf", buffer: tinyPdf(SAMPLE) };
   await p.locator("#exam-papers [data-pp-local]").first().setInputFiles(pdf);
-  await expectVisible(p, ".pv .pv-task .pv-help", "naloga v prenešeni poli", 15000);
+  await expectVisible(p, ".pv .pv-task .pv-help", "naloga v preneseni poli", 15000);
   const found = await p.locator(".pv .pv-task").count();
-  if (real ? !found : found !== 2) throw new Error(`prenešena pola: najdenih nalog ${found}, pričakovani 2`);
-  if (real) console.log(`prenešena pola (${label}): ${await p.locator(".pv .pv-help").count()} gumbov za ${found} območij`);
-  await expectVisible(p, ".pv .pv-page canvas[width]:not([width='0'])", "izris strani prenešene pole", 15000);
+  if (real ? !found : found !== 2) throw new Error(`prenesena pola: najdenih nalog ${found}, pričakovani 2`);
+  if (real) console.log(`prenesena pola (${label}): ${await p.locator(".pv .pv-help").count()} gumbov za ${found} območij`);
+  await expectVisible(p, ".pv .pv-page canvas[width]:not([width='0'])", "izris strani prenesene pole", 15000);
   await screen(p, `prenesena-pola-${label}`);
   await click(p, ".pv [data-pv-close]", { wait: 200 });
-  if (await p.locator(".pv").count()) throw new Error("prenešene pole ni mogoče zapreti");
+  if (await p.locator(".pv").count()) throw new Error("prenesene pole ni mogoče zapreti");
   // »Pomoč pri tej nalogi«: nov pogovor, v enem sporočilu izrez naloge (slika) in besedilo.
   await p.locator("#exam-papers [data-pp-local]").first().setInputFiles(pdf);
-  await expectVisible(p, ".pv .pv-task .pv-help", "naloga v prenešeni poli", 15000);
+  await expectVisible(p, ".pv .pv-task .pv-help", "naloga v preneseni poli", 15000);
   await click(p, ".pv .pv-task .pv-help", { wait: 800 });
   if ((await currentView(p)) !== "view-chat") throw new Error("»Pomoč pri tej nalogi« ne odpre inštruktorja");
   await expectVisible(p, "#messages .msg.user", "sporočilo z nalogo iz pole", 10000);
@@ -784,7 +784,7 @@ async function examsView(p, label) {
   await screen(p, `prenesena-pola-pomoc-${label}`);
   await tab(p, "exams");
   await expectVisible(p, '#exam-papers .pp-row', "pretekle pole po pomoči pri nalogi");
-  // Pola ostane v pomnilniku: »Odpri prenešeno polo« jo po pomoči odpre znova brez izbire datoteke; Esc jo pozabi.
+  // Pola ostane v pomnilniku: »Odpri preneseno polo« jo po pomoči odpre znova brez izbire datoteke; Esc jo pozabi.
   await p.locator("#exam-papers .pp-local").first().click();
   await expectVisible(p, ".pv .pv-task .pv-help", "ponovno odprta pola po pomoči", 15000);
   await p.keyboard.press("Escape");
@@ -794,12 +794,12 @@ async function examsView(p, label) {
   const size = p.viewportSize();
   await p.setViewportSize({ width: 360, height: 740 });
   await p.locator("#exam-papers [data-pp-local]").first().setInputFiles(pdf);
-  await expectVisible(p, ".pv .pv-task .pv-help", "naloga v prenešeni poli na telefonu", 15000);
+  await expectVisible(p, ".pv .pv-task .pv-help", "naloga v preneseni poli na telefonu", 15000);
   await expectVisible(p, ".pv .pv-page canvas[width]:not([width='0'])", "izris strani na telefonu", 15000);
   await screen(p, `prenesena-pola-360-${label}`);
   await p.keyboard.press("Escape");
   await p.waitForTimeout(200);
-  if (await p.locator(".pv").count()) throw new Error("Esc ne zapre prenešene pole");
+  if (await p.locator(".pv").count()) throw new Error("Esc ne zapre prenesene pole");
   await p.setViewportSize(size);
   // Izbira pol po korakih: krušne drobtine vrnejo korak, izbira ga zapre.
   await click(p, "#exam-papers .lp-crumb[data-pp-step=\"exam\"]", { wait: 200 });

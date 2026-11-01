@@ -1,4 +1,4 @@
-// Razdelitev prenešene pole na naloge iz besedilne plasti PDF (pdf.js getTextContent), brez DOM-a (test/paper-tasks.test.js).
+// Razdelitev prenesene pole na naloge iz besedilne plasti PDF (pdf.js getTextContent), brez DOM-a (test/paper-tasks.test.js).
 // Pole RIC številčijo naloge ob levem robu (»1.«, »2.« …); podnaloge ponovijo številko (»1.« + »a)«) ali jo
 // razširijo (»1.1«), naloga čez več strani ima številko na vrhu vsake strani. Deli (»A) KRATKE NALOGE«,
 // »B) …«) začnejo znova pri 1. Strani brez številk (naslovnica, prazne, slike) ostanejo za ročni okvir.

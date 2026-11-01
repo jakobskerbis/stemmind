@@ -1,4 +1,4 @@
-// Prenešena pola v Evklidu: učenec polo prenese z ric.si (Izpitna pola) in jo izbere tukaj. PDF ostane v napravi:
+// Prenesena pola v Evklidu: učenec polo prenese z ric.si (Izpitna pola) in jo izbere tukaj. PDF ostane v napravi:
 // izriše ga pdf.js (/vendor/pdfjs/, naložen šele ob odprtju), strežnik ga ne dobi in ne shrani (pole so last RIC).
 // Naloge najde besedilna plast (public/paper-tasks.js); »Pomoč pri tej nalogi« izreže le to nalogo (JPEG, največ
 // 1600 px) in jo z besedilom pošlje inštruktorju. Strani brez zaznanih nalog: učenec povleče okvir (prst ali miška).
