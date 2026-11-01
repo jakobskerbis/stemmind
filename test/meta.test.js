@@ -113,6 +113,8 @@ test("a forbidden lead phrase is stripped from the stream and from the stored te
   assert.equal(stripLeadPhrase("Odlično, 12 je prav. Kaj sledi?"), "Odlično, 12 je prav. Kaj sledi?");
   assert.equal(stripLeadPhrase("Jasno je, da velja."), "Jasno je, da velja.");
   assert.equal(stripLeadPhrase("Seveda!"), "Seveda!");
+  assert.equal(stripLeadPhrase("Jasno, da velja: 2x = 6."), "Jasno, da velja: 2x = 6.");
+  assert.equal(stripLeadPhrase("Super, 12 je prav."), "Super, 12 je prav.");
   const full = 'Dobro vprašanje! Ulomek je del celote. Koliko je pol pice?\n<<META subject=MAT topic="ulomki" error=0 mode=A flag=none done=0>>';
   for (const size of [1, 3, 20, 200]) {
     const f = createStreamFilter();
@@ -121,4 +123,10 @@ test("a forbidden lead phrase is stripped from the stream and from the stored te
     out += f.end().rest;
     assert.equal(out, "Ulomek je del celote. Koliko je pol pice?", `size ${size}`);
   }
+});
+
+test("stripMeta keeps the fences of a real code block and strips only the block that held META", () => {
+  const code = "Velja $a<b$.\n\n```js\nlet x = 1;\n```\n\nKonec.";
+  assert.equal(stripMeta(code + '\n```\n<<META subject=MAT topic="x" error=0 mode=A flag=none done=0>>\n```'), code);
+  assert.equal(stripMeta('Ok.\n`META subject=MAT topic="x" error=0 mode=A flag=none done=0`'), "Ok.");
 });

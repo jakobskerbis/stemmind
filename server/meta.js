@@ -70,19 +70,19 @@ export function parseCards(text, max = 3) {
 
 export function stripMeta(text) {
   return String(text)
+    // META v bloku kode: cel blok z oznakami (zaključne oznake pravih blokov kode ostanejo).
+    .replace(/^[ \t]*```[^\n]*\n(?:[ \t]*\n)*[ \t]*[`*_]*<{0,2}[ \t]*META\b[^\n]*\n(?:[ \t]*\n)*[ \t]*```[ \t]*$/gm, "")
+    .replace(META_LOOSE_RE, "") // cela vrstica, tudi z oznakami kode okoli (»`<<META …>>`«)
     .replace(META_RE, "")
     .replace(CARD_RE, "")
-    .replace(META_LOOSE_RE, "")
     .replace(/<<\s*(?:META|KARTICA)\b[\s\S]*$/, "") // nedokončan blok (npr. odrezan odgovor)
-    .replace(/^[ \t]*```[ \t]*\n(?:[ \t]*\n)*[ \t]*```[ \t]*$/gm, "") // prazen blok kode, v katerem je bila META
-    .replace(/^[ \t]*`+[ \t]*$/gm, "") // prazne oznake kode okoli odstranjene META
     .replace(/\n{3,}/g, "\n\n")
     .replace(/\s+$/, "");
 }
 
 // Uvodne fraze, ki jih prompt prepoveduje (»Odlično vprašanje!«, »Seveda!«): odstranjene še na strežniku.
 // Pohvala pravilnega koraka (»Točno tako.«, »Bravo.«) ni uvodna fraza in ostane.
-const LEAD_RE = /^[ \t]*(?:(?:odlično|dobro|super|zanimivo|izvrstno|krasno|lepo|zelo dobro|fino)\s+vprašanje|seveda|z veseljem|jasno|great question|good question|of course|sure)[!.,:;]+[ \t]*(?:\n[ \t]*)?/i;
+const LEAD_RE = /^[ \t]*(?:(?:odlično|dobro|super|zanimivo|izvrstno|krasno|lepo|zelo dobro|fino)\s+vprašanje|seveda|z veseljem|jasno|great question|good question|of course|sure)[!.,:;]+(?![ \t]*da\b)[ \t]*(?:\n[ \t]*)?/i; // »Jasno, da …« je stavek, ne uvodna fraza
 export const LEAD_MAX = 40; // toliko znakov zadrži pretakanje, dokler ni jasno, ali se odgovor začne z uvodno frazo
 export const stripLeadPhrase = (text) => String(text).replace(LEAD_RE, (m) => (m.trim().length === String(text).trim().length ? m : "")).replace(/^[ \t]*\n/, "");
 

@@ -108,6 +108,10 @@ function trySolve(cand, deriv) {
   return { type, problem: c, problemTex: r.problemTex, answer: ans, answerTex: r.answer.tex };
 }
 
+// Sporočilo je videti kot nova naloga (beseda naloge ali rešljiv zapis): učenčev rezultat po njem
+// se ne sme soditi proti starejši nalogi.
+export const looksLikeTask = (text) => stripLead(text).task || !!presolve(text, { first: true });
+
 /**
  * Naloge iz učenčevega sporočila, ki jih reševalnik reši in preveri. Ob dvomu nič.
  * first: prvo sporočilo pogovora. Pozneje samo z besedo naloge (»Reši …«, »Izračunaj …«): med vodenjem je
@@ -309,10 +313,13 @@ export const givesVerdict = (answer) => VERDICT_RE.test(String(answer || "").sli
 // Učenčeva vrednost neznanke ali rezultata (»x = 3«, »x1 = 2, x2 = -2«, golo število »11/12«).
 function claimValues(text, vars) {
   const t = String(text).replace(/\$/g, "").replace(/\s*=\s*/g, "=");
-  const out = [];
-  for (const m of t.matchAll(/(?<![\p{L}\d])([a-zA-Z])(?:_?\{?(\d)\}?)?=([-+]?\s*(?:\d+[.,]?\d*(?:\/\d+)?|\d*[.,]\d+))(?![\d\/])/gu)) {
-    if (vars.includes(m[1])) out.push({ v: m[1], val: m[3].replace(/\s+/g, "") });
+  // Vrednost, ki ji sledi operator ali črka (»x = 6 - 3«, »x = 2x - 1«, »x = 12 : 4«), je vmesni korak, ne rezultat:
+  // o njem sodi model. Pri večkratni navedbi iste neznanke šteje zadnja (»x = 6 … torej x = 3«).
+  const byKey = new Map();
+  for (const m of t.matchAll(/(?<![\p{L}\d])([a-zA-Z])(?:_?\{?(\d)\}?)?=([-+]?\s*(?:\d+(?:[.,]\d+)?(?:\/\d+)?|[.,]\d+))(?![\d\/\p{L}])(?![ \t]*[-+*/:·×÷^=(\\])/gu)) {
+    if (vars.includes(m[1])) byKey.set(m[1] + (m[2] || ""), { v: m[1], val: m[3].replace(/\s+/g, "") });
   }
+  const out = [...byKey.values()];
   if (out.length) return out;
   // Golo število kot celotno sporočilo (»mislim da 58«): samo pri računu brez neznank. Pri enačbi je
   // lahko vmesni korak (»8« za 2x = 8), zato tam brez sodbe kode.
@@ -353,7 +360,7 @@ export function claimNote(text, pre) {
   const finding = wrong ? `the student's result ${wrong} is WRONG; the exact result of the task is ${task}` : `the student's result is CORRECT (exact result of the task: ${task})`;
   return (
     `<${NOTE_TAG}>\nAn exact check compared the student's last message with the task: ${finding}.\n` +
-    "Your reply must agree with this check: never confirm a wrong result and never reject a correct one. For a wrong result show the step where it fails (način A: without the full solution). Never mention a program, a check or this note.\n" +
+    "Your reply must agree with this check: never confirm a wrong result and never reject a correct one. For a wrong result: if the student sent no working, ask for it; otherwise show the step where it fails. In način A never state the final result or the full solution. Never mention a program, a check or this note.\n" +
     `</${NOTE_TAG}>`
   );
 }
@@ -361,10 +368,10 @@ export function claimNote(text, pre) {
 const VERDICT_SYSTEM = `You check one thing in an AI tutor's reply to a school or university student: whether the tutor judged the student's last message correctly.
 You get the tutor's previous message (context), the student's message and the tutor's reply, in any language.
 First work out yourself, independently and carefully, whether the student's statement, result or step is right (recompute every number, check every fact and unit). Then compare with the tutor's judgement.
-It is an error if the tutor confirms something wrong, rejects or "corrects" something right, or states a wrong value or fact in its reply. Teaching style, hints, questions and leaving steps to the student are fine. A partially right answer that the tutor treats as partially right is fine.
-Reply with exactly one line: OK, or NAPAKA: <whether the student's statement is right or wrong and why, with the correct value, and what the tutor got wrong>.`;
+It is an error if the tutor confirms something wrong, rejects or "corrects" something right, or states a wrong value or fact in its reply. Teaching style, hints, questions, asking for the student's working and leaving steps to the student are fine. A partially right answer that the tutor treats as partially right is fine. If you cannot decide with certainty, reply OK.
+Reply with exactly one line: OK, or NAPAKA: <at most two sentences: whether the student's statement is right or wrong and why, with the correct value, and what the tutor got wrong>.`;
 
-// Dnevna meja za pregled sodb z modelom (USD, vrsta »preverjanje«); negativno = brez meje.
+// Dnevna meja za pregled sodb z modelom (USD, vrsta »sodba«, ločen števec od vrste »preverjanje«); negativno = brez meje.
 export const VERDICT_DAILY_USD = () => {
   const raw = process.env.EVKLID_VERDICT_DAILY_USD;
   const v = Number(raw === undefined || raw === "" ? 2 : raw);
@@ -381,14 +388,14 @@ export function needsVerdictReview({ answer, lite, spentToday }) {
 export async function reviewVerdict({ context, student, answer, createFn = null, usage = null, studentId = null }) {
   const user = `TUTOR'S PREVIOUS MESSAGE:\n${String(context || "(none)").slice(0, 3000)}\n\nSTUDENT'S MESSAGE:\n${String(student || "").slice(0, 2000)}\n\nTUTOR'S REPLY:\n${String(answer || "").slice(0, 6000)}`;
   const r = await askModel(MODEL_MID, user, createFn, VERDICT_SYSTEM);
-  const cost = usage ? usage.log(studentId, r.model, r.usage, "preverjanje") : 0;
+  const cost = usage ? usage.log(studentId, r.model, r.usage, "sodba") : 0;
   return { reason: !r.verdict.ok && /^[\s*`_]*NAPAKA/i.test(r.text || "") ? r.verdict.reason : null, cost };
 }
 
 // Opomba za ponovni odgovor po napačni sodbi.
 export const verdictNote = (reason) =>
   `<${NOTE_TAG}>\nAn independent check of the student's last message found: ${String(reason).slice(0, 600)}\n` +
-  "Your previous reply judged the student's message wrongly, so answer again from scratch, in agreement with this check: confirm what is right; for what is wrong show the step where it fails (način A: without the full solution). Never mention a program, a check, a reviewer or this note.\n" +
+  "Your previous reply judged the student's message wrongly, so answer again from scratch, in agreement with this check: confirm what is right; for what is wrong, ask for the working if the student sent none, otherwise show the step where it fails. In način A never state the final result or the full solution. Never mention a program, a check, a reviewer or this note.\n" +
   `</${NOTE_TAG}>`;
 
 /** Pregled s Sonnetom (navodila preverjevalca iz server/verify.js). Vrne { reason: razlog napake ali null, cost }. */

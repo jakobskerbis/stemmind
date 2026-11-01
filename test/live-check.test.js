@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { openDb } from "../server/db.js";
 import { createApp } from "../server/app.js";
 import { modeParams } from "../server/claude.js";
-import { presolve, codeFindings, needsReview, fixBlock, insertFix, withNote } from "../server/live-check.js";
+import { presolve, codeFindings, needsReview, fixBlock, insertFix, withNote, claimNote } from "../server/live-check.js";
 
 const META = '\n<<META subject=MAT topic="enačbe" error=0 mode=A flag=none done=0>>';
 const LONG = "Pri tekmovalnih nalogah iz geometrije najprej narišemo skico in označimo vse dane količine. Pitagorov izrek velja v vsakem trikotniku, zato ga uporabimo kar takoj, brez dodatnega preverjanja kotov.";
@@ -282,7 +282,7 @@ test("verdict check: a wrong confirmation is never shown; the tutor answers agai
     assert.match(r.messages.at(-1).display_text, /^Hm, ni čisto tako/);
     assert.doesNotMatch(JSON.stringify(h.store.apiHistory(conv.id)), /preverjen_racun|Točno tako/);
     const k = h.kinds();
-    assert.equal(k.preverjanje, 1);
+    assert.equal(k.sodba, 1);
     assert.equal(k.popravek, 1);
   } finally {
     h.close();
@@ -318,6 +318,46 @@ test("verdict check: when the task from the first message is solvable, the code 
     assert.match(note, /the student's result x = 5 is WRONG; the exact result of the task is \$2x \+ 3 = 11\$ → \$x = 4\$/);
     assert.match(sse, /Kje se je zalomilo/);
     assert.doesNotMatch(sse, /preverjen_racun/);
+  } finally {
+    h.close();
+  }
+});
+
+test("verdict check: code judges only a final value; intermediate steps, a later task and both roots are handled", async () => {
+  const pre = presolve("Reši enačbo 2x + 4 = 10", { first: true });
+  for (const step of ["x = 6 - 3", "x = 2x - 1", "x = 12 : 4", "x = 5 + 7", "3x - 2x = 5 + 7"]) assert.equal(claimNote(step, pre), null, step);
+  assert.match(claimNote("dobim x = 6 in potem x = 3", pre), /CORRECT/);
+  assert.match(claimNote("x = 3, y = 4", pre), /CORRECT/);
+  assert.match(claimNote("x = -3", pre), /x = -3 is WRONG/);
+  assert.match(claimNote("x1 = 2, x2 = -2", presolve("Reši x^2 = 4", { first: true })), /CORRECT/);
+  assert.match(claimNote("x = 0,9167", presolve("Reši 12x = 11", { first: true })), /CORRECT/);
+  // Nova naloga v poznejšem sporočilu: sodba kode proti njej, ne proti prvi.
+  const h = harness({ answers: ["Kaj bi naredil?", "Dobro, kaj pa zdaj?", "Preveri še enkrat."] });
+  try {
+    const s = await h.student();
+    const first = await h.ask(s, "Reši enačbo 2x + 3 = 11");
+    const post = async (text) => (await fetch(`http://127.0.0.1:${h.port}/api/conversations/${first.c.id}/messages`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text }) })).text();
+    await post("Reši 3x = 15");
+    await post("x = 5");
+    const note = h.calls[2].messages.at(-1).content.at(-1).text;
+    assert.match(note, /the student's result is CORRECT \(exact result of the task: \$3x = 15\$/);
+    assert.equal(h.kinds().chat, 3, "vsak odgovor je zabeležen enkrat");
+  } finally {
+    h.close();
+  }
+});
+
+test("verdict check: after a later task the solver cannot read, the code does not judge against the old task", async () => {
+  const h = harness({ answers: ["Kaj bi naredil najprej?", "Dobro, kaj pa zdaj?", "Točno, $x = 5$. Kaj sledi?"], reviews: ["OK"] });
+  try {
+    const s = await h.student();
+    const first = await h.ask(s, "Reši enačbo 2x + 3 = 11");
+    const post = async (text) => (await fetch(`http://127.0.0.1:${h.port}/api/conversations/${first.c.id}/messages`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text }) })).text();
+    await post("Kaj pa 3x = 15?");
+    await post("x = 5");
+    const note = h.calls.at(-1).messages.at(-1).content;
+    assert.equal(note.length, 1, "brez sodbe kode proti stari nalogi");
+    assert.equal(h.reviewCalls.length, 1, "sodi model");
   } finally {
     h.close();
   }

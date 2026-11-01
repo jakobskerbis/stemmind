@@ -38,7 +38,7 @@ import { compressedStatic, compressedJson } from "./compress.js";
 import { mountFeedback, feedbackAiOn, feedbackPromptOn, isLocalRequest } from "./feedback.js";
 import { mountReports, chatOff, messageCode } from "./reports.js";
 import { verifyAnswer, codeCheck } from "./verify.js";
-import { liveCheckOn, presolve, withNote, codeFindings, needsReview, reviewAnswer, correction, insertFix, isClaim, claimNote, needsVerdictReview, reviewVerdict, verdictNote } from "./live-check.js";
+import { liveCheckOn, presolve, withNote, codeFindings, needsReview, reviewAnswer, correction, insertFix, isClaim, claimNote, needsVerdictReview, reviewVerdict, verdictNote, looksLikeTask } from "./live-check.js";
 import { mountGraphs } from "./graphs.js";
 import { mountGames } from "./games.js";
 import { mountLab } from "./laboratorij.js";
@@ -573,11 +573,23 @@ export function createApp(store, opts = {}) {
       const history = deep && !routed.boosted ? recentHistory(fullHistory) : windowHistory(fullHistory);
       // Učenčev rezultat ali trditev: sodbo inštruktorja preveri koda (naloga iz prvega sporočila) ali model,
       // preden učenec odgovor vidi (server/live-check.js, 4). Zato se tak odgovor ne pretaka sproti.
+      const textOf = (m) => (Array.isArray(m.content) ? m.content : [{ text: m.content }]).map((b) => b.text || "").join("\n");
       const prevTutor = fullHistory.filter((m) => m.role === "assistant").at(-1);
-      const prevTutorText = prevTutor ? stripMeta((Array.isArray(prevTutor.content) ? prevTutor.content : [{ text: prevTutor.content }]).map((b) => b.text || "").join("\n")) : "";
+      const prevTutorText = prevTutor ? stripMeta(textOf(prevTutor)) : "";
       const claim = !pre && liveCheckOn() && !cached && !image && !win && !hinted && !isFirst && isClaim(text, prevTutorText);
-      const firstText = claim ? fullHistory.find((m) => m.role === "user") : null;
-      const firstPre = firstText ? presolve((Array.isArray(firstText.content) ? firstText.content : [{ text: firstText.content }]).map((b) => b.text || "").join("\n"), { first: true }) : null;
+      // Naloga je zadnja, ki jo je reševalnik rešil (prvo sporočilo ali poznejša »Reši …«): učenčev rezultat
+      // sodi koda le proti nalogi, o kateri pogovor zdaj teče.
+      // Če je učenec po tej nalogi poslal še eno, ki je reševalnik ne zna (»Kaj pa 3x = 15?«), koda ne sodi.
+      let firstPre = null;
+      if (claim) {
+        const earlier = fullHistory.filter((m) => m.role === "user").slice(0, -1).map(textOf);
+        let at = -1;
+        for (let i = earlier.length - 1; i >= 0 && !firstPre; i--) {
+          firstPre = presolve(earlier[i], { first: i === 0 });
+          at = i;
+        }
+        if (firstPre && earlier.slice(at + 1).some(looksLikeTask)) firstPre = null;
+      }
       const codeVerdict = claim ? claimNote(text, firstPre) : null;
       const notes = [pre?.note, codeVerdict].filter(Boolean).join("\n");
       const held = []; // zadržani deli odgovora, dokler sodba ni preverjena
@@ -613,7 +625,7 @@ export function createApp(store, opts = {}) {
       let { rest } = filter.end();
       let verdictChecked = false;
       let extraCost = 0;
-      if (claim && !codeVerdict && result.text && result.stopReason !== "refusal" && !result.toolCalls && !settingsTools.state.used && liveReviewOn() && needsVerdictReview({ answer: stripMeta(result.text), lite, spentToday: () => usage.kindToday("preverjanje") })) {
+      if (claim && !codeVerdict && result.text && result.stopReason !== "refusal" && !result.toolCalls && !settingsTools.state.used && liveReviewOn() && needsVerdictReview({ answer: stripMeta(result.text), lite, spentToday: () => usage.kindToday("sodba") })) {
         verdictChecked = true;
         try {
           const rv = await reviewVerdict({ context: prevTutorText, student: text, answer: stripMeta(result.text), createFn: opts.reviewCreateFn, usage, studentId: student.id });
@@ -694,7 +706,8 @@ export function createApp(store, opts = {}) {
       // V zgodovino shranimo samo besedilo (brez blokov razmišljanja): manj žetonov
       // pri naslednjih klicih in nobenih težav ob krajšanju zgodovine.
       let content = [{ type: "text", text: (fix ? insertFix(result.text, fix) : result.text) || "…" }];
-      const cost = (cached ? 0 : usage.log(student.id, answerModel, result.usage, routed.boosted ? "boost" : "chat")) + extraCost;
+      // Prvi odgovor gre v porabo kot »chat«; ponovni odgovor po napačni sodbi je že zabeležen kot »popravek« (extraCost).
+      const cost = (cached ? 0 : usage.log(student.id, first.model || answerModelOf(mode, deep), first.usage, routed.boosted ? "boost" : "chat")) + extraCost;
       if (settingsTools.state.proposal) send("proposal", settingsTools.state.proposal);
       if (key && !cached && !fix && !result.toolCalls && !settingsTools.state.used && result.stopReason === "end_turn" && result.text) {
         // Drugim učencem gre odgovor šele po trojnem preverjanju (koda + dva AI pregleda, server/verify.js).
