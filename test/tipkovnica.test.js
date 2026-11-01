@@ -47,7 +47,8 @@ test("which fields get Evklid's keyboard: login e-mail and password keep the pho
   // izvirni inputmode šteje, tudi ko ga tipkovnica nastavi na »none«
   assert.equal(fieldKind(el("input", { inputmode: "none" }), "decimal"), "num");
   // prijava in registracija: telefon ponudi shranjeno geslo (j, 31. 10.)
-  for (const a of [{ type: "email" }, { type: "password" }, { autocomplete: "username" }, { autocomplete: "current-password" }, { autocomplete: "new-password" }, { autocomplete: "one-time-code" }]) {
+  // e-pošta brez gesla v obrazcu (npr. e-pošta staršev) piše z Evklidovo; z geslom gl. test spodaj (j, 1. 11.)
+  for (const a of [{ type: "password" }, { autocomplete: "username" }, { autocomplete: "current-password" }, { autocomplete: "new-password" }, { autocomplete: "one-time-code" }]) {
     assert.equal(fieldKind(el("input", a)), null, JSON.stringify(a));
   }
   // izjeme
@@ -213,9 +214,12 @@ test("predlogi besed: vrstica nikoli ni prazna (začetki in vezne besede za sl i
   }
 });
 
-test("polje za povezavo (type=url ali inputmode=url) dobi telefonovo tipkovnico zaradi lepljenja", () => {
-  const el = (attrs) => ({ tagName: "INPUT", type: attrs.type || "text", getAttribute: (k) => attrs[k] ?? null, hasAttribute: () => false, closest: () => null });
-  assert.equal(fieldKind(el({ type: "url" })), null);
-  assert.equal(fieldKind(el({ type: "text", inputmode: "url" })), null);
-  assert.equal(fieldKind(el({ type: "text" })), "text");
+test("telefonova tipkovnica samo za prijavne podatke; povezave in ostala e-pošta pišejo z Evklidovo", () => {
+  const form = (pw) => ({ querySelector: (q) => (pw && q.includes("password") ? {} : null) });
+  const el = (attrs, f = null) => ({ tagName: "INPUT", type: attrs.type || "text", form: f, getAttribute: (k) => attrs[k] ?? null, hasAttribute: () => false, closest: () => null });
+  assert.equal(fieldKind(el({ type: "url", inputmode: "url" })), "text");
+  assert.equal(fieldKind(el({ type: "password" })), null);
+  assert.equal(fieldKind(el({ type: "email", autocomplete: "email" }, form(true))), null);
+  assert.equal(fieldKind(el({ type: "email", autocomplete: "email" }, form(false))), "text");
+  assert.equal(fieldKind(el({ type: "text", autocomplete: "username" })), null);
 });

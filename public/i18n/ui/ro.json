@@ -726,6 +726,8 @@
   "tk.l.kem": "Chim",
   "tk.shift": "Literă mare",
   "tk.space": "Spațiu (trage pentru a muta cursorul)",
+  "tk.paste": "Lipește",
+  "tk.pasteFail": "Nu pot accesa clipboardul: ține apăsat pe câmp și alege Lipește.",
   "tk.globe": "Tastatura telefonului pentru acest câmp",
   "tk.next": "Înainte",
   "tk.newline": "Rând nou",

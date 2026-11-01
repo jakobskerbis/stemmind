@@ -720,6 +720,8 @@
   "tk.l.kem": "Quím",
   "tk.shift": "Maiúscula",
   "tk.space": "Espaço (arrasta para mover o cursor)",
+  "tk.paste": "Colar",
+  "tk.pasteFail": "Sem acesso à área de transferência: toca e mantém no campo e escolhe Colar.",
   "tk.globe": "Teclado do telemóvel para este campo",
   "tk.next": "Seguinte",
   "tk.newline": "Nova linha",

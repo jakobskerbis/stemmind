@@ -714,6 +714,8 @@
   "tk.l.kem": "化学",
   "tk.shift": "大写字母",
   "tk.space": "空格（拖动可移动光标）",
+  "tk.paste": "粘贴",
+  "tk.pasteFail": "无法访问剪贴板：长按输入框并选择“粘贴”。",
   "tk.globe": "此栏使用手机键盘",
   "tk.next": "下一项",
   "tk.newline": "换行",

@@ -714,6 +714,8 @@
   "tk.l.kem": "Hóa",
   "tk.shift": "Chữ hoa",
   "tk.space": "Dấu cách (kéo để di chuyển con trỏ)",
+  "tk.paste": "Dán",
+  "tk.pasteFail": "Không truy cập được bộ nhớ tạm: nhấn giữ ô và chọn Dán.",
   "tk.globe": "Bàn phím điện thoại cho ô này",
   "tk.next": "Tiếp",
   "tk.newline": "Dòng mới",

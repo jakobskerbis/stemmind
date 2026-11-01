@@ -714,6 +714,8 @@
   "tk.l.kem": "化學",
   "tk.shift": "大寫字母",
   "tk.space": "空白鍵（拖曳可移動游標）",
+  "tk.paste": "貼上",
+  "tk.pasteFail": "無法存取剪貼簿：長按輸入框並選擇「貼上」。",
   "tk.globe": "此欄使用手機鍵盤",
   "tk.next": "下一項",
   "tk.newline": "換行",

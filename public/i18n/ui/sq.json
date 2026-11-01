@@ -720,6 +720,8 @@
   "tk.l.kem": "Kim",
   "tk.shift": "Shkronjë e madhe",
   "tk.space": "Hapësirë (tërhiq për të lëvizur kursorin)",
+  "tk.paste": "Ngjit",
+  "tk.pasteFail": "Nuk ka qasje te kujtesa: shtyp gjatë fushën dhe zgjidh Ngjit.",
   "tk.globe": "Tastiera e telefonit për këtë fushë",
   "tk.next": "Para",
   "tk.newline": "Rresht i ri",

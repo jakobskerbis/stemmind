@@ -827,6 +827,8 @@ export default {
   "tk.l.kem": "Kem",
   "tk.shift": "Velika črka",
   "tk.space": "Preslednica (povleci za premik kazalca)",
+  "tk.paste": "Prilepi",
+  "tk.pasteFail": "Ni dostopa do odložišča: dolgo pritisni v polje in izberi Prilepi.",
   "tk.globe": "Tipkovnica telefona za to polje",
   "tk.next": "Naprej",
   "tk.newline": "Nova vrstica",

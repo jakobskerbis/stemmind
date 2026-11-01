@@ -720,6 +720,8 @@
   "tk.l.kem": "Chim",
   "tk.shift": "Majuscule",
   "tk.space": "Espace (glisse pour déplacer le curseur)",
+  "tk.paste": "Coller",
+  "tk.pasteFail": "Presse-papiers inaccessible : appuie longuement sur le champ et choisis Coller.",
   "tk.globe": "Clavier du téléphone pour ce champ",
   "tk.next": "Suivant",
   "tk.newline": "Nouvelle ligne",

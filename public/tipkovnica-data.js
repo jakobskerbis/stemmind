@@ -102,11 +102,17 @@ export const NUM_TOP_MATH = [["x²", "²"], ["√", "√(@)"], ["xⁿ", "^(@)"],
 export const NUM_TOP_TEXT = [["( )", "(@)"], ["%", "%"], ["€", "€"], ["/", "/"], ["#", "#"], ["&", "&"]];
 // Pogosti znaki v klepetu z inštruktorjem (vrstica nad tipkami).
 export const TUTOR_CHIPS = [["x²", "²"], ["√", "√(@)"], ["a/b", "(@)/()"], ["π", "π"], ["→", "→"], ["≤", "≤"], ["≠", "≠"], ["·", "·"], ["°", "°"]];
+export const URL_CHIPS = [["https://", "https://"], [".com", ".com"], [".si", ".si"], ["/", "/"]];
+/** Ali je polje za povezavo (type=url ali inputmode=url): dobi tipko Prilepi in pripone. */
+export const isUrlField = (el) => String(el?.type || el?.getAttribute?.("type") || "").toLowerCase() === "url" || String(el?.getAttribute?.("inputmode") || "").toLowerCase() === "url";
+// e-pošta v obrazcu z geslom = prijava ali registracija
+const hasPassword = (el) => !!(el.form || el.closest?.("form"))?.querySelector?.('input[type="password"]');
 export const EMAIL_CHIPS = [["@", "@"], [".si", ".si"], [".com", ".com"], ["@gmail.com", "@gmail.com"]];
 
 // ---------- katera polja dobijo našo tipkovnico ----------
-// url: povezave se lepijo, telefonova tipkovnica ima odložišče (j, 1. 11.: polje za APK)
-const NO_KB_TYPES = new Set(["email", "password", "url", "file", "date", "datetime-local", "month", "week", "time", "color", "range", "checkbox", "radio", "submit", "button", "reset", "image", "hidden"]);
+// Telefonova tipkovnica samo za prijavne podatke (j, 1. 11.: »no other keyboard than Evklid's, except on the sign-in page for credentials«):
+// geslo in e-pošta/uporabniško ime v obrazcu z geslom. Vse ostalo (tudi povezave) piše Evklidova, s tipko Prilepi.
+const NO_KB_TYPES = new Set(["password", "file", "date", "datetime-local", "month", "week", "time", "color", "range", "checkbox", "radio", "submit", "button", "reset", "image", "hidden"]);
 const NUM_TYPES = new Set(["number", "tel"]);
 const NUM_MODES = new Set(["numeric", "decimal", "tel"]);
 const LOGIN = /\b(username|current-password|new-password|one-time-code)\b/;
@@ -126,7 +132,7 @@ export function fieldKind(el, inputmode = el?.getAttribute?.("inputmode")) {
   if (tag === "INPUT") {
     const type = String(el.type || el.getAttribute?.("type") || "text").toLowerCase();
     if (NO_KB_TYPES.has(type)) return null;
-    if (String(inputmode || "").toLowerCase() === "url") return null;
+    if ((type === "email" || /\bemail\b/.test(auto)) && hasPassword(el)) return null;
     if (NUM_TYPES.has(type) || NUM_MODES.has(String(inputmode || "").toLowerCase())) return "num";
     return "text";
   }
