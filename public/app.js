@@ -1,4 +1,5 @@
 // Evklid – odjemalec (brez ogrodja).
+import { fetchThroughRestart as fetchRetry } from "./restart-retry.js";
 import { attachPad, closePad, openPad, padIsSheet } from "./pad.js";
 import { icon, hydrateIcons } from "./icons.js";
 import { greekFactHtml, wireGreekFacts } from "./greek.js";
@@ -57,7 +58,7 @@ const fromPack = (url, opts) => (state.student ? offlineApi(state.student.id, ur
 function serverDown(res) {
   const code = res.headers.get("ngrok-error-code");
   const ours = /json/i.test(res.headers.get("content-type") || "");
-  const down = !!(code && code !== "ERR_NGROK_6024") || (!ours && [502, 504, 530].includes(res.status));
+  const down = !!(code && code !== "ERR_NGROK_6024") || (!ours && [502, 503, 504, 530].includes(res.status));
   if (down !== serverIsDown) {
     serverIsDown = !!down;
     setTimeout(() => syncOfflineBanner(), 0);
@@ -66,22 +67,34 @@ function serverDown(res) {
 }
 let serverIsDown = false;
 
+// Med objavo nove različice: tiho ponovimo, pasica »Evklid se posodablja …« (public/restart-retry.js).
+// Samo stran gostitelja 502/503/504 (Render med ponovnim zagonom); izpad tunela (ngrok, 530) gre takoj na vaje brez povezave.
+const restarting = (res) => !res.headers.get("ngrok-error-code") && !/json/i.test(res.headers.get("content-type") || "") && [502, 503, 504].includes(res.status);
+let serverUpdating = false;
+function setUpdating(on) {
+  if (on === serverUpdating) return;
+  serverUpdating = on;
+  setTimeout(() => syncOfflineBanner(), 0);
+}
+async function fetchThroughRestart(url, init) {
+  try {
+    return await fetchRetry(url, init, { busy: (r) => (restarting(r) && (setUpdating(true), true)) });
+  } finally {
+    setUpdating(false);
+  }
+}
+
 const api = async (url, opts = {}) => {
   if (/\/tasks\/off-/.test(url)) {
     const local = fromPack(url, opts);
     if (local !== undefined) return local;
     throw new Error(t("off.noConnection"));
   }
-  let res;
-  try {
-    res = await fetch(url, {
-      ...opts,
-      headers: { "Content-Type": "application/json", ...(opts.headers || {}) },
-      body: opts.body && typeof opts.body !== "string" ? JSON.stringify(opts.body) : opts.body,
-    });
-  } catch {
-    res = null;
-  }
+  const res = await fetchThroughRestart(url, {
+    ...opts,
+    headers: { "Content-Type": "application/json", ...(opts.headers || {}) },
+    body: opts.body && typeof opts.body !== "string" ? JSON.stringify(opts.body) : opts.body,
+  });
   if (!res || (res.status === 503 && res.headers.get("X-Offline")) || serverDown(res)) {
     const local = fromPack(url, opts);
     if (local !== undefined) return local;
@@ -753,14 +766,19 @@ async function send(text, { deep = false } = {}) {
     bubble.addEventListener("click", skip);
     bubble.title = t("chat.tapToSkip");
 
-    const res = await fetch(`/api/conversations/${state.conversationId}/messages`, {
+    const res = await fetchThroughRestart(`/api/conversations/${state.conversationId}/messages`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ text, deep, lite: liteActive(), device: deviceSnapshot(), image: image ? { media_type: image.media_type, data: image.data } : undefined }),
     });
+    if (!res) {
+      bubble.remove();
+      throw new Error(t("off.noConnection"));
+    }
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
       bubble.remove();
+      if (serverDown(res)) throw new Error(t("off.serverBusy"));
       if (err.chat_off) throw Object.assign(new Error(t("chat.off")), { chatOff: true });
       throw new Error(err.error || t("common.error", { status: res.status }));
     }
@@ -1069,11 +1087,15 @@ function syncOfflineBanner() {
   const box = $("#offline-banner");
   if (!box || !state.student) return;
   const sid = state.student.id;
-  const off = !navigator.onLine || serverIsDown;
+  const off = !navigator.onLine || serverIsDown || serverUpdating;
   const n = packTaskCount(sid);
   const pending = pendingCount(sid);
   box.hidden = !off && !pending;
-  box.innerHTML = off
+  // internet deluje, strežnik pa se ravno znova zaganja (objava nove različice)
+  const updating = serverUpdating && navigator.onLine !== false;
+  box.innerHTML = updating
+    ? `${icon("refresh-cw")}<span>${t("off.updating")}</span>`
+    : off
     ? `${icon("wifi-off")}<span>${n ? t("off.banner", { n }) : t("off.bannerEmpty")}</span>`
     : `${icon("refresh-cw")}<span>${t("off.pending", { n: pending })}</span>`;
 }

@@ -521,6 +521,7 @@
   "set.xpGoalNote": "Cerca de 15 XP por cada exercício resolvido. Quando você atinge a meta, o app te dá os parabéns.",
   "off.noConnection": "Sem ligação à Internet.",
   "off.serverBusy": "O Evklid não está a responder agora, talvez esteja a atualizar. Tenta outra vez daqui a um minuto.",
+  "off.updating": "O Evklid está a atualizar. Um momento, continuo automaticamente …",
   "off.serverDown": "A aplicação não está acessível neste momento. Vai abrir sozinha assim que voltar.",
   "off.banner": "Estás sem ligação. Podes praticar os exercícios guardados no dispositivo ({n}).",
   "off.bannerEmpty": "Estás sem ligação. Quando voltares a estar ligado, os exercícios ficarão guardados no dispositivo.",

@@ -521,6 +521,7 @@
   "set.xpGoalNote": "Takriban XP 15 kwa kila zoezi ulilotatua. Ukifikia lengo, programu inakupongeza.",
   "off.noConnection": "Hakuna muunganisho wa intaneti.",
   "off.serverBusy": "Evklid haijibu kwa sasa, huenda inasasishwa. Jaribu tena baada ya dakika moja.",
+  "off.updating": "Evklid inasasishwa. Subiri kidogo, nitaendelea yenyewe …",
   "off.serverDown": "Programu haipatikani kwa sasa. Itafunguka yenyewe itakapopatikana tena.",
   "off.banner": "Uko nje ya mtandao. Unaweza kufanya mazoezi yaliyohifadhiwa kwenye kifaa ({n}).",
   "off.bannerEmpty": "Uko nje ya mtandao. Ukiunganishwa tena, mazoezi yatahifadhiwa kwenye kifaa.",

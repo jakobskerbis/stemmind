@@ -533,6 +533,7 @@
   "set.xpGoalNote": "Zhruba 15 XP za každou vyřešenou úlohu. Když cíl splníš, aplikace ti pogratuluje.",
   "off.noConnection": "Žádné připojení k internetu.",
   "off.serverBusy": "Evklid teď neodpovídá, možná se právě aktualizuje. Zkus to znovu za minutu.",
+  "off.updating": "Evklid se aktualizuje. Chvilku, pokračuji automaticky …",
   "off.serverDown": "Aplikace teď není dostupná. Až bude znovu k dispozici, otevře se sama.",
   "off.banner": "Jsi offline. Můžeš procvičovat úlohy uložené v zařízení ({n}).",
   "off.bannerEmpty": "Jsi offline. Až budeš znovu online, úlohy k procvičování se uloží do zařízení.",

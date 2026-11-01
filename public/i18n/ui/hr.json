@@ -527,6 +527,7 @@
   "set.xpGoalNote": "Otprilike 15 XP za svaki riješeni zadatak. Kad postigneš cilj, aplikacija ti čestita.",
   "off.noConnection": "Nema internetske veze.",
   "off.serverBusy": "Evklid trenutačno ne odgovara, možda se upravo ažurira. Pokušaj ponovno za minutu.",
+  "off.updating": "Evklid se ažurira. Trenutak, nastavljam automatski …",
   "off.serverDown": "Aplikacija trenutačno nije dostupna. Otvorit će se sama kad ponovno bude dostupna.",
   "off.banner": "Nisi povezan. Možeš vježbati zadatke spremljene na uređaju ({n}).",
   "off.bannerEmpty": "Nisi povezan. Kad se ponovno povežeš, zadaci za vježbu spremit će se na uređaj.",
