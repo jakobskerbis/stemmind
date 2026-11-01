@@ -2717,5 +2717,7 @@
   "lab.lockedText": "Experiências interativas, simulações e verificação imediata estão disponíveis no pacote pago e durante o teste de 7 dias. O texto da lição e o PDF são gratuitos.",
   "lab.packages": "Ver pacotes",
   "lab.empty": "Ainda não há experiências.",
-  "lab.error": "Não foi possível carregar o laboratório."
+  "lab.error": "Não foi possível carregar o laboratório.",
+  "pp.tutor": "Resolver com o tutor",
+  "pp.tutorMsg": "Estou a resolver a prova anterior {paper}. Vou enviar-te o exercício (foto ou escrito). Guia-me com pistas no estilo deste exame e não reveles a solução antes de eu tentar sozinho. No fim, diz-me que tema devo praticar mais."
 }

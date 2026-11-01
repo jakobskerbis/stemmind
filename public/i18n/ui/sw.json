@@ -2711,5 +2711,7 @@
   "lab.lockedText": "Majaribio shirikishi, uigaji na ukaguzi wa papo hapo vinapatikana katika kifurushi cha kulipia na wakati wa majaribio ya siku 7. Maandishi ya somo na PDF ni bure.",
   "lab.packages": "Tazama vifurushi",
   "lab.empty": "Bado hakuna majaribio.",
-  "lab.error": "Maabara haikuweza kupakiwa."
+  "lab.error": "Maabara haikuweza kupakiwa.",
+  "pp.tutor": "Tatua pamoja na mwalimu",
+  "pp.tutorMsg": "Ninafanya karatasi ya mtihani uliopita {paper}. Nitakutumia swali (picha au maandishi). Niongoze kwa vidokezo kwa mtindo wa mtihani huu na usinipe jibu kabla sijajaribu mwenyewe. Mwishoni niambie ni mada gani nifanyie mazoezi zaidi."
 }

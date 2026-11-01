@@ -941,6 +941,8 @@ export default {
   "pp.opens": "Odpre se na ric.si v novem zavihku",
   "pp.oursSoon": "Naša pola v tem slogu je v pripravi",
   "pp.more": "Pokaži starejše ({n})",
+  "pp.tutor": "Rešuj z inštruktorjem",
+  "pp.tutorMsg": "Rešujem preteklo polo {paper}. Poslal ti bom nalogo (fotografijo ali prepis). Vodi me z namigi v slogu tega izpita in mi ne izdaj rešitve, dokler je ne poskusim sam. Na koncu mi povej, katero temo naj še vadim.",
   "pp.empty": "Za to izbiro na ric.si ni objavljenih pol.",
   // referenčni material (fakultetni predmeti, učbenik → Moj študij)
   "refs.title": "Referenčni material",

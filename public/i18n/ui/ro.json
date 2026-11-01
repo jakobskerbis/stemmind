@@ -2740,5 +2740,7 @@
   "lab.lockedText": "Experimentele interactive, simulările și verificarea pe loc sunt disponibile în pachetul plătit și în perioada de probă de 7 zile. Textul lecției și PDF-ul sunt gratuite.",
   "lab.packages": "Vezi pachetele",
   "lab.empty": "Încă nu există experimente.",
-  "lab.error": "Laboratorul nu a putut fi încărcat."
+  "lab.error": "Laboratorul nu a putut fi încărcat.",
+  "pp.tutor": "Rezolvă cu profesorul",
+  "pp.tutorMsg": "Lucrez la subiectul din anii trecuți {paper}. Îți trimit problema (fotografie sau scrisă). Ghidează-mă cu indicii în stilul acestui examen și nu-mi da soluția până nu încerc singur. La final spune-mi ce temă ar trebui să mai exersez."
 }

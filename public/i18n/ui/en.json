@@ -2713,5 +2713,7 @@
   "lab.lockedText": "Interactive experiments, simulations and instant checks are available in the paid package and during the 7-day trial. The lesson text and PDF are free.",
   "lab.packages": "See packages",
   "lab.empty": "No experiments yet.",
-  "lab.error": "The laboratory could not be loaded."
+  "lab.error": "The laboratory could not be loaded.",
+  "pp.tutor": "Solve with the tutor",
+  "pp.tutorMsg": "I'm working on the past paper {paper}. I'll send you the task (photo or typed). Guide me with hints in the style of this exam and don't give away the solution until I've tried it myself. At the end, tell me which topic I should practise more."
 }

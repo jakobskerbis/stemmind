@@ -2738,5 +2738,7 @@
   "lab.lockedText": "Interaktivni eksperimenti, simulacije i trenutna provjera dostupni su u plaćenom paketu i tokom 7-dnevne probe. Tekst lekcije i PDF su besplatni.",
   "lab.packages": "Pogledaj pakete",
   "lab.empty": "Još nema eksperimenata.",
-  "lab.error": "Laboratorija se nije mogla učitati."
+  "lab.error": "Laboratorija se nije mogla učitati.",
+  "pp.tutor": "Rješavaj s instruktorom",
+  "pp.tutorMsg": "Rješavam prošli ispit {paper}. Poslat ću ti zadatak (fotografija ili prepis). Vodi me nagovještajima u stilu ovog ispita i ne otkrivaj rješenje dok ne pokušam sam. Na kraju mi reci koju temu trebam još vježbati."
 }

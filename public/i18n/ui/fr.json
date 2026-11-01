@@ -2713,5 +2713,7 @@
   "lab.lockedText": "Les expériences interactives, les simulations et la vérification immédiate sont disponibles dans la formule payante et pendant l'essai de 7 jours. Le texte de la leçon et le PDF sont gratuits.",
   "lab.packages": "Voir les formules",
   "lab.empty": "Pas encore d'expériences.",
-  "lab.error": "Impossible de charger le laboratoire."
+  "lab.error": "Impossible de charger le laboratoire.",
+  "pp.tutor": "Résoudre avec le tuteur",
+  "pp.tutorMsg": "Je travaille sur l’ancien sujet {paper}. Je t’envoie l’exercice (photo ou recopié). Guide-moi avec des indices dans le style de cet examen et ne donne pas la solution avant que j’aie essayé moi-même. À la fin, dis-moi quel thème je dois encore travailler."
 }

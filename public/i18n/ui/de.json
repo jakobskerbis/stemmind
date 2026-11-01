@@ -2713,5 +2713,7 @@
   "lab.lockedText": "Interaktive Experimente, Simulationen und sofortige Überprüfung gibt es im kostenpflichtigen Paket und während der 7-tägigen Testphase. Lektionstext und PDF sind kostenlos.",
   "lab.packages": "Pakete ansehen",
   "lab.empty": "Noch keine Experimente.",
-  "lab.error": "Das Labor konnte nicht geladen werden."
+  "lab.error": "Das Labor konnte nicht geladen werden.",
+  "pp.tutor": "Mit dem Tutor lösen",
+  "pp.tutorMsg": "Ich bearbeite die frühere Prüfung {paper}. Ich schicke dir die Aufgabe (Foto oder abgetippt). Führe mich mit Hinweisen im Stil dieser Prüfung und verrate die Lösung nicht, bevor ich es selbst versucht habe. Sag mir am Ende, welches Thema ich noch üben sollte."
 }

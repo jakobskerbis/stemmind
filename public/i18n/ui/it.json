@@ -2713,5 +2713,7 @@
   "lab.lockedText": "Esperimenti interattivi, simulazioni e verifica immediata sono disponibili nel pacchetto a pagamento e durante la prova di 7 giorni. Il testo della lezione e il PDF sono gratuiti.",
   "lab.packages": "Vedi i pacchetti",
   "lab.empty": "Ancora nessun esperimento.",
-  "lab.error": "Impossibile caricare il laboratorio."
+  "lab.error": "Impossibile caricare il laboratorio.",
+  "pp.tutor": "Risolvi con il tutor",
+  "pp.tutorMsg": "Sto svolgendo la prova passata {paper}. Ti mando l’esercizio (foto o trascritto). Guidami con suggerimenti nello stile di questo esame e non darmi la soluzione prima che ci abbia provato da solo. Alla fine dimmi quale argomento devo ancora esercitare."
 }
