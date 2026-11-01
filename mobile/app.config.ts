@@ -62,7 +62,9 @@ const config: ExpoConfig = {
     "expo-apple-authentication",
     ["expo-splash-screen", { image: "./assets/splash-icon.png", imageWidth: 160, backgroundColor: "#F6F7F9", dark: { backgroundColor: "#0D1117" } }],
     ["expo-camera", { cameraPermission: CAMERA, recordAudioAndroid: false, barcodeScannerEnabled: false }],
-    ["expo-image-picker", { photosPermission: PHOTOS, cameraPermission: false, microphonePermission: false }],
+    // cameraPermission mora biti besedilo, ne false: false v tem vtičniku kamero BLOKIRA (odstrani CAMERA iz Androida
+    // in NSCameraUsageDescription iz iOS), zato je zavihek Skeniraj ne more dobiti (APK 5, 1. 11.).
+    ["expo-image-picker", { photosPermission: PHOTOS, cameraPermission: CAMERA, microphonePermission: false }],
     ["expo-notifications", { color: "#2353D1", defaultChannel: "opomniki" }],
     "expo-iap", // nakupi v aplikaciji; APK za neposredni prenos jih ne kliče (glej src/lib/billing.ts)
   ],
