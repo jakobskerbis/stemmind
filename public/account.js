@@ -511,7 +511,7 @@ function renderForgot() {
   shell(`
     <h1>Pozabljeno geslo</h1>
     <form id="auth-form" class="card form">
-      <label>E-naslov <input name="email" type="email" required autocomplete="email"></label>
+      <label>E-naslov <input name="email" type="email" required autocomplete="username"></label>
       <p class="form-error" hidden></p>
       <button class="primary" type="submit">Pošlji povezavo</button>
     </form>

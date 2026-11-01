@@ -47,7 +47,8 @@ test("which fields get Evklid's keyboard: login e-mail and password keep the pho
   // izvirni inputmode šteje, tudi ko ga tipkovnica nastavi na »none«
   assert.equal(fieldKind(el("input", { inputmode: "none" }), "decimal"), "num");
   // prijava in registracija: telefon ponudi shranjeno geslo (j, 31. 10.)
-  for (const a of [{ type: "email" }, { type: "password" }, { autocomplete: "username" }, { autocomplete: "current-password" }, { autocomplete: "new-password" }, { autocomplete: "one-time-code" }]) {
+  // e-pošta brez gesla v obrazcu (npr. e-pošta staršev) piše z Evklidovo; z geslom gl. test spodaj (j, 1. 11.)
+  for (const a of [{ type: "password" }, { autocomplete: "username" }, { autocomplete: "current-password" }, { autocomplete: "new-password" }, { autocomplete: "one-time-code" }]) {
     assert.equal(fieldKind(el("input", a)), null, JSON.stringify(a));
   }
   // izjeme
@@ -211,4 +212,17 @@ test("predlogi besed: vrstica nikoli ni prazna (začetki in vezne besede za sl i
     assert.ok(ZACETKI[lang]?.start?.length >= 3, `${lang}: začetki`);
     assert.ok(ZACETKI[lang]?.next?.length >= 3, `${lang}: vezne besede`);
   }
+});
+
+test("telefonova tipkovnica samo za prijavne podatke; povezave in ostala e-pošta pišejo z Evklidovo", () => {
+  const form = (pw) => ({ querySelector: (q) => (pw && q.includes("password") ? {} : null) });
+  const el = (attrs, f = null) => ({ tagName: "INPUT", type: attrs.type || "text", form: f, getAttribute: (k) => attrs[k] ?? null, hasAttribute: () => false, closest: () => null });
+  assert.equal(fieldKind(el({ type: "url", inputmode: "url" })), "text");
+  assert.equal(fieldKind(el({ type: "password" })), null);
+  assert.equal(fieldKind(el({ type: "email", autocomplete: "email" }, form(true))), null);
+  assert.equal(fieldKind(el({ type: "email", autocomplete: "email" }, form(false))), "text");
+  assert.equal(fieldKind(el({ type: "text", autocomplete: "username" })), null);
+  // čip »@«, @gmail.com in prilepljena povezava: »@« je znak, ne mesto kazalca
+  assert.deepEqual(applyTemplate("ana", 3, 3, "@gmail.com", -1, true), { value: "ana@gmail.com", caret: 13, text: "@gmail.com" });
+  assert.equal(applyTemplate("", 0, 0, "https://expo.dev/@j/a", -1, true).value, "https://expo.dev/@j/a");
 });

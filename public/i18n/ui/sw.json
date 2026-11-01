@@ -720,6 +720,8 @@
   "tk.l.kem": "Kem",
   "tk.shift": "Herufi kubwa",
   "tk.space": "Nafasi (buruta kusogeza kishale)",
+  "tk.paste": "Bandika",
+  "tk.pasteFail": "Haiwezekani kufikia ubao wa kunakili: bonyeza sehemu kwa muda na uchague Bandika.",
   "tk.globe": "Kibodi ya simu kwa sehemu hii",
   "tk.next": "Endelea",
   "tk.newline": "Mstari mpya",

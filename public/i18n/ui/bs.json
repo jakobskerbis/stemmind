@@ -726,6 +726,8 @@
   "tk.l.kem": "Hem",
   "tk.shift": "Veliko slovo",
   "tk.space": "Razmak (povuci za pomjeranje kursora)",
+  "tk.paste": "Zalijepi",
+  "tk.pasteFail": "Nema pristupa međuspremniku: dugo pritisni polje i odaberi Zalijepi.",
   "tk.globe": "Tastatura telefona za ovo polje",
   "tk.next": "Dalje",
   "tk.newline": "Novi red",

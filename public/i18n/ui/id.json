@@ -714,6 +714,8 @@
   "tk.l.kem": "Kim",
   "tk.shift": "Huruf besar",
   "tk.space": "Spasi (geser untuk memindahkan kursor)",
+  "tk.paste": "Tempel",
+  "tk.pasteFail": "Papan klip tidak bisa diakses: tekan lama kolomnya lalu pilih Tempel.",
   "tk.globe": "Keyboard ponsel untuk kolom ini",
   "tk.next": "Lanjut",
   "tk.newline": "Baris baru",

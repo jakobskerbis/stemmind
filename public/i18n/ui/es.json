@@ -720,6 +720,8 @@
   "tk.l.kem": "Quím",
   "tk.shift": "Mayúscula",
   "tk.space": "Espacio (arrastra para mover el cursor)",
+  "tk.paste": "Pegar",
+  "tk.pasteFail": "No se puede acceder al portapapeles: mantén pulsado el campo y elige Pegar.",
   "tk.globe": "Teclado del móvil para este campo",
   "tk.next": "Siguiente",
   "tk.newline": "Nueva línea",

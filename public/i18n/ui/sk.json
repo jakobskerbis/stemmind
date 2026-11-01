@@ -732,6 +732,8 @@
   "tk.l.kem": "Chem",
   "tk.shift": "Veľké písmeno",
   "tk.space": "Medzerník (potiahni na posun kurzora)",
+  "tk.paste": "Vložiť",
+  "tk.pasteFail": "Schránka nie je dostupná: podrž prst v poli a vyber Vložiť.",
   "tk.globe": "Klávesnica telefónu pre toto pole",
   "tk.next": "Ďalej",
   "tk.newline": "Nový riadok",

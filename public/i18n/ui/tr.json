@@ -720,6 +720,8 @@
   "tk.l.kem": "Kim",
   "tk.shift": "Büyük harf",
   "tk.space": "Boşluk (imleci taşımak için sürükle)",
+  "tk.paste": "Yapıştır",
+  "tk.pasteFail": "Panoya erişilemiyor: alana uzun bas ve Yapıştır'ı seç.",
   "tk.globe": "Bu alan için telefon klavyesi",
   "tk.next": "İleri",
   "tk.newline": "Yeni satır",
