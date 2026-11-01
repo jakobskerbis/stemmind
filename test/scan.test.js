@@ -172,6 +172,28 @@ test("unsupported problems are handed to AI instead of guessed", () => {
   assert.equal(analyze("2x+").type, "error");
 });
 
+test("functions without AI: calculator value, angle without unit in degrees and radians", () => {
+  // sin(15) brez enote: glavni rezultat v stopinjah, v radianih zraven (j, 1. 11. 2026)
+  let r = ans("sin(15)");
+  assert.equal(r.numeric, true);
+  assert.equal(flat(r.answer.tex), flat("\\sin\\left(15^{\\circ}\\right) \\approx 0{,}2588"));
+  assert.equal(flat(r.answer.approx), flat("\\sin\\left(15\\,\\text{rad}\\right) \\approx 0{,}6503"));
+  assert.deepEqual(r.methods[0].steps.map((s) => s.title.k), ["scan.s.angleDeg", "scan.s.angleRad"]);
+  // enota je dana (° ali π): en rezultat; točna vrednost z »=«
+  r = ans("sin(30°)");
+  assert.equal(r.answer.tex, "0{,}5");
+  assert.equal(r.answer.approx, null);
+  assert.equal(ans("cos(pi/3)").answer.tex, "0{,}5");
+  assert.equal(ans("log(100)").answer.tex, "2");
+  assert.equal(ans("ln(2)").answer.tex, "\\approx 0{,}6931");
+  assert.equal(flat(ans("arcsin(0.5)").answer.tex), flat("\\arcsin\\left(0{,}5\\right) = 30^{\\circ}"));
+  // nedefinirano ali neskončno: ne ugibamo
+  // sin(0,5) je lahko sin 0,5 ali funkcija z dvema argumentoma: ne ugibamo
+  for (const t of ["tan(90°)", "log(-1)", "arcsin(2)", "sin(0,5)"]) assert.equal(solve(t).ok, false, t);
+  // korenov brez funkcij še vedno ne zaokrožujemo (AI zna delno korenjenje)
+  assert.equal(solve("sqrt(8)").ok, false);
+});
+
 test("every step and answer text exists in the Slovenian catalog", () => {
   const src = fs.readFileSync(path.join(import.meta.dirname, "..", "public", "scan", "solvecore.js"), "utf8");
   const keys = new Set(src.match(/scan\.[a-zA-Z]+\.[a-zA-Z]+/g));
@@ -282,5 +304,18 @@ test("API: scan read and solve validate input, log usage and return the cleaned 
     const rows = store.db.prepare("SELECT kind FROM usage WHERE student_id = ?").all(s.id);
     assert.equal(rows.filter((r) => r.kind === "skeniranje").length, 3);
     assert.equal((await req("POST", `/api/students/999/scan/solve`, { text: "x=1" })).status, 404);
+  });
+});
+
+test("API: scan solve says the tutor is unavailable when the API account has no credit", async () => {
+  const scanSolveFn = async () => {
+    throw Object.assign(new Error("Your credit balance is too low"), { status: 400 });
+  };
+  await withApp({ scanSolveFn }, async ({ req }) => {
+    const s = (await req("POST", "/api/students", { name: "Eva", settings: { curriculum_level: "8. razred" } })).body;
+    const out = await req("POST", `/api/students/${s.id}/scan/solve`, { text: "x^4+4", goal: "factor" });
+    assert.equal(out.status, 503);
+    assert.equal(out.body.unavailable, true);
+    assert.match(out.body.error, /dobroimetja/);
   });
 });

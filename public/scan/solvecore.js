@@ -1552,6 +1552,73 @@ function solveArith(ast) {
   });
 }
 
+// Funkcije (sin, log …), π in e: točne vrednosti kot ulomka ni, zato računamo kot kalkulator (približek).
+// Kot brez enote (sin 15) je dvoumen: v šoli je navadno v stopinjah (kalkulator v načinu DEG), zato je
+// glavni rezultat v stopinjah, rezultat v radianih pa je pokazan zraven, da je razlika jasna.
+const DIRECT_TRIG = new Set(["sin", "cos", "tan", "cot", "sec", "csc"]);
+const INV_TRIG = new Set(["arcsin", "arccos", "arctan", "arccot"]);
+const hasUnit = (n) => {
+  let u = false;
+  walkTree(n, (m) => {
+    if (m.k === "deg" || (m.k === "const" && m.name === "pi")) u = true;
+  });
+  return u;
+};
+// kopija drevesa, v kateri ima kot brez enote zapisano enoto (° ali rad) – samo za izpis
+function withUnit(n, unit) {
+  if (!n || typeof n !== "object") return n;
+  if (n.k === "call" && DIRECT_TRIG.has(n.f) && n.args.length === 1 && !hasUnit(n.args[0])) {
+    const a = n.args[0];
+    return { ...n, args: [unit === "deg" ? { k: "deg", a } : { k: "var", name: `${tex(a)}\\,\\text{rad}` }] };
+  }
+  const o = { ...n };
+  for (const k of ["a", "b"]) if (n[k]) o[k] = withUnit(n[k], unit);
+  if (n.args) o.args = n.args.map((x) => withUnit(x, unit));
+  return o;
+}
+// vrednost → [znak, TeX]; »=« le, kadar je vrednost točna na 4 decimalke (sin 30° = 0,5)
+function numValue(v) {
+  if (!Number.isFinite(v) || Math.abs(v) > 1e12) return null; // npr. tan 90°, log(−1)
+  const w = Math.round(v * 1e4) / 1e4;
+  if (Math.abs(v - w) <= 1e-10 * Math.max(1, Math.abs(v))) return ["=", approxTex(w, 4)];
+  if (Math.abs(v) >= 1e-3) return ["\\approx", approxTex(v, 4)];
+  const [m, e] = v.toExponential(3).split("e");
+  return ["\\approx", `${m.replace(".", "{,}")} \\cdot 10^{${Number(e)}}`];
+}
+
+function solveNumeric(ast) {
+  let ambiguous = false;
+  let manyArgs = false;
+  walkTree(ast, (n) => {
+    // sin(0,5): vejica je lahko decimalna ali ločilo argumentov – ne ugibamo (reši AI)
+    if (n.k === "call" && n.args.length !== 1) manyArgs = true;
+    if (n.k === "call" && (INV_TRIG.has(n.f) || (DIRECT_TRIG.has(n.f) && !hasUnit(n.args[0] || {})))) ambiguous = true;
+  });
+  if (manyArgs) return null;
+  // samo arkus funkcija (arcsin 0,5): rezultat je kot, zato ima enoto
+  const top = unwrap(ast);
+  const angleOut = top.k === "call" && INV_TRIG.has(top.f);
+  const line = (node, deg) => {
+    const v = numValue(compile(ast, { deg })({}));
+    if (!v) return null;
+    const unit = angleOut ? (deg ? "^{\\circ}" : "\\,\\text{rad}") : "";
+    return { tex: `${tex(node)} ${v[0]} ${v[1]}${unit}`, value: `${v[0]} ${v[1]}${unit}` };
+  };
+  if (!ambiguous) {
+    const one = line(ast, false);
+    if (!one) return null;
+    return result({ kind: "arith", numeric: true, problemTex: tex(ast), answer: { tex: one.value.replace(/^= /, ""), approx: null }, methods: [{ id: "calc", steps: [step(T("scan.s.calc"), one.tex, { why: T("scan.w.calc") })] }], verified: true });
+  }
+  const deg = line(withUnit(ast, "deg"), true);
+  const rad = line(withUnit(ast, "rad"), false);
+  if (!deg && !rad) return null;
+  const steps = [];
+  if (deg) steps.push(step(T("scan.s.angleDeg"), deg.tex, { why: T("scan.w.angleDeg") }));
+  if (rad) steps.push(step(T("scan.s.angleRad"), rad.tex, { why: T("scan.w.angleRad") }));
+  const main = deg || rad;
+  return result({ kind: "arith", numeric: true, problemTex: tex(ast), answer: { tex: main.tex, approx: deg && rad ? rad.tex : null }, methods: [{ id: "calc", steps }], verified: true });
+}
+
 // ---------------------------------------------------------------------------
 // Izrazi: poenostavljanje in razcep
 
@@ -2112,7 +2179,13 @@ export function solve(text, { goal = null, complex = false } = {}) {
         }
         break;
       case "arith":
-        r = solveArith(info.ast);
+        try {
+          r = solveArith(info.ast);
+        } catch (err) {
+          // funkcije in konstante (sin 15, log 2, π): približek kot na kalkulatorju, brez AI
+          if (!(err instanceof AlgebraError) || err.message !== "func") throw err;
+          r = solveNumeric(info.ast);
+        }
         break;
       case "expr":
         if (g === "factor") r = solveFactor(info.ast);

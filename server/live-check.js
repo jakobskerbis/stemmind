@@ -95,7 +95,8 @@ function trySolve(cand, deriv) {
   } catch {
     return null;
   }
-  if (!r?.ok || r.verified !== true) return null;
+  // približek s kalkulatorjem (sin 15, ln 2) ni »točno preverjen« rezultat, kot ga opomba obljublja
+  if (!r?.ok || r.verified !== true || r.numeric) return null;
   const type = r.type === "system" ? "system" : r.type === "equation" ? "equation" : r.type === "arith" ? "arith" : deriv && r.goal === "derivative" ? "derivative" : null;
   if (!type || (hasEq && type !== "equation" && type !== "system") || (!hasEq && type !== "arith" && type !== "derivative")) return null;
   const ans = answerText(r, type);

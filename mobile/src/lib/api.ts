@@ -110,6 +110,9 @@ export async function request(path: string, opts: Opts = {}) {
   const body = type.includes("json") ? await res.json().catch(() => ({})) : await res.text();
   // Profil je odprt na drugi napravi (server/accounts/index.js): ponudimo prevzem (_layout.tsx).
   if (res.status === 409 && body?.taken && onTaken) onTaken(Number(body.student_id));
+  // Strežnik ne odgovori (npr. med objavo nove različice vrne gostitelj stran 502/503 brez JSON):
+  // prijazno sporočilo namesto začetka strani HTML.
+  if (!res.ok && typeof body !== "object" && [502, 503, 504, 530].includes(res.status)) throw new ApiError(res.status, { serverBusy: true }, t("off.serverBusy"));
   if (!res.ok) throw new ApiError(res.status, typeof body === "object" ? body : { error: String(body).slice(0, 200) });
   return body;
 }

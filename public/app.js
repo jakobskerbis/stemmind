@@ -84,12 +84,13 @@ const api = async (url, opts = {}) => {
   if (!res || (res.status === 503 && res.headers.get("X-Offline")) || serverDown(res)) {
     const local = fromPack(url, opts);
     if (local !== undefined) return local;
-    throw new Error(t("off.noConnection"));
+    // Internet deluje, strežnik pa ne odgovori (npr. med objavo nove različice): ne pišemo »Ni povezave z internetom«.
+    throw new Error(navigator.onLine === false ? t("off.noConnection") : t("off.serverBusy"));
   }
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
-    // status: strežnik je odgovoril (napaka ni v povezavi).
-    throw Object.assign(new Error(err.error || t("common.error", { status: res.status })), { status: res.status });
+    // status: strežnik je odgovoril (napaka ni v povezavi); body: dodatni podatki (npr. unavailable).
+    throw Object.assign(new Error(err.error || t("common.error", { status: res.status })), { status: res.status, body: err });
   }
   return res.json();
 };
