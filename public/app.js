@@ -1978,6 +1978,14 @@ function syncCompetitionTab() {
   m.classList.toggle("active", currentView === m.dataset.view);
   $("#me-exams").hidden = !siExams() || exams;
   $("#me-competition").hidden = noComp;
+  // Regijski sistemi: isti vnos pod Jaz je »Izpiti« (pogled competition naloži loadExams).
+  const mc = $("#me-competition");
+  const [mb, msub] = mc.querySelectorAll("b, small");
+  mb.dataset.i18n = regionalExams() ? "nav.exams" : "nav.competition";
+  mb.textContent = prepLabel();
+  msub.dataset.i18n = regionalExams() ? "exam.title" : "comp.meSub";
+  msub.textContent = t(msub.dataset.i18n);
+  mc.querySelector(".ic").innerHTML = icon(regionalExams() ? "clipboard-check" : "medal");
   $("#me-lab").hidden = !exams;
   $("#view-lab > .me-back").hidden = !exams;
 }
@@ -2777,7 +2785,7 @@ async function loadExams(key = state.examKey, exam = null) {
     : [...c.exams.own, ...(ownIds.includes(c.exam) ? [] : [{ id: c.exam, name: c.name }])].map((x) => [x.id, x.name]);
   const m = c.mock;
   box.innerHTML = `
-    ${si && offTabbarViews().includes("exams") ? meBackHtml() : ""}
+    ${!si || offTabbarViews().includes("exams") ? meBackHtml() : ""}
     <h1>${si ? t("nav.examsSi") : t("exam.title")}</h1>
     <div class="comp-pickers">
       ${seg(examSeg, c.exam, "data-exam")}
