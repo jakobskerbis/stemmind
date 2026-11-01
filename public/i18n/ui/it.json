@@ -2715,5 +2715,5 @@
   "lab.empty": "Ancora nessun esperimento.",
   "lab.error": "Impossibile caricare il laboratorio.",
   "pp.tutor": "Risolvi con il tutor",
-  "pp.tutorMsg": "Sto svolgendo la prova passata {paper}. Ti mando l’esercizio (foto o trascritto). Guidami con suggerimenti nello stile di questo esame e non darmi la soluzione prima che ci abbia provato da solo. Alla fine dimmi quale argomento devo ancora esercitare."
+  "pp.tutorMsg": "Sto svolgendo la prova passata {paper}. Ti mando l’esercizio (foto o trascritto). Guidami con suggerimenti nello stile di questo esame e non darmi la soluzione prima che ci abbia provato io. Alla fine dimmi quale argomento devo ancora esercitare."
 }

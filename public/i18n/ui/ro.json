@@ -2742,5 +2742,5 @@
   "lab.empty": "Încă nu există experimente.",
   "lab.error": "Laboratorul nu a putut fi încărcat.",
   "pp.tutor": "Rezolvă cu profesorul",
-  "pp.tutorMsg": "Lucrez la subiectul din anii trecuți {paper}. Îți trimit problema (fotografie sau scrisă). Ghidează-mă cu indicii în stilul acestui examen și nu-mi da soluția până nu încerc singur. La final spune-mi ce temă ar trebui să mai exersez."
+  "pp.tutorMsg": "Lucrez la subiectul din anii trecuți {paper}. Îți trimit problema (fotografie sau scrisă). Ghidează-mă cu indicii în stilul acestui examen și nu-mi da soluția până nu încerc eu. La final spune-mi ce temă ar trebui să mai exersez."
 }

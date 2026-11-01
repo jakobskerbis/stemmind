@@ -2763,5 +2763,5 @@
   "lab.empty": "Zatím žádné pokusy.",
   "lab.error": "Laboratoř se nepodařilo načíst.",
   "pp.tutor": "Řeš s lektorem",
-  "pp.tutorMsg": "Řeším minulou zkouškovou písemku {paper}. Pošlu ti úlohu (fotku nebo přepis). Veď mě nápovědami ve stylu této zkoušky a neprozrazuj řešení, dokud to sám nezkusím. Na konci mi řekni, které téma mám ještě procvičit."
+  "pp.tutorMsg": "Řeším minulou zkouškovou písemku {paper}. Pošlu ti úlohu (fotku nebo přepis). Veď mě nápovědami ve stylu této zkoušky a neprozrazuj řešení, dokud to nezkusím. Na konci mi řekni, které téma mám ještě procvičit."
 }

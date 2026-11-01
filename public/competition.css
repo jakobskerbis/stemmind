@@ -116,7 +116,7 @@
 .pp-when span { color: var(--muted); font-size: 0.86rem; }
 .pp-files { display: flex; flex-wrap: wrap; gap: 6px; }
 .pp-file { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; }
-.pp-tutor { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; }
+.pp-files button.pp-tutor { display: inline-flex; align-items: center; gap: 6px; min-height: 40px !important; } /* dotik: button.small je sicer 38 px */
 .pp-file svg.i:last-child { width: 14px; height: 14px; opacity: 0.7; }
 .pp-expl { grid-column: 2; display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 0.84rem; }
 .pp-expl svg.i { width: 15px; height: 15px; flex: none; }

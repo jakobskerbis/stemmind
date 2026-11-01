@@ -2740,5 +2740,5 @@
   "lab.empty": "Još nema eksperimenata.",
   "lab.error": "Laboratorija se nije mogla učitati.",
   "pp.tutor": "Rješavaj s instruktorom",
-  "pp.tutorMsg": "Rješavam prošli ispit {paper}. Poslat ću ti zadatak (fotografija ili prepis). Vodi me nagovještajima u stilu ovog ispita i ne otkrivaj rješenje dok ne pokušam sam. Na kraju mi reci koju temu trebam još vježbati."
+  "pp.tutorMsg": "Rješavam prošli ispit {paper}. Poslat ću ti zadatak (fotografija ili prepis). Vodi me nagovještajima u stilu ovog ispita i ne otkrivaj rješenje dok ne pokušam. Na kraju mi reci koju temu trebam još vježbati."
 }

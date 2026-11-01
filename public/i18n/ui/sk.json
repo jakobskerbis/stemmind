@@ -2767,5 +2767,5 @@
   "lab.empty": "Zatiaľ žiadne pokusy.",
   "lab.error": "Laboratórium sa nepodarilo načítať.",
   "pp.tutor": "Rieš s lektorom",
-  "pp.tutorMsg": "Riešim minulú skúškovú písomku {paper}. Pošlem ti úlohu (fotku alebo prepis). Veď ma nápovedami v štýle tejto skúšky a neprezrádzaj riešenie, kým to sám neskúsim. Na konci mi povedz, ktorú tému mám ešte precvičiť."
+  "pp.tutorMsg": "Riešim minulú skúškovú písomku {paper}. Pošlem ti úlohu (fotku alebo prepis). Veď ma nápovedami v štýle tejto skúšky a neprezrádzaj riešenie, kým to neskúsim. Na konci mi povedz, ktorú tému mám ešte precvičiť."
 }

@@ -2719,5 +2719,5 @@
   "lab.empty": "Ainda não há experiências.",
   "lab.error": "Não foi possível carregar o laboratório.",
   "pp.tutor": "Resolver com o tutor",
-  "pp.tutorMsg": "Estou a resolver a prova anterior {paper}. Vou enviar-te o exercício (foto ou escrito). Guia-me com pistas no estilo deste exame e não reveles a solução antes de eu tentar sozinho. No fim, diz-me que tema devo praticar mais."
+  "pp.tutorMsg": "Estou a resolver a prova anterior {paper}. Vou enviar-te o exercício (foto ou escrito). Guia-me com pistas no estilo deste exame e não reveles a solução antes de eu tentar. No fim, diz-me que tema devo praticar mais."
 }

@@ -2769,5 +2769,5 @@
   "lab.empty": "Brak doświadczeń.",
   "lab.error": "Nie udało się wczytać laboratorium.",
   "pp.tutor": "Rozwiązuj z korepetytorem",
-  "pp.tutorMsg": "Rozwiązuję arkusz z poprzednich lat {paper}. Wyślę ci zadanie (zdjęcie albo przepisane). Prowadź mnie wskazówkami w stylu tego egzaminu i nie zdradzaj rozwiązania, dopóki sam nie spróbuję. Na koniec powiedz mi, który temat mam jeszcze poćwiczyć."
+  "pp.tutorMsg": "Rozwiązuję arkusz z poprzednich lat {paper}. Wyślę ci zadanie (zdjęcie albo przepisane). Prowadź mnie wskazówkami w stylu tego egzaminu i nie zdradzaj rozwiązania, dopóki nie spróbuję. Na koniec powiedz mi, który temat mam jeszcze poćwiczyć."
 }
