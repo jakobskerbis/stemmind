@@ -49,7 +49,8 @@ export const VZORCI = {
 export const INDIKATORJI = {
   brez: { name: "brez indikatorja", pKIn: null, obmocje: null, konec: Infinity, kisla: "brezbarvna", bazicna: "brezbarvna", A0: [0, 0, 0], A1: [0, 0, 0] },
   fenolftalein: { name: "fenolftalein", pKIn: 9.4, obmocje: [8.2, 10.0], konec: 8.2, kisla: "brezbarvna", bazicna: "rožnata", A0: [0, 0, 0], A1: [0.02, 0.9, 0.3] },
-  metiloranz: { name: "metiloranž", pKIn: 3.46, obmocje: [3.1, 4.4], konec: 4.4, kisla: "rdeča", bazicna: "rumena", A0: [0.02, 1.1, 0.75], A1: [0, 0.05, 0.9] },
+  // metiloranž: absorbanci izbrani tako, da je kisla oblika rdeča (~#d7301f), bazična rumeno oranžna (~#f5b924, λmax 464 nm), vmes oranžna (ocena).
+  metiloranz: { name: "metiloranž", pKIn: 3.46, obmocje: [3.1, 4.4], konec: 4.4, kisla: "rdeča", bazicna: "rumena", A0: [0.064, 0.715, 0.905], A1: [0.007, 0.13, 0.84] },
   bromtimol: { name: "bromtimol modro", pKIn: 7.1, obmocje: [6.0, 7.6], konec: 7.6, kisla: "rumena", bazicna: "modra", A0: [0, 0.08, 0.75], A1: [0.95, 0.35, 0.06] },
 };
 export const inFraction = (ind, pH) => (ind.pKIn == null ? 0 : 1 / (1 + 10 ** (ind.pKIn - pH)));
@@ -64,7 +65,9 @@ export function colourName(ind, pH) {
   if (ind === INDIKATORJI.fenolftalein) return pH >= 10.5 ? "močno rožnata" : pH >= 9.5 ? "rožnata" : pH >= ind.konec ? "bledo rožnata" : "brezbarvna";
   if (pH >= ind.konec) return ind.bazicna;
   if (pH <= ind.obmocje[0]) return ind.kisla;
-  return ind === INDIKATORJI.metiloranz ? "oranžna" : "zelena";
+  // metiloranž: ime sledi narisani barvi (rdeča do 3,2, oranžna, tik pred koncem prehoda oranžno rumena)
+  if (ind === INDIKATORJI.metiloranz) return pH > 4.1 ? "oranžno rumena" : pH > 3.2 ? "oranžna" : ind.kisla;
+  return "zelena";
 }
 
 // ------------------------------------------------------------------ pripomočki
@@ -79,7 +82,12 @@ export function colourName(ind, pH) {
 // 0,2–0,5 mL (ocena); curek ga izrine po 0,3–1,5 mL iztoka (ocena), počasne kapljice ga ne premaknejo.
 export const BIRETA = { V: 50, napaka: 0.05, razdelek: 0.1, odcitek: 0.05, mmNaML: 10.5, kapljica: 0.05, kapljice: 0.1, curek: 1.0, mrtva: 2, voda: 0.8, mehur: [0.2, 0.5], izrine: [0.3, 1.5] };
 // Polnilna pipeta 25 mL, razred A: ±0,03 mL (ISO 648). Stalna napaka pipete do ±0,02 mL in ponovljivost do ±0,01 mL.
-export const PIPETA = { V: 25, napaka: 0.03 };
+// Pipeta, mokra od pomivanja (ni splaknjena z vzorcem): ~0,2 mL vode (ocena: film ~25 μm na ~80 cm² stene pod oznako),
+// ki razredči vzorec: kisline je ~0,8 % premalo.
+export const PIPETA = { V: 25, napaka: 0.03, voda: 0.2 };
+// Erlenmajerica po spiranju: ~0,5 mL tekočine na steni (ocena: film ~30 μm na ~150 cm²). Destilirana voda ne spremeni
+// množine kisline; ostanek vzorca (splaknjena z vzorcem) jo poveča za ~2 %.
+export const ERLENMAJERICA = { ostanek: 0.5 };
 // pH-meter po umerjanju z dvema pufroma: natančnost ±0,02 pH, ločljivost 0,01 pH (ocena za laboratorijski pH-meter).
 export const PH_METER = { napaka: 0.02, dec: 2 };
 
@@ -142,17 +150,20 @@ export class TitrBench {
       b.mokra = false;
       return { ok: true, water, mehur: b.mehur };
     }
+    // dolivaš le, če je gladina pod ciljem; če je že nad njim, ostane, kjer je
     const add = Math.max(0, b.u - target);
     b.c = (b.c * b.vol + this.cNaOH * add) / (b.vol + add);
     b.vol += add;
-    b.u = target;
+    b.u -= add;
     return { ok: true, water: 0, mehur: b.mehur };
   }
   // Pipo za trenutek povsem odpreš nad čašo za odpadke: zrak iz konice odide, izteče ~1 mL.
   purge() {
     const b = this.bur;
+    if (!this.goggles) return { ok: false, why: "ocala" };
     if (!this.filled) return { ok: false, why: "prazna" };
-    const out = Math.max(0, Math.min(1 + 0.3 * this.r(), b.vol - 0.5));
+    // gladina ne pade pod oznako 50 mL (pod njo ni skale)
+    const out = Math.max(0, Math.min(1 + 0.3 * this.r(), b.vol - 0.5, BIRETA.V - b.u - b.mehur));
     const had = b.mehur;
     b.u += out + b.mehur;
     b.vol -= out;
@@ -185,12 +196,17 @@ export class TitrBench {
     return this.flow(BIRETA.kapljica * (1 + clamp(gauss(this.r, 0.05, 2), -0.1, 0.1)));
   }
   // ---------------------------------------------------------- erlenmajerica
-  pipette(id) {
+  // pipeta: "vzorec" (pravilno: splaknjena z vzorcem) | "mokra" (mokra od pomivanja, voda razredči vzorec).
+  // erlenmajerica: "voda" (pravilno: splaknjena z destilirano vodo; voda ne spremeni množine kisline) | "suha" | "vzorec"
+  // (splaknjena z vzorcem: ostanek vzorca doda kislino).
+  pipette(id, { pipeta = "vzorec", erlenmajerica = "voda" } = {}) {
     if (!this.goggles) return { ok: false, why: "ocala" };
     const Vs = PIPETA.V + this.pipErr + clamp(gauss(this.r, 0.004, 2.5), -0.01, 0.01);
-    const n = this.c[id] * Vs;
+    const wet = PIPETA.voda;
+    const n = this.c[id] * ((pipeta === "mokra" ? Vs - wet : Vs) + (erlenmajerica === "vzorec" ? ERLENMAJERICA.ostanek : 0));
+    const V = Vs + (erlenmajerica === "suha" ? 0 : ERLENMAJERICA.ostanek);
     this.trial++;
-    this.flask = { id, Vs, V: Vs, cl: VZORCI[id].mocna ? n : 0, ac: VZORCI[id].mocna ? 0 : n, na: 0, ind: "brez", added: 0, trial: this.trial };
+    this.flask = { id, Vs, V, cl: VZORCI[id].mocna ? n : 0, ac: VZORCI[id].mocna ? 0 : n, na: 0, ind: "brez", added: 0, trial: this.trial, pipeta, erlenmajerica };
     this.flash = 0;
     return { ok: true, Vs };
   }

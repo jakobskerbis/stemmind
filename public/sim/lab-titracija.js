@@ -1,7 +1,7 @@
 // Virtualni laboratorij, kemija: titracija kisline z NaOH ob indikatorju (model: lab-model-titracija.js).
 // Učenec spere in napolni bireto, izpusti zrak iz konice, odpipetira vzorec, izbere indikator, titrira po kapljicah,
 // sam odčita bireto, ponavlja do ujemanja in izračuna koncentracijo. Napake imajo posledice kot v pravem laboratoriju.
-import { h, s, svgBox, select, segmented, button, toggle, layout, label } from "./kit.js";
+import { h, s, svgBox, select, segmented, button, toggle, layout, label, stage as stageBox, controls as controlsBox } from "./kit.js";
 import { ticker, lcd, dataTable, dataGraph, conclusion, eventLog, notes, fixed } from "./lab.js";
 import { flaskLevel } from "./lab-kem.js";
 import { TitrBench, VZORCI, INDIKATORJI, BIRETA, PIPETA, colourName, indicatorColor, POENOSTAVITVE_TITRACIJA } from "./lab-model-titracija.js";
@@ -26,6 +26,7 @@ export function labTitracija(el) {
   const log = eventLog();
   const phLcd = lcd("pH-meter");
   const status = h("p", { class: "lab-status", "aria-live": "polite" });
+  const swatch = h("span", { class: "lab-tit-swatch", "aria-hidden": "true", hidden: true }); // barva raztopine ob pipi (ime barve je v status)
   const table = dataTable(
     [
       { key: "vz", label: "vzorec" },
@@ -47,7 +48,11 @@ export function labTitracija(el) {
   const fillBtn = button("Napolni bireto z NaOH", () => fill(), "primary small");
   const purgeBtn = button("Izpusti zrak iz konice", () => purge());
   const sampleSel = select({ label: "vzorec", options: Object.entries(VZORCI).map(([k, v]) => [k, v.name]), value: "hcl" });
-  const pipBtn = button(`Odpipetiraj ${fixed(PIPETA.V, 2)} mL v čisto erlenmajerico`, () => pipette(), "primary small");
+  // Priprava pipete in erlenmajerice (model: pipette(id, { pipeta, erlenmajerica })). Kot pri bireti: pipeto moraš sprati sam.
+  const pipRinse = toggle("pipeto prej speri z vzorcem", false);
+  const flaskSeg = segmented({ options: [["voda", "z destilirano vodo"], ["vzorec", "z vzorcem"]], value: "voda" });
+  flaskSeg.setAttribute("aria-label", "erlenmajerico speri");
+  const pipBtn = button(`Odpipetiraj ${fixed(PIPETA.V, 2)} mL v erlenmajerico`, () => pipette(), "primary small");
   const indSeg = segmented({ options: Object.entries(INDIKATORJI).map(([k, v]) => [k, v.name]), value: "fenolftalein" });
   indSeg.setAttribute("aria-label", "indikator");
   const indBtn = button("Dodaj 2 kapljici indikatorja", () => addInd());
@@ -64,21 +69,23 @@ export function labTitracija(el) {
   cIn.addEventListener("keydown", (e) => e.key === "Enter" && checkC());
   const cBtn = button("Preveri koncentracijo", () => checkC(), "primary small");
   const calc = h("div", { class: "lab-tit-calc", hidden: true },
-    h("p", { class: "muted", html: "<i>c</i>(kisline) = <i>c</i>(NaOH) · <i>V</i>(NaOH) / <i>V</i>(vzorca); <i>c</i>(NaOH) = 0,1000 mol/L, <i>V</i>(vzorca) = 25,00 mL. Vzemi povprečje titracij, ki se ujemata." }),
+    h("p", { class: "muted", html: "<i>c</i>(kisline) = <i>c</i>(NaOH) · <i>V</i>(NaOH) / <i>V</i>(vzorca); <i>c</i>(NaOH) = 0,1000 mol/L, <i>V</i>(vzorca) = 25,00 mL. Vzemi povprečje titracij, ki se ujemajo." }),
     h("label", { class: "lab-tit-field" }, h("span", { class: "demo-slider-label" }, "c(kisline) [mol/L]"), cIn), h("div", { class: "demo-buttons" }, cBtn));
   const grp = (title, ...kids) => h("fieldset", { class: "lab-tit-grp" }, h("legend", {}, title), ...kids);
   const buttons = (...k) => h("div", { class: "demo-buttons" }, ...k);
 
+  // Risba in koraki v skupnem okvirju: na širokem zaslonu drug ob drugem, risba pripeta (textbook.css, .lab-tit-top).
   layout(el, {
-    stage: [svg, h("div", { class: "lab-meters" }, phLcd)],
-    controls: [
+    extra: [h("div", { class: "lab-tit-top" }, stageBox(svg, h("div", { class: "lab-meters" }, phLcd)), controlsBox(
       grp("1. Priprava", buttons(goggles)),
       grp("2. Bireta (NaOH, 0,1000 mol/L)", buttons(rinseBtn, fillBtn, purgeBtn)),
-      grp("3. Vzorec (neznana koncentracija) in indikator", sampleSel, buttons(pipBtn), h("div", { class: "lab-row" }, h("span", { class: "demo-slider-label" }, "indikator"), indSeg), buttons(indBtn, phT)),
-      grp("4. Titracija", tapSeg, buttons(dropBtn)),
-      grp("5. Odčitek birete (spodnji rob meniska)", h("label", { class: "lab-tit-field" }, h("span", { class: "demo-slider-label" }, "odčitek [mL]"), readIn), buttons(recBtn), buttons(phBtn, autoT)),
-    ],
-    extra: [status, log, h("h4", { class: "lab-h" }, "Titracije"), table, summary, calc, h("h4", { class: "lab-h" }, "Titracijska krivulja (s pH-metrom)"), graph, qBox,
+      grp("3. Vzorec in indikator", sampleSel, buttons(pipRinse), h("div", { class: "lab-row" }, h("span", { class: "demo-slider-label" }, "erlenmajerico speri"), flaskSeg), buttons(pipBtn),
+        h("div", { class: "lab-row" }, h("span", { class: "demo-slider-label" }, "indikator"), indSeg), buttons(indBtn, phT)),
+      // Odčitek pred pipo: vrstni red je začetni odčitek → titracija → končni odčitek; stanje raztopine ob pipi (telefon: erlenmajerica je nad kontrolami).
+      grp("4. Titracija", h("p", { class: "lab-tit-hint" }, "Najprej zapiši začetni odčitek (spodnji rob meniska v povečavi). Nato odpri pipo, blizu končne točke dodajaj po eno kapljico. Ko barva ostane, zapri pipo in zapiši končni odčitek."),
+        h("label", { class: "lab-tit-field" }, h("span", { class: "demo-slider-label" }, "odčitek birete [mL]"), readIn), buttons(recBtn), tapSeg, buttons(dropBtn), h("div", { class: "lab-tit-now" }, swatch, status), buttons(phBtn, autoT)),
+      log, // dnevnik v stolpcu s koraki: na širokem zaslonu ob pripeti risbi, na telefonu takoj pod koraki
+    )), h("h4", { class: "lab-h" }, "Titracije"), table, summary, calc, h("h4", { class: "lab-h" }, "Titracijska krivulja (s pH-metrom)"), graph, qBox,
       notes(POENOSTAVITVE_TITRACIJA, "HCl + NaOH → NaCl + H₂O; CH₃COOH + NaOH → CH₃COONa + H₂O. pH iz bilance nabojev; K<sub>w</sub> = 1,0 · 10⁻¹⁴ in K<sub>a</sub>(CH₃COOH) = 1,75 · 10⁻⁵ pri 25 °C (CRC Handbook). Prehodna območja indikatorjev: fenolftalein 8,2–10,0, metiloranž 3,1–4,4, bromtimol modro 6,0–7,6 (CRC Handbook), pK<sub>In</sub> po Harrisu (Quantitative Chemical Analysis). Bireta 50 mL razreda A ±0,05 mL (ISO 385), polnilna pipeta 25 mL razreda A ±0,03 mL (ISO 648), kapljica ~0,05 mL (Harris). Ocene: pretok iz pipe, voda v neoprani bireti (0,8 mL), zračni mehurček (0,2–0,5 mL), barve indikatorjev, pH-meter ±0,02.")],
     tryText: "Določi neznano koncentracijo klorovodikove kisline: titriraj, dokler se dve titraciji ne ujemata na 0,10 mL, in izračunaj c. Nato titriraj ocetno kislino enkrat z metiloranžem in enkrat s fenolftaleinom. Napovej, kateri da pravi rezultat, in razloži zakaj. Kaj se zgodi, če bireto napolniš, ne da bi jo prej spral s titrantom?",
   });
@@ -110,6 +117,7 @@ export function labTitracija(el) {
     sync();
   }
   function purge() {
+    if (!need()) return;
     if (!B.filled) return log.push("Bireta je prazna. Najprej jo napolni.", "warn");
     closeTap();
     const r = B.purge();
@@ -122,7 +130,8 @@ export function labTitracija(el) {
     closeTap();
     if (cur && B.flask && B.flask.added > 0) log.push("Prejšnje titracije nisi končal (ni končnega odčitka), zato je ni v tabeli.", "warn");
     const id = sampleSel.get();
-    B.pipette(id);
+    const pipeta = pipRinse.get() ? "vzorec" : "mokra", erlenmajerica = flaskSeg.get();
+    B.pipette(id, { pipeta, erlenmajerica });
     cur = null;
     pip = { t: 0, dur: reduced ? 0 : 3 };
     if (pts.length) prevPts = pts;
@@ -130,7 +139,9 @@ export function labTitracija(el) {
     last = null;
     pipR = r05(B.reading());
     lastColour = "";
-    log.push(`S propipeto si v polnilno pipeto posrkal vzorec do oznake in ga izpustil v čisto erlenmajerico: ${fixed(PIPETA.V, 2)} mL. Vzorec: ${VZORCI[id].name}.`, "info");
+    if (pipeta === "mokra") log.push("Pipeta je bila še mokra od pomivanja z vodo: voda v njej je vzorec malo razredčila.", "warn");
+    if (erlenmajerica === "vzorec") log.push("Erlenmajerico si splaknil z vzorcem: kapljice vzorca, ki so ostale v njej, dodajo kislino.", "warn");
+    log.push(`S propipeto si v polnilno pipeto posrkal vzorec do oznake in ga izpustil v erlenmajerico: ${fixed(PIPETA.V, 2)} mL. Vzorec: ${VZORCI[id].name}.${erlenmajerica === "voda" ? " Erlenmajerica je mokra od destilirane vode, kar ne moti: množina kisline ostane enaka." : ""}`, "info");
     sync();
   }
   function addInd() {
@@ -140,10 +151,11 @@ export function labTitracija(el) {
     const r = B.addIndicator(id);
     if (!r.ok) return log.push("V erlenmajerici je že indikator. Za drug indikator vzemi novo erlenmajerico z vzorcem.", "warn");
     const ind = INDIKATORJI[id];
-    log.push(`Dodal si 2 kapljici indikatorja ${ind.name} (prehod pri pH ${fixed(ind.obmocje[0], 1)}–${fixed(ind.obmocje[1], 1)}: ${ind.kisla} → ${ind.bazicna}).`, "info");
+    log.push(`V erlenmajerico si dodal 2 kapljici indikatorja: ${ind.name} (prehod pri pH ${fixed(ind.obmocje[0], 1)}–${fixed(ind.obmocje[1], 1)}: ${ind.kisla} → ${ind.bazicna}).`, "info");
     sync();
   }
   function canFlow() {
+    if (!need()) return false;
     if (!B.filled) return log.push("Bireta je prazna. Najprej jo napolni.", "warn"), false;
     if (pip) return false;
     if (!B.flask) return log.push("Pod bireto ni erlenmajerice z vzorcem. Najprej odpipetiraj vzorec.", "warn"), false;
@@ -160,7 +172,7 @@ export function labTitracija(el) {
   }
   function oneDrop() {
     if (!canFlow()) return;
-    if (B.reading() >= BIRETA.V - 1e-6) return log.push("Gladina je pri oznaki 50 mL. Dopolni bireto in začni znova.", "warn");
+    if (B.bur.u >= BIRETA.V - 1e-6) return log.push("Gladina je pri oznaki 50 mL. Dopolni bireto in začni znova.", "warn");
     B.drop();
     drops.push({ y: 0 });
     draw();
@@ -179,10 +191,12 @@ export function labTitracija(el) {
     if (!cur) {
       if (!B.flask) return log.push("Najprej odpipetiraj vzorec v erlenmajerico, nato zapiši začetni odčitek.", "warn");
       if (B.flask.added > 0) return log.push("V erlenmajerico je NaOH že tekel. Za pravo titracijo vzemi novo erlenmajerico z vzorcem.", "warn");
+      pipR = r05(Rt);
       cur = { R1: v, R1t: Rt, id: B.flask.id, ind: B.flask.ind, trial: B.flask.trial, mehur: B.bur.mehur, wrongRead: off };
       if (B.flask.ind === "brez") log.push("V erlenmajerici ni indikatorja. Kako boš vedel, kdaj ustaviti?", "warn");
       log.push(`Začetni odčitek: ${mL(v)}. Zdaj titriraj.`, "info");
     } else {
+      if (B.flask.added > 0 && v < cur.R1) return log.push(`Končni odčitek (${mL(v)}) ne more biti manjši od začetnega (${mL(cur.R1)}): skala birete narašča navzdol.`, "warn");
       if (B.flask.added <= 0) {
         cur.R1 = v;
         cur.wrongRead = off;
@@ -192,7 +206,7 @@ export function labTitracija(el) {
       closeTap();
       const f = B.flask, n0 = f.cl + f.ac, Veq = n0 / B.bur.c;
       const row = { vz: VZORCI[cur.id].short, ind: INDIKATORJI[f.ind].name, r1: fixed(cur.R1, 2), r2: fixed(v, 2), v: fixed(v - cur.R1, 2), V: v - cur.R1, id: cur.id,
-        indId: f.ind, over: f.added - Veq, mehur: cur.mehur > 0 && B.bur.mehur === 0 ? cur.mehur : 0, razr: 1 - B.bur.c / B.cNaOH, read: cur.wrongRead || off };
+        indId: f.ind, over: f.added - Veq, mehur: cur.mehur > 0 && B.bur.mehur === 0 ? cur.mehur : 0, razr: 1 - B.bur.c / B.cNaOH, read: cur.wrongRead || off, pipeta: f.pipeta, erlenmajerica: f.erlenmajerica };
       rows.push(row);
       table.add(row);
       log.push(`Končni odčitek: ${mL(v)}. Porabil si ${mL(v - cur.R1)} NaOH.`, "ok");
@@ -218,7 +232,8 @@ export function labTitracija(el) {
     const id = rows.at(-1).id, set = concordant(id), n = rows.filter((r) => r.id === id).length;
     if (set.length >= 2) {
       const mean = set.reduce((a, b) => a + b, 0) / set.length;
-      summary.innerHTML = `Ujemanje (${VZORCI[id].short}): ${set.length} titracije se ujemajo na 0,10 mL (${set.map((x) => fixed(x, 2)).join(", ")}). Povprečje <b>${mL(mean)}</b>. Iz njega izračunaj koncentracijo.`;
+      const k = set.length, ujema = k === 2 ? "titraciji se ujemata" : k <= 4 ? "titracije se ujemajo" : "titracij se ujema";
+      summary.innerHTML = `Ujemanje (${VZORCI[id].short}): ${k} ${ujema} na 0,10 mL (${set.map((x) => fixed(x, 2)).join(", ")}). Povprečje <b>${mL(mean)}</b>. Iz njega izračunaj koncentracijo.`;
     } else summary.textContent = n === 1 ? "Prva titracija je pogosto groba (z njo izveš približno porabo). Ponovi jo natančneje: blizu končne točke po kapljicah." : `Titracije vzorca ${VZORCI[id].short} se še ne ujemajo na 0,10 mL. Ponovi titracijo.`;
   }
   function checkC() {
@@ -240,6 +255,8 @@ export function labTitracija(el) {
     if (rs.some((r) => r.over < -0.15 && r.indId !== "brez" && !(r.indId === "metiloranz" && !VZORCI[id].mocna))) why.push("titracijo si ustavil pred končno točko");
     if (rs.some((r) => r.mehur > 0)) why.push("zračni mehurček iz konice: odčitek je večji od prostornine, ki je stekla v erlenmajerico");
     if (rs.some((r) => r.razr > 0.002)) why.push(`bireta ni bila sprana s titrantom: voda je NaOH razredčila za ${fixed(Math.max(...rs.map((r) => r.razr)) * 100, 1)} %, zato ga porabiš več`);
+    if (rs.some((r) => r.pipeta === "mokra")) why.push("pipeta ni bila sprana z vzorcem: voda v njej je vzorec razredčila, zato je v erlenmajerici manj kisline in porabiš manj NaOH");
+    if (rs.some((r) => r.erlenmajerica === "vzorec")) why.push("erlenmajerica je bila sprana z vzorcem: ostanek vzorca doda kislino, zato porabiš več NaOH");
     if (rs.some((r) => r.read)) why.push("nenatančen odčitek birete");
     let t = `Račun je pravilen: c = ${fixed(v, 4)} mol/L. Prava koncentracija vzorca je ${fixed(cTrue, 4)} mol/L, tvoj rezultat odstopa za ${err >= 0 ? "+" : "−"}${fixed(Math.abs(err) * 100, 1)} %.`;
     if (Math.abs(err) <= 0.005) t += " Odlično: natančnost dobre titracije je nekaj desetink odstotka.";
@@ -274,9 +291,14 @@ export function labTitracija(el) {
       ],
     }));
   }
+  // Poraba za graf: od odčitka, ko v erlenmajerico še ni steklo nič NaOH (tudi če si bireto po pipetiranju napolnil ali dolil).
+  function vNow() {
+    if (B.flask && B.flask.added <= 0) pipR = r05(B.reading());
+    return Math.max(0, r05(B.reading()) - pipR);
+  }
   function recPH(auto = false) {
     if (!phT.get() || !B.flask) return auto ? null : log.push("Najprej vstavi pH-elektrodo v erlenmajerico z vzorcem (vklopi »pH-meter v erlenmajerici«).", "warn");
-    const V = Math.max(0, r05(B.reading()) - pipR), p = B.readPH();
+    const V = vNow(), p = B.readPH();
     if (last && Math.abs(last[0] - V) < 0.04 && auto) return;
     if (pts.length >= 250) return;
     pts.push([V, p]);
@@ -291,7 +313,7 @@ export function labTitracija(el) {
       const dV = q[i][0] - q[i - 1][0];
       if (dV <= 0) continue;
       const k = (q[i][1] - q[i - 1][1]) / dV;
-      if (!best || k > best.k) best = { k, V: (q[i][0] + q[i - 1][0]) / 2, p: (q[i][1] + q[i - 1][1]) / 2, i };
+      if (!best || k > best.k) best = { k, V: (q[i][0] + q[i - 1][0]) / 2, p: (q[i][1] + q[i - 1][1]) / 2, dV, i };
     }
     if (!best || best.k < 3 || q.at(-1)[1] < best.p + 0.5 || q[0][1] > best.p - 1.5) return null;
     return best;
@@ -302,8 +324,10 @@ export function labTitracija(el) {
     S.push({ pts, shape: "o", cls: "a", label: "izmerjeno" });
     const eq = equivalence(pts);
     if (eq) {
-      S.push({ pts: [[eq.V, eq.p]], shape: "^", cls: "c", label: `ekvivalentna točka ≈ ${mL(eq.V, 1)}, pH ≈ ${fixed(eq.p, 1)}` });
-      if (!said.has(`eq${B.trial}`)) said.add(`eq${B.trial}`), log.push(`Na krivulji je skok pH: ekvivalentna točka je pri približno ${mL(eq.V, 1)} (pH ≈ ${fixed(eq.p, 1)}).`, "ok");
+      // V iz najstrmejšega odseka; pH le, če sta sosednji točki največ 0,2 mL narazen (sicer bi bila sredina skoka ugibanje).
+      const pOk = eq.dV <= 0.2 + 1e-9, pTxt = pOk ? `, pH ≈ ${fixed(eq.p, 1)}` : "";
+      S.push({ pts: [[eq.V, eq.p]], shape: "^", cls: "c", label: `ekvivalentna točka pri V ≈ ${mL(eq.V, 1)}${pTxt}` });
+      if (!said.has(`eq${B.trial}`)) said.add(`eq${B.trial}`), log.push(`Na krivulji je skok pH: ekvivalentna točka je pri V ≈ ${mL(eq.V, 1)} (najstrmejši del krivulje)${pTxt}.${pOk ? "" : " Za pH v ekvivalentni točki blizu skoka dodajaj po kapljicah, da so meritve gostejše."}`, "ok");
     }
     graph.draw(S);
   }
@@ -330,8 +354,9 @@ export function labTitracija(el) {
       for (const d of drops) d.y += dt * 1.6; // pot od konice do gladine v ~0,6 s
       while (drops.length && drops[0].y >= 1) drops.shift();
     } else drops.length = 0;
+    vNow();
     if (phT.get() && autoT.get() && B.flask && !pip) {
-      const V = Math.max(0, r05(B.reading()) - pipR), p = B.pH();
+      const V = vNow(), p = B.pH();
       if (!last || (V - last[0] >= 0.5 - 1e-9) || (V > last[0] + 0.04 && Math.abs(p - last[1]) >= 0.3)) recPH(true);
     }
     // barva raztopine: dnevnik ob vsaki spremembi (tudi za bralnik zaslona)
@@ -363,7 +388,7 @@ export function labTitracija(el) {
       if (B.flash > 0.25 && B.flask.ind !== "brez" && !B.endSeen() && (B.flashTau || 0) > 0.8) t += ` Ob kapljici se za trenutek pokaže ${INDIKATORJI[B.flask.ind].bazicna} barva, ki ob vrtinčenju izgine.`;
       if (B.tap !== "zaprta") t += B.tap === "curek" ? " NaOH teče v curku." : " NaOH kaplja (~2 kapljici na sekundo).";
     } else if (!B.filled) t = "Bireta je prazna, erlenmajerica še ni pripravljena.";
-    status.textContent = t;
+    if (status.textContent !== t) status.textContent = t; // ne napoveduj iste vrstice 10-krat na sekundo
   }
   function sync() {
     recBtn.textContent = cur ? "Zapiši končni odčitek" : "Zapiši začetni odčitek";
@@ -372,7 +397,7 @@ export function labTitracija(el) {
   }
 
   // ---------------------------------------------------------------- risanje
-  // Levo: celota v merilu 0,6 px/mm. Desno zgoraj: povečava meniska (9 px/mm), desno spodaj: erlenmajerica od blizu (1,15 px/mm).
+  // Levo: celota v merilu 0,6 px/mm. Desno zgoraj: povečava meniska (9 px/mm), desno spodaj: erlenmajerica od blizu (1,6 px/mm).
   const K = 0.6, BX = 112, Y0 = 84, Y50 = Y0 + BIRETA.V * MM_ML * K, BENCH = 548;
   const yR = (R) => Y0 + R * MM_ML * K;
   const FB = BENCH - 6 * K - 6 * K; // podnožje stojala 6 mm, ploščica 6 mm
@@ -433,7 +458,7 @@ export function labTitracija(el) {
     s("line", { x1: PX - 4, y1: pTop + 50 * K, x2: PX + 4, y2: pTop + 50 * K, class: "lab-tit-ring" }, svg);
     label(svg, PX, pTop - 22, "pipeta", "lbl small");
     label(svg, PX, pTop - 9, "25 mL", "lbl small");
-    label(svg, BX - 12, Y0 - 32, "bireta 50 mL", "lbl small", "end");
+    label(svg, BX + 8, Y0 - 32, "bireta 50 mL", "lbl small", "start"); // desno od birete: levo je palica stojala
     label(svg, BX, BENCH + 12, "erlenmajerica 100 mL", "lbl small");
     // merilo 10 cm
     s("line", { x1: 40, y1: 24, x2: 40 + 100 * K, y2: 24, class: "lab-scale" }, svg);
@@ -445,6 +470,8 @@ export function labTitracija(el) {
     // gumbi, ki trenutno nimajo smisla
     purgeBtn.disabled = !B.filled;
     indBtn.disabled = !B.flask;
+    swatch.hidden = !f;
+    if (f) swatch.style.background = col;
     dropBtn.disabled = !B.filled;
   }
 

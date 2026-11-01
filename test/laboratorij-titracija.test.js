@@ -2,7 +2,7 @@
 // Vsak test primerja model z vrednostjo iz literature; dovoljeno odstopanje je v imenu testa (docs/laboratorij.md).
 import test from "node:test";
 import assert from "node:assert/strict";
-import { solvePH, volumeAtPH, inFraction, indicatorColor, INDIKATORJI as I, TitrBench, BIRETA, PIPETA, KA_OCETNA } from "../public/sim/lab-model-titracija.js";
+import { solvePH, volumeAtPH, inFraction, indicatorColor, INDIKATORJI as I, TitrBench, BIRETA, PIPETA, ERLENMAJERICA, KA_OCETNA } from "../public/sim/lab-model-titracija.js";
 
 const near = (a, b, tol, msg) => assert.ok(Math.abs(a - b) <= tol, `${msg}: ${a} ni ${b} ± ${tol}`);
 const r05 = (x) => Math.round(x / 0.05) * 0.05; // skrben učenec odčita bireto na 0,05 mL
@@ -18,6 +18,12 @@ test("equivalence: HCl + NaOH pH 7.00 (±0.01); acetic acid half-equivalence pH 
   near(-Math.log10(KA_OCETNA), 4.76, 0.005, "pKa");
   near(solvePH({ ac: 2.5, na: 1.25, V: 37.5 }), 4.76, 0.02, "polovica ekvivalence");
   near(solvePH({ ac: 2.5, na: 2.5, V: 50 }), 8.72, 0.03, "ekvivalenca");
+  // čez ekvivalenco odloča presežek OH⁻, razredčen z dodano prostornino: 0,5 mmol v 55 mL → pH = 14 + log(0,5/55) = 11,96
+  near(solvePH({ cl: 2.5, na: 3, V: 55 }), 11.96, 0.01, "HCl + 30 mL NaOH");
+  near(solvePH({ ac: 2.5, na: 3, V: 55 }), 11.96, 0.01, "ocetna kislina + 30 mL NaOH");
+  // pred ekvivalenco: HCl 1,5 mmol v 35 mL → pH 1,37; ocetna kislina Henderson–Hasselbalch 4,756 + log(1/1,5) = 4,58
+  near(solvePH({ cl: 2.5, na: 1, V: 35 }), 1.37, 0.01, "HCl + 10 mL NaOH");
+  near(solvePH({ ac: 2.5, na: 1, V: 35 }), 4.58, 0.01, "ocetna kislina + 10 mL NaOH");
   // pH monotono narašča z dodanim NaOH
   let prev = -1;
   for (let V = 0; V <= 50; V += 0.5) {
@@ -65,9 +71,9 @@ function prep(seed, { rinse = true, purge = true } = {}) {
 }
 // Ena titracija: odpipetiraj, dodaj indikator, odčitaj, curek do »fast« mL, nato po kapljicah do končne barve.
 // overshoot: koliko sekund curek še teče, ko se barva že spremeni. Vrne odčitano porabo in pravo dodano prostornino.
-function trial(b, id, ind, { fast = Infinity, overshoot = 0 } = {}) {
+function trial(b, id, ind, { fast = Infinity, overshoot = 0, pip } = {}) {
   if (b.reading() > 22) b.fill();
-  b.pipette(id);
+  b.pipette(id, pip);
   b.addIndicator(ind);
   const R1 = r05(b.reading());
   b.tap = "curek";
@@ -196,4 +202,58 @@ test("deterministic with the seeded RNG", () => {
   };
   assert.deepEqual(run(11), run(11));
   assert.notDeepEqual(run(11), run(12));
+});
+
+test("burette: topping up never lowers the level, liquid is conserved, the level stops at the 50 mL mark", () => {
+  for (let seed = 1; seed <= 20; seed++) {
+    const b = prep(seed);
+    const cons = () => near(b.bur.u + b.bur.vol + b.bur.mehur, BIRETA.V + BIRETA.mrtva, 1e-9, `seed ${seed}: prostornina v bireti`);
+    for (let k = 0; k < 5; k++) {
+      const u0 = b.bur.u;
+      b.fill(); // že (skoraj) polna: gladina se dvigne ali ostane, nikoli ne pade brez iztoka
+      assert.ok(b.bur.u <= u0 + 1e-12, `seed ${seed}: dolivanje ne spusti gladine (${u0} → ${b.bur.u})`);
+      cons();
+    }
+    b.pipette("hcl");
+    b.tap = "curek";
+    for (let i = 0; i < 1000 && b.tap === "curek"; i++) b.step(0.1);
+    assert.equal(b.tap, "zaprta");
+    assert.ok(b.events.some((e) => e.type === "prazna"));
+    near(b.bur.u, BIRETA.V, 1e-9, `seed ${seed}: gladina pri 50 mL`);
+    assert.equal(b.drop(), 0, "pod oznako 50 mL ne kaplja");
+    cons();
+    b.purge();
+    assert.ok(b.bur.u <= BIRETA.V + 1e-9, `seed ${seed}: izpust zraka ne spusti gladine pod 50 mL`);
+  }
+});
+
+test("unrinsed burette: the dilution (~1.6 %) shrinks after each top-up with fresh titrant", () => {
+  const b = prep(5, { rinse: false });
+  const d0 = 1 - b.bur.c / b.cNaOH;
+  assert.ok(d0 > 0.014 && d0 < 0.018, `razredčitev ${d0}`);
+  let prev = d0;
+  for (let k = 0; k < 3; k++) {
+    trial(b, "hcl", "fenolftalein", { fast: 20 });
+    b.fill();
+    const d = 1 - b.bur.c / b.cNaOH;
+    assert.ok(d < prev && d > 0, `po ${k + 1}. dolivanju ${d}`);
+    prev = d;
+  }
+});
+
+test("pipetting mistakes: wet pipette ~0.8 % too low (−0.5 to −1.1 %), flask rinsed with sample ~2 % too high (+1.5 to +2.5 %), flask wet with water no error (±0.3 %)", () => {
+  for (let seed = 1; seed <= 10; seed++) {
+    const cases = [
+      [{ pipeta: "mokra" }, -PIPETA.voda / PIPETA.V, -0.011, -0.005],
+      [{ erlenmajerica: "vzorec" }, ERLENMAJERICA.ostanek / PIPETA.V, 0.015, 0.025],
+      [{ erlenmajerica: "voda" }, 0, -0.003, 0.003],
+      [{ erlenmajerica: "suha" }, 0, -0.003, 0.003],
+    ];
+    for (const [pip, , lo, hi] of cases) {
+      const b = prep(seed);
+      const { c } = determine(b, "ocetna", "fenolftalein", { pip, first: { pip } });
+      const e = c / b.c.ocetna - 1;
+      assert.ok(e > lo && e < hi, `seed ${seed}, ${JSON.stringify(pip)}: ${(e * 100).toFixed(2)} %`);
+    }
+  }
 });
