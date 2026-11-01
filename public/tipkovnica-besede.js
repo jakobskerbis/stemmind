@@ -38,3 +38,9 @@ chemistry atom molecule ion electron proton neutron element compound reaction ac
 solution concentration mole molar oxidation reduction oxygen hydrogen carbon nitrogen water
 periodic table bond covalent ionic balance stoichiometry test exam homework`.split(/\s+/),
 };
+
+// Ko se beseda še ne piše, vrstica predlogov ni prazna: na začetku polja začetki vprašanj, med besedami pogoste vezne besede.
+export const ZACETKI = {
+  sl: { start: ["Kako", "Zakaj", "Razloži"], next: ["je", "in", "da"] },
+  en: { start: ["How", "Why", "Explain"], next: ["the", "is", "to"] },
+};
