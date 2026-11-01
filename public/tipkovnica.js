@@ -686,6 +686,20 @@ export function initKeyboard() {
   new ResizeObserver(() => {
     if (S.open) document.documentElement.style.setProperty("--tk-h", board.offsetHeight + "px");
   }).observe(board);
+  // Tipkovnica sedi na dnu vidnega dela: če brskalnik spodaj prekrije stran (npr. spodnja vrstica naslova), se dvigne nad to.
+  const vv = window.visualViewport;
+  if (vv) {
+    let zadnji = -1;
+    const sedi = () => {
+      const pod = Math.max(0, Math.round(innerHeight - vv.height - vv.offsetTop));
+      // večji odmik pomeni odprto sistemsko tipkovnico (npr. 🌐), takrat ne premikamo
+      const v = pod < 120 ? pod : 0;
+      if (v !== zadnji) document.documentElement.style.setProperty("--tk-vv", (zadnji = v) + "px"); // ob drsenju le ob spremembi
+    };
+    vv.addEventListener("resize", sedi);
+    vv.addEventListener("scroll", sedi);
+    sedi();
+  }
 
   document.addEventListener(
     "pointerdown",
