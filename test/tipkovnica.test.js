@@ -204,3 +204,11 @@ test("old keypads are replaced by the shared keyboard", () => {
   assert.match(read("public/tipkovnica.css"), /\.tk-k \{[^}]*min-height: 44px/);
   assert.match(js, /class="tk-hide"[^>]*aria-label/);
 });
+
+test("predlogi besed: vrstica nikoli ni prazna (začetki in vezne besede za sl in en)", async () => {
+  const { WORDS, ZACETKI } = await import("../public/tipkovnica-besede.js");
+  for (const lang of Object.keys(WORDS)) {
+    assert.ok(ZACETKI[lang]?.start?.length >= 3, `${lang}: začetki`);
+    assert.ok(ZACETKI[lang]?.next?.length >= 3, `${lang}: vezne besede`);
+  }
+});

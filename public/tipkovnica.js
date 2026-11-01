@@ -37,6 +37,7 @@ const origMode = new WeakMap(); // polje → izvirni inputmode (null: ga ni bilo
 const numShadow = new WeakMap(); // type=number: vpisano besedilo (brskalnik »3.« ne sprejme kot vrednost)
 let studentSettings = () => null;
 let words = null; // seznam za predloge (naloži se, ko so predlogi vklopljeni)
+let starts = null; // predlogi, ko se beseda še ne piše
 
 const S = { open: false, field: null, cfg: {}, kind: null, layers: [], layer: null, shift: 0, shiftAt: 0, fxg: "trig", symg: null, sys: null, explicit: false };
 let board = null;
@@ -224,7 +225,8 @@ function goKey(cls = "w2") {
 function ctxChips() {
   if (prefs.words && S.layer === "abc" && words) {
     const w = currentWord();
-    const list = w ? suggest(words, w) : [];
+    const empty = !String(S.field?.value ?? S.field?.textContent ?? "").trim();
+    const list = w ? suggest(words, w) : (starts?.[empty ? "start" : "next"] || []);
     return { words: true, html: list.map((x) => chip(x, { a: "word", v: x }, "word")).join("") };
   }
   let list = val(S.cfg.ctx, S.field);
@@ -351,7 +353,7 @@ function render() {
   S.layer = layerId(L);
   const body = typeof L === "object" ? customHtml(L) : { abc: abcHtml, num: numHtml, fx: fxHtml, sym: symHtml, kem: kemHtml }[S.layer]?.() || abcHtml();
   const c = ctxChips();
-  const ctx = c.html || (prefs.words && S.layer === "abc") ? `<div class="tk-ctx${c.words ? " words" : ""}">${c.html}</div>` : "";
+  const ctx = c.html || (prefs.words && S.layer === "abc" && words) ? `<div class="tk-ctx${c.words ? " words" : ""}">${c.html}</div>` : "";
   board.innerHTML = `<div class="tk-in">${ctx}${tabsHtml()}<div class="tk-rows" data-layer="${esc(S.layer)}">${body}</div></div>`;
 }
 function renderCtx() {
@@ -440,8 +442,10 @@ async function loadWords() {
   try {
     const m = await import("./tipkovnica-besede.js");
     words = m.WORDS[base] || null;
+    starts = m.ZACETKI?.[base] || null;
   } catch {
     words = null;
+    starts = null;
   }
   if (S.open && S.layer === "abc") render();
 }
