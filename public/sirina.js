@@ -1,6 +1,6 @@
 // Široke formule in tabele v lekciji (j 2026-10-31: na telefonu so se skrivali stolpci in konci formul).
 // Kar je preširoko za kartico, najprej malo pomanjšamo (do 80 %). Kar je še vedno preširoko, se pomika
-// vstran, desni rob pa zbledi, da se vidi, da se nadaljuje. Formula sredi besedila se nikoli ne prelomi
+// vstran in je označeno kot drsna vrstica (public/drsniki.js). Formula sredi besedila se nikoli ne prelomi
 // v dve vrstici sredi izraza. Če formula ne gre v vrstico, jo zložimo pri enačajih: leva stran zgoraj,
 // spodaj vsak »= …« v svoji vrstici, enačaji poravnani (j 2026-11-01). Šele kar je še vedno preširoko, se
 // zmanjša ali pomika. Preverja scripts/preveri-videz-lekcij.cjs.
@@ -10,13 +10,6 @@ const BOX = ".katex-display, .md-table-wrap";
 let sirine = new WeakMap(); // zadnja širina, pri kateri smo element že prilagodili
 const opazovani = new Set();
 let ro = null;
-
-// Bledi rob na koncu vrstice, dokler je kaj skrito (le v okvirju, ki se res pomika; v RTL je scrollLeft ≤ 0).
-function rob(el) {
-  const vec = el.scrollWidth > el.clientWidth + 1 && getComputedStyle(el).overflowX !== "visible";
-  el.classList.toggle("tb-drsnik", vec);
-  el.classList.toggle("tb-konec", !vec || Math.abs(el.scrollLeft) + el.clientWidth >= el.scrollWidth - 2);
-}
 
 // Relacije, pri katerih zložimo predolgo formulo (le na vrhnji ravni, ne v ulomku ali oklepaju {…}).
 const REL = new Set(["\\approx", "\\le", "\\leq", "\\ge", "\\geq", "\\neq", "\\ne", "\\equiv", "\\doteq", "\\sim", "\\simeq", "\\to", "\\rightarrow", "\\Rightarrow", "\\Leftrightarrow", "\\iff", "\\implies", "\\longrightarrow", "\\rightleftharpoons", "\\propto", "\\lt", "\\gt"]);
@@ -200,7 +193,6 @@ function okvir(el) {
     const t = el.querySelector(":scope > table");
     if (t) pomanjsaj(t, w, () => el.scrollWidth);
   }
-  rob(el);
 }
 
 // Odstavek ali alineja z dolgo formulo med besedilom.
@@ -255,7 +247,6 @@ export function prilagodiSirino(root) {
     if (el.parentElement?.closest(".katex-display, .md-table-wrap")) return;
     ro.observe(el);
     opazovani.add(el);
-    el.addEventListener("scroll", () => rob(el), { passive: true });
   });
   const vrste = new Set();
   root.querySelectorAll(".katex").forEach((k) => {
