@@ -1852,9 +1852,12 @@ async function loadPath(key = state.pathKey) {
       ? opt(own)
       : "";
   $(".path-head").classList.toggle("fixed", !uni);
-  $("#path-level").textContent = own ? own.label : p.label || "";
-  // Povezava na Učbenik, kadar so pred to potjo nižji razredi/letniki istega predmeta.
-  $("#path-lower").hidden = uni || !own || paths.indexOf(own) < 1;
+  // Napis v jeziku učenca: »Matematika, 2. letnik« → »Mathematics, Year 2« (oznaka poti s strežnika je slovenska).
+  const lvl = /^(.+), (\d+\. (?:razred|letnik).*)$/.exec(own?.label || "");
+  $("#path-level").textContent = lvl ? [SUBJECT_NAMES[own.subject] || lvl[1], levelLabel(lvl[2])].join(document.documentElement.dir === "rtl" ? "، " : ", ") : own?.label || p.label || "";
+  // Povezava na Učbenik, kadar so pred to potjo nižji razredi/letniki istega predmeta
+  // (ali kadar za to raven poti še ni, a ima predmet druge poti).
+  $("#path-lower").hidden = uni || (own ? paths.indexOf(own) < 1 : !paths.length);
   if (!p.key) {
     content.innerHTML = `<p class="muted">${escapeHtml(p.message)}</p>`;
     return;
