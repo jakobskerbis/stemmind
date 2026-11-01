@@ -54,6 +54,7 @@ novo gradnjo APK (posodobitev OTA jih ne prinese).
 | Igre | matematične igre (`public/games/`) | L | WebView | ✗ |
 | Tekmovanja | priprava na tekmovanja (`#view-competition`) | M | WebView, pozneje naravno | ✗ |
 | NPZ in matura | preizkusi s časom (`#view-exams`) | M | naravno, kot vaje | ✗ |
+| Pretekle pole RIC v Evklidu | prenešena pola se odpre v aplikaciji, razdelitev na naloge, »Pomoč pri tej nalogi« (`public/paper-viewer.js`, `public/paper-tasks.js`) | M | naravno: aplikacija polo prenese z ric.si na napravi in jo odpre sama (brez izbire datoteke); razdelilnik `paper-tasks.js` je čista funkcija, uporabna tudi tu | ✗ |
 | Kartice | ponavljanje s karticami (`flashcards.js`) | M | naravno | ✗ |
 | Napredek | statistika in grafi po temah (`#view-progress`) | M | naravno, grafi v WebView | ✗ |
 | Lige | tedenska lestvica (`leagues.js`) | S | naravno | ✗ |
