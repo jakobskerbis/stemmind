@@ -106,7 +106,7 @@ export function lampR(U) {
 }
 
 // Linearni sistem G·v = i (Gaussova eliminacija z izbiro pivota).
-function solveLinear(G, b) {
+export function solveLinear(G, b) {
   const n = b.length;
   const A = G.map((row, i) => [...row, b[i]]);
   for (let c = 0; c < n; c++) {
