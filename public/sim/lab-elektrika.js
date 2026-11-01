@@ -58,7 +58,7 @@ export function labVezava(el) {
   const vmRange = select({ label: "območje voltmetra", options: [["2", "2 V"], ["20", "20 V"], ["200", "200 V"]], value: B.vmRange, onChange: (v) => ((B.vmRange = v), refresh()) });
   const rec = button("Zapiši meritev", () => record(), "primary small");
   const fuseBtn = button("Zamenjaj varovalko v ampermetru", () => (B.replaceFuse(), log.push("Nova varovalka je v ampermetru.", "ok"), refresh()));
-  const partBtn = button("Zamenjaj pokvarjene dele", () => (B.replaceBurnt(), log.push("Pokvarjene dele si zamenjal z novimi.", "ok"), refresh()));
+  const partBtn = button("Zamenjaj pokvarjene dele", () => (B.replaceBurnt(), log.push("V vezju so novi deli.", "ok"), refresh()));
   const clearBtn = button("Izbriši meritve", () => (table.clear(), sets.clear(), rPts.clear(), sync(), redrawGraph()));
 
   layout(el, {
@@ -160,7 +160,7 @@ export function labVezava(el) {
       qBox.append(conclusion({
         text: "Kaj velja za tokove pri vzporedni vezavi?",
         options: [
-          { t: "Tok v glavnem vodu je enak vsoti tokov v vejah; skozi manjši upor teče večji tok.", ok: true, why: "Naboj se v razcepišču ne izgubi (1. Kirchhoffov zakon): <i>I</i> = <i>I</i>₁ + <i>I</i>₂. Napetost na vseh vejah je enaka, zato je <i>I</i><sub>i</sub> = <i>U</i>/<i>R</i><sub>i</sub>, skupna upornost pa je manjša od najmanjše." },
+          { t: "Tok v glavnem vodu je enak vsoti tokov v vejah; skozi manjši upor teče večji tok.", ok: true, why: "Naboj se v razcepišču ne izgubi (1. Kirchhoffov zakon): <i>I</i> = <i>I</i>₁ + <i>I</i>₂. Napetost na vseh vejah je enaka, zato je <i>I</i><sub>i</sub> = <i>U</i>/<i>R</i><sub>i</sub>, skupna upornost pa je manjša od najmanjše. Če je izmerjena vsota <i>I</i>₁ + <i>I</i>₂ za malenkost (~1 %) večja od <i>I</i>, to ni napaka zakona: ampermeter ima upor ~1 Ω, ki tok v glavnem vodu zmanjša nekoliko bolj kot tok v posamezni veji, k temu pa prišteješ še napako merilnika." },
           { t: "Tok je v vseh vejah in v glavnem vodu enak.", ok: false, why: "Tako je pri zaporedni vezavi. Pri vzporedni se tok razdeli med veje." },
           { t: "Skupna upornost je vsota uporov.", ok: false, why: "Vsota velja za zaporedno vezavo. Vzporedno dodan upornik odpre novo pot toku, zato je skupna upornost manjša: 1/<i>R</i> = 1/<i>R</i>₁ + 1/<i>R</i>₂." },
         ],
@@ -271,7 +271,7 @@ export function labVezava(el) {
       }
       drawPart(p, k, L, part, i);
       const lx = p.x, ly = p.horiz ? Y0 - 18 : Y1 + 18;
-      label(svg, lx, p.horiz && par.length ? Y0 + 24 : ly, `${i + 1}: ${short(k)}${part.burnt ? (L.type === "R" ? " zgorel" : " pregorela") : ""}`, "lbl small");
+      label(svg, lx, p.horiz && par.length ? Y0 + (par.length > 1 ? 72 : 24) : ly, `${i + 1}: ${short(k)}${part.burnt ? (L.type === "R" ? " zgorel" : " pregorela") : ""}`, "lbl small");
     });
     later.forEach((f) => f());
     fuseBtn.hidden = !blown;
@@ -315,7 +315,7 @@ export function labPrevodnost(el) {
 
   const matSel = select({ label: "snov med sponkama", options: Object.entries(MATERIALI).map(([k, m]) => [k, m.name]), value: st.mat, onChange: (v) => ((st.mat = v), (st.magnet = false), test()) });
   const indSeg = segmented({ options: [["zarnica", "žarnica 3,8 V"], ["led", "LED z uporom 150 Ω"]], value: st.ind, onChange: (v) => ((st.ind = v), test()) });
-  indSeg.setAttribute("aria-label", "kazalo toka");
+  indSeg.setAttribute("aria-label", "lučka");
   const amT = toggle("ampermeter v krogu", false, (v) => ((st.am = v), test()));
   const amRange = select({ label: "območje ampermetra", options: [["200m", "200 mA"], ["10", "10 A (drug priključek)"]], value: st.amRange, onChange: (v) => ((st.amRange = v), test()) });
   const fuseBtn = button("Zamenjaj varovalko v ampermetru", () => ((st.fuse = false), log.push("Nova varovalka je v ampermetru.", "ok"), test()));
@@ -335,7 +335,7 @@ export function labPrevodnost(el) {
   layout(el, {
     extra: [
       h("div", { class: "lab-tit-top" }, stageBox(svg, h("div", { class: "lab-meters" }, amLcd), status), controlsBox(
-        grp("1. Preizkuševalnik", h("p", { class: "lab-tit-hint" }, "Baterija 4,5 V, kazalo toka in dve sponki. Če snov prevaja električni tok, je krog sklenjen in kazalo zasveti."), row("kazalo", indSeg), buttons(amT), amRange),
+        grp("1. Preizkuševalnik", h("p", { class: "lab-tit-hint" }, "Baterija 4,5 V, lučka in dve sponki. Če snov prevaja električni tok, je krog sklenjen in lučka zasveti."), row("lučka", indSeg), buttons(amT), amRange),
         grp("2. Snov", matSel, buttons(magBtn, sijBtn, upBtn), buttons(recBtn, fuseBtn)),
         log,
       )),
@@ -379,7 +379,7 @@ export function labPrevodnost(el) {
   }
   function look() {
     const m = MATERIALI[st.mat];
-    const t = m.tekocina ? "prozorna tekočina" : m.sijaj === true ? "kovinski sijaj" : m.sijaj ? "sivo se malo sveti" : "brez kovinskega sijaja";
+    const t = m.tekocina ? "prozorna tekočina" : m.sijaj === true ? "kovinski sijaj" : m.sijaj ? "rahel siv sijaj" : "brez kovinskega sijaja";
     log.push(`${m.name}: ${t}${m.sijaj === true ? " (ko jo podrgneš, se sveti)" : ""}.`, "info");
     entry().sijaj = t;
   }

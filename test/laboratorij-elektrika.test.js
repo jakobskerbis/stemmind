@@ -2,7 +2,7 @@
 // Dovoljeno odstopanje je zapisano pri vsakem testu (docs/laboratorij.md).
 import test from "node:test";
 import assert from "node:assert/strict";
-import { AM_RANGES, VM_RANGES, meterSpec } from "../public/sim/lab-model.js";
+import { AM_RANGES, VM_RANGES, meterSpec, fuseRate } from "../public/sim/lab-model.js";
 import { VezBench, rSkupni, tester, MATERIALI, matR, TESTER } from "../public/sim/lab-model-elektrika.js";
 
 const near = (a, b, tol, msg) => assert.ok(Math.abs(a - b) <= tol, `${msg}: ${a} ni ${b} ± ${tol}`);
@@ -61,10 +61,22 @@ test("lamps: parallel 6 V lamps glow fully, series ones dimly; a removed lamp br
     return b.brightness(0);
   };
   const par = glow("vzporedno"), ser = glow("zaporedno");
-  assert.ok(par > 0.95 && par <= 1.0, `vzporedno ${par}`);
+  // žarnice imajo toleranco ±5 % upora, zato svetlost pri polni napetosti 0,9–1,1 nazivne
+  assert.ok(par > 0.9 && par < 1.1, `vzporedno ${par}`);
   assert.ok(ser > 0.05 && ser < 0.15, `zaporedno (~3 V na vsaki: (3/6)^3,4 = 0,095) ${ser}`);
   assert.ok(glow("zaporedno", true) < 1e-6, "odvita žarnica prekine zaporedni krog");
   near(glow("vzporedno", true), par, 0.02, "vzporedno druga sveti naprej");
+  // dve »enaki« žarnici vzporedno: toka se razlikujeta za največ ~10 % (toleranca ±5 %), a nista čisto enaka
+  const b = bench(7, { vez: "vzporedno", n: 2, U0: 6 });
+  b.setKind(0, "L6"), b.setKind(1, "L6");
+  const [e1, e2] = b.solve().el;
+  assert.ok(e1.I !== e2.I && Math.abs(e1.I / e2.I - 1) < 0.11, `toka ${e1.I} ${e2.I}`);
+});
+
+test("tester: ~0,3 A through a metal shows OL on 200 mA but does not blow the F 200 mA fuse (IEC 60127-2: holds ≥ 1 h at 1,5 In)", () => {
+  const I = tester("baker", "zarnica", AM_RANGES["200m"].rsh).I;
+  assert.ok(I > 0.2 && I < 1.5 * AM_RANGES["200m"].fuse, `tok ${I}`);
+  assert.equal(fuseRate(I, AM_RANGES["200m"].fuse), 0);
 });
 
 test("mistakes: voltmeter in series, ammeter in parallel blows the fuse, short circuit hits the 1 A limit, 47 Ω burns at 12 V, 100 Ω survives", () => {

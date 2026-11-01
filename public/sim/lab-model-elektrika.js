@@ -10,6 +10,7 @@ const ODPRTO = 1e12; // Ω: prazno podnožje, zgorel upor, pregorela nitka
 // Deli: upori in žarnica 6 V / 0,1 A iz lab-ohm, žica (kratek stik) in prazno podnožje (odvita žarnica, odstranjen upor).
 // Žica s sponkama ima ~0,02 Ω (ocena: 20 cm bakrene žice 0,5 mm², ρ = 1,68 · 10⁻⁸ Ω m, plus sponki).
 export const R_ZICA = 0.02;
+export const ZARNICA_TOL = 0.05;
 export const VEZ_DELI = {
   ...LOADS,
   zica: { type: "W", name: "žica (kratek stik)" },
@@ -48,7 +49,9 @@ export class VezBench {
   newPart(k) {
     const L = VEZ_DELI[k];
     if (L.type === "R") return { R: L.nom * (1 + clamp(gauss(this.r, UPOR.tol / 2.2, 2.2), -UPOR.tol, UPOR.tol)), T: 20, burnt: false, hotSaid: false };
-    if (L.type === "L") return { over: 0, wear: 0, burnt: false };
+    // Žarnice niso enake: upor nitke (in tok) posamezne žarnice odstopa do ±5 % (ocena; podatkovni listi miniaturnih
+    // žarnic dopuščajo do ±10 % toka), zato vzporedni žarnici ne kažeta čisto enakega toka.
+    if (L.type === "L") return { k: 1 + clamp(gauss(this.r, ZARNICA_TOL / 2.2, 2.2), -ZARNICA_TOL, ZARNICA_TOL), over: 0, wear: 0, burnt: false };
     return {};
   }
   setKind(i, k) {
@@ -66,7 +69,7 @@ export class VezBench {
     if (L.type === "O" || p.burnt) return ODPRTO;
     if (L.type === "W") return R_ZICA;
     if (L.type === "R") return p.R * (1 + UPOR.alfa * (p.T - 20));
-    return lampR(U);
+    return lampR(U) * (p.k ?? 1);
   }
   // Vezje kot seznam dvopolov med vozlišči (0 = minus, 1 = plus napajalnika). Merilnik »glavni« zaporedno je v glavnem
   // vodu, vzporedno pa na sponkah napajalnika; merilnik »i« zaporedno je v veji elementa i, vzporedno pa na elementu i.
@@ -177,11 +180,13 @@ export class VezBench {
   readV() {
     return this.state.Uvm == null ? null : meterRead(this.vmM, this.state.Uvm, VM_RANGES[this.vmRange], "V");
   }
-  // Svetlost žarnice i (1 = nazivna): svetlobni tok ∝ U^3,4 (lab-model.js, ZARNICA).
+  // Svetlost žarnice i (1 = nazivna): svetlobni tok ∝ U^3,4 in moč ∝ U^1,6 (lab-model.js, ZARNICA), torej svetloba
+  // ∝ P^(3,4/1,6); za nazivno žarnico je to isto kot (U/Ur)^3,4, žarnica z manjšim uporom pa pri isti napetosti sveti močneje.
   brightness(i) {
     const e = this.state.el[i];
     if (VEZ_DELI[this.kinds[i]].type !== "L" || this.parts[i].burnt || !e) return 0;
-    return Math.min(1.6, Math.pow(Math.abs(e.U) / ZARNICA.Ur, ZARNICA.svet));
+    const P = Math.abs(e.U * e.I) / (ZARNICA.Ur * ZARNICA.Ir);
+    return Math.min(1.6, Math.pow(P, ZARNICA.svet / (1 + ZARNICA.eksp)));
   }
   // Skupna upornost iz nazivnih vrednosti; NaN, če v vezju ni samo uporov.
   nominalTotal() {
@@ -203,7 +208,8 @@ export class VezBench {
 // v temnejšem prostoru opazimo svetenje že pri ~0,05 mA (ocena).
 // Raztopine: dve bakreni ploščici 3 cm narazen, v vodi 2 cm × 3 cm, konstanta celice K = d/A = 50 m⁻¹ (ocena za
 // šolski poskus). Ko tok teče skozi slano vodo, poteka elektroliza (mehurčki): razkrojna napetost ~2,1 V
-// (ocena: 1,36 V za Cl₂ + 0,41 V za H₂ pri pH 7 + prenapetost), zato za tok ostane le 4,5 V − 2,1 V.
+// (ocena: 1,36 V za Cl₂ + 0,41 V za H₂ pri pH 7 + prenapetost; bakrena anoda se deloma raztaplja, kar
+// napetost nekoliko zniža, zato je 2,1 V zgornja ocena), zato za tok ostane le 4,5 V − 2,1 V.
 export const TESTER = { U: 4.5, ri: 1.5, K: 50, Udec: 2.1 };
 export const ZARNICA_T = { Ur: 3.8, Ir: 0.3, eksp: 0.6, svet: 3.4, hladna: 0.1 };
 export const LED = { Vf: 1.8, Rs: 150, Inom: 0.02, Imin: 5e-5 };
