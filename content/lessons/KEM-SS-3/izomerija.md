@@ -46,7 +46,7 @@ izomerija
 | 2-metilbutan | ena veja | $28\,^\circ\mathrm{C}$ |
 | 2,2-dimetilpropan | dve veji na istem C | $10\,^\circ\mathrm{C}$ |
 
-Bolj razvejana molekula je bolj kroglasta. Sosednje molekule se dotikajo na manjši površini, zato so disperzijske sile (šibke privlačne sile med nepolarnimi molekulami) med njimi šibkejše in vrelišče je nižje.
+Bolj razvejana molekula je bolj kroglasta. Sosednje molekule se dotikajo na manjši površini, zato so disperzijske sile (šibke privlačne sile, ki delujejo med vsemi molekulami, tudi nepolarnimi) med njimi šibkejše in vrelišče je nižje.
 
 V simulaciji spodaj (»Izomerija«) izberi formulo $\mathrm{C_5H_{12}}$. Primerjaj oblike treh molekul in njihova vrelišča. Nato izberi $\mathrm{C_4H_8}$ in poišči par, ki se razlikuje le po legi skupin $\mathrm{CH_3}$. Zakaj sta to dve spojini, izveš v bloku 6.
 

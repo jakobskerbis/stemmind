@@ -23,7 +23,7 @@ Pot signala: dendrit → telo → akson → končič → naslednja celica. Akson
 
 *Preveri:* kateri del nevrona signal oddaja naprej? *(Aksonski končič.)*
 
-**2. Mirovni potencial.** Membrana nevrona loči dve raztopini z različnimi ioni. Zunaj je več natrijevih ionov ($\mathrm{Na^+}$), znotraj več kalijevih ($\mathrm{K^+}$). To razliko vzdržuje **natrijevo-kalijeva črpalka**: z energijo iz ATP izčrpa $3$ $\mathrm{Na^+}$ ven in $2$ $\mathrm{K^+}$ noter. V membrani so tudi **kanali**, beljakovinske pore za posamezne ione. Skozi odprte kanale $\mathrm{K^+}$ uhaja ven in odnaša pozitivni naboj, zato ostane notranjost negativna.
+**2. Mirovni potencial.** Membrana nevrona loči dve raztopini z različno koncentracijo ionov. Zunaj je več natrijevih ionov ($\mathrm{Na^+}$), znotraj več kalijevih ($\mathrm{K^+}$). To razliko vzdržuje **natrijevo-kalijeva črpalka**: z energijo iz ATP izčrpa $3$ $\mathrm{Na^+}$ ven in $2$ $\mathrm{K^+}$ noter. V membrani so tudi **kanali**, beljakovinske pore za posamezne ione. Skozi odprte kanale $\mathrm{K^+}$ uhaja ven in odnaša pozitivni naboj, zato ostane notranjost negativna.
 
 Napetost med notranjostjo in zunanjostjo mirujoče celice je **mirovni potencial**, okoli $-70\,\mathrm{mV}$. Celica je kot napeta vzmet v mizarski spenjalki: miruje, a je pripravljena sprožiti.
 
@@ -93,7 +93,7 @@ Ta pot traja okoli $0{,}5\,\mathrm{ms}$ in gre le v eno smer: mešički so samo 
 - **alkohol** med drugim okrepi zaviralni prenašalec GABA, zato se odzivi upočasnijo;
 - **kokain** prepreči privzem dopamina nazaj, zato ga je v špranji preveč.
 
-Pri ponavljanju se možgani prilagodijo, npr. z manj receptorji. Za enak učinek je potrebno več snovi (**toleranca**), brez nje pa se pojavijo neprijetni znaki (**odvisnost**).
+Pri ponavljanju se možgani prilagodijo, npr. z manj receptorji. Za enak učinek je potrebno več snovi (**toleranca**), brez nje pa se pojavijo neprijetni odtegnitveni znaki, ki kažejo na **odvisnost**.
 
 Simulacija »Akcijski potencial in sinapsa« spodaj ti dogodke pomeša. Postavi jih v pravo zaporedje in ob vsakem koraku ugotovi, kateri ioni gredo v celico in kateri iz nje.
 
@@ -114,7 +114,7 @@ $t = \dfrac{s}{v}$
 
 1. Signal potuje s stalno hitrostjo, zato delimo pot s hitrostjo: $t = \dfrac{0{,}9\,\mathrm{m}}{60\,\mathrm{m/s}} = 0{,}015\,\mathrm{s}$.
 2. V milisekundah: $0{,}015\,\mathrm{s} = 15\,\mathrm{ms}$.
-3. Odgovor: signal pride do hrbtenjače v $15\,\mathrm{ms}$, hitreje kot en utrip očesa.
+3. Odgovor: signal pride do hrbtenjače v $15\,\mathrm{ms}$, hitreje kot en mežik.
 
 ### Primer 2: spremembe potenciala
 
@@ -136,7 +136,7 @@ $\Delta U = U_{\mathrm{končna}} - U_{\mathrm{začetna}}$
 
 ### Primer 3 (težji): katero vlakno je to?
 
-Zdravnica z elektrodama izmeri, da signal v živcu roke prepotuje $1{,}2\,\mathrm{m}$ v $24\,\mathrm{ms}$. Ali je vlakno mielinizirano?
+Zdravnica z elektrodama izmeri, da signal v živcu noge prepotuje $1{,}2\,\mathrm{m}$ v $24\,\mathrm{ms}$. Ali je vlakno mielinizirano?
 
 **Podatki:** $s = 1{,}2\,\mathrm{m}$, $t = 24\,\mathrm{ms}$; vlakna brez mielina: do okoli $2\,\mathrm{m/s}$, z mielinom: $50$ do $120\,\mathrm{m/s}$
 **Iščemo:** hitrost $v$ in vrsto vlakna

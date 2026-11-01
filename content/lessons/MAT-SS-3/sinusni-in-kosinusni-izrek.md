@@ -114,7 +114,7 @@ $\gamma = 180^\circ - \alpha - \beta$, nato $\dfrac{a}{\sin\alpha} = \dfrac{b}{\
 
 ### Primer 3: Strelni kot (dva koraka)
 
-Nogometaš $P$ stoji ob robu kazenskega prostora. Do bližje vratnice $L$ ima $18\,\mathrm{m}$, do daljne vratnice $D$ pa $20\,\mathrm{m}$. Vrata so široka $7{,}32\,\mathrm{m}$. Pod kolikšnim kotom $\varphi$ vidi vrata? Kolikšna sta kota $\delta$ in $\lambda$ trikotnika pri vratnicah $D$ in $L$?
+Nogometaš $P$ stoji malo zunaj kazenskega prostora. Do bližje vratnice $L$ ima $18\,\mathrm{m}$, do daljne vratnice $D$ pa $20\,\mathrm{m}$. Vrata so široka $7{,}32\,\mathrm{m}$. Pod kolikšnim kotom $\varphi$ vidi vrata? Kolikšna sta kota $\delta$ in $\lambda$ trikotnika pri vratnicah $D$ in $L$?
 
 **Podatki:** $d = PL = 18\,\mathrm{m}$ (nasproti $D$), $l = PD = 20\,\mathrm{m}$ (nasproti $L$), $p = LD = 7{,}32\,\mathrm{m}$ (nasproti $P$)
 **Iščemo:** kote $\varphi$, $\delta$ in $\lambda$

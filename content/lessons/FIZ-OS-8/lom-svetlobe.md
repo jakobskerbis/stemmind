@@ -52,7 +52,7 @@ V simulaciji spodaj nastavi vpadni kot $40^\circ$, zgoraj zrak, spodaj pa zapore
 
 **Rešitev uganke.** Svetloba od kovanca gre skozi vodo strmo navzgor do gladine. Tam preide v optično redkejši zrak in se lomi stran od pravokotnice. Postane bolj položna, gre mimo roba skodelice in pride v tvoje oko. Oko pa žarek podaljša naravnost nazaj, kot da ni nikjer zavil. Kovanec vidiš višje, kot v resnici leži. **Kovanec se prikaže.** Iz istega razloga je žlica v vodi videti prelomljena in lonec plitvejši.
 
-**Leče.** Leča je kos stekla ali plastike z ukrivljenima ploskvama. Svetloba se lomi na vstopu v lečo in na izstopu iz nje. Ker so ploskve na različnih mestih različno nagnjene, se žarki na robu leče lomijo močneje kot ob sredini.
+**Leče.** Leča je kos stekla ali plastike, ki ima vsaj eno ploskev ukrivljeno. Svetloba se lomi na vstopu v lečo in na izstopu iz nje. Ker so ploskve na različnih mestih različno nagnjene, se žarki na robu leče lomijo močneje kot ob sredini.
 
 Skica za zvezek: nariši vodoravno črto, **optično os**, in pravokotno nanjo lečo. Z leve pošlji tri žarke, vzporedne z osjo. Srednji gre po osi skozi sredino leče naravnost. Kaj se zgodi z zgornjim in spodnjim, je odvisno od oblike leče:
 

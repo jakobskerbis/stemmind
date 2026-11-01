@@ -51,3 +51,14 @@ test("a real lesson becomes short cards that keep all its text", () => {
   }
   assert.deepEqual(steps.filter((s) => s.type === "check").flatMap((s) => s.checks), L.checks.map((_, i) => i));
 });
+
+test("a numbered point stays whole on one step (j, 1. 11. 2026)", () => {
+  const p = "Besedilo ".repeat(60).trim();
+  const md = [`**1. Prva.** ${p}`, p, `**2. Druga.** ${p}`, p, p, `**3. Tretja.** Kratko.`, p].join("\n\n");
+  const parts = splitSection(md, "explain");
+  for (const c of parts) assert.match(c, /^\*\*\d+\. /, "every step starts with a point");
+  assert.equal(parts.join("\n\n"), md);
+  const L = loadLesson("MAT-SS-2/kompleksna-stevila");
+  const raz = L.sections.find((s) => /razlag/i.test(s.title));
+  for (const c of splitSection(raz.md, "explain")) assert.match(c.trimStart(), /^\*\*\d+\. /);
+});
