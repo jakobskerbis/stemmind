@@ -5,7 +5,7 @@ import path from "node:path";
 import { openDb } from "../server/db.js";
 import { createApp } from "../server/app.js";
 import { getTopic, listPaths, topicOrder, sameTopics } from "../server/curriculum.js";
-import { parseLesson, lessonView, searchTextbook, tocView, simsFor, LESSONS_DIR, lessonSummaryForPrompt, expandFormulaBlocks } from "../server/textbook.js";
+import { parseLesson, lessonView, searchTextbook, tocView, simsFor, LESSONS_DIR, lessonSummaryForPrompt, expandFormulaBlocks, hideSolutions } from "../server/textbook.js";
 import { checkLessonSource } from "../server/lesson-check.js";
 import { SIM_TOPICS, simsForTopic } from "../public/sim/katalog.js";
 import { hasEngine } from "../public/sim/index.js";
@@ -68,6 +68,39 @@ test("university topic shared by several courses uses one lesson", () => {
     if (!existed) fs.rmSync(file);
     if (!hadDir) fs.rmdirSync(dir);
   }
+});
+
+test("worked-example solution sits behind »Pokaži rešitev«; the closing »Premisli« stays visible", () => {
+  const md = [
+    "### Primer 1: hitrost",
+    "",
+    "Avto prevozi 100 km v 2 h. Kolikšna je hitrost?",
+    "",
+    "**Rešitev:** Uporabimo $v = s/t$.",
+    "",
+    "$v = 50$ km/h.",
+    "",
+    "### Primer 2: čas",
+    "",
+    "**Rešitev:**",
+    "Čas je $t = s/v$.",
+    "",
+    ":::premisli",
+    "Kaj se zgodi s hitrostjo, če čas podvojimo?",
+    "---",
+    "Razpolovi se.",
+    ":::",
+  ].join("\n");
+  const html = hideSolutions(expandFormulaBlocks(md));
+  assert.equal(html.match(/<details class="tb-solution"><summary>Pokaži rešitev<\/summary>/g)?.length, 2);
+  assert.match(html, /Uporabimo \$v = s\/t\$\.\n\n\$v = 50\$ km\/h\.\n\n<\/details>\n\n### Primer 2/);
+  assert.match(html, /Čas je \$t = s\/v\$\.\n\n<\/details>\n\n<div class="tb-think">/);
+  // Real lesson: the »Premisli« after the last example is outside the solution.
+  const ex = lessonView("BIO-OS-8/celica-pod-mikroskopom").lesson.sections.find((s) => /rešen/i.test(s.title)).md;
+  const lastSolution = ex.lastIndexOf('<details class="tb-solution">');
+  const think = ex.indexOf('<div class="tb-think">', lastSolution);
+  assert.ok(lastSolution >= 0 && think > lastSolution);
+  assert.match(ex.slice(lastSolution, think), /<\/details>\s*$/);
 });
 
 test("formula blocks: hidden in app, printed in PDF, plain for the tutor", () => {

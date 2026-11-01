@@ -113,9 +113,10 @@ export function expandFormulaBlocks(md, mode = "html") {
     return `<details class="tb-formula"><summary>Pokaži formulo</summary>\n\n${inner}\n\n</details>`;
   });
 }
-// Rešitev rešenega primera (od »**Rešitev:**« do naslednjega naslova) je v aplikaciji skrita za
-// gumbom »Pokaži rešitev«, da učenec najprej poskusi sam (j, 1. 11. 2026). Samo v načinu html.
-const SOLUTION_RE = /^\*\*Rešitev:\*\*[ \t]*([^\n]*)\n([\s\S]*?)(?=^#{2,3}[ \t]|(?![\s\S]))/gm;
+// Rešitev rešenega primera (od »**Rešitev:**« do naslednjega naslova ali vprašanja »Premisli«) je v
+// aplikaciji skrita za gumbom »Pokaži rešitev«, da učenec najprej poskusi sam (j, 1. 11. 2026). Samo v
+// načinu html. »Premisli« na koncu razdelka (v 270 lekcijah) ostane viden pod gumbom, ne v rešitvi.
+const SOLUTION_RE = /^\*\*Rešitev:\*\*[ \t]*([^\n]*)\n([\s\S]*?)(?=^#{2,3}[ \t]|^[ \t]*<div class="tb-think">|(?![\s\S]))/gm;
 export function hideSolutions(md) {
   return String(md ?? "").replace(SOLUTION_RE, (_, first, body) => {
     const inner = `${first.trim()}\n\n${body.trim()}`.trim();
