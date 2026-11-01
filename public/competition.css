@@ -149,35 +149,35 @@ html.pv-open, html.pv-open body { overflow: hidden; }
 .pv-title b, .pv-title small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .pv-title small { color: var(--muted); font-size: 0.82rem; }
 .pv-nav { display: flex; align-items: center; }
-.pv-no { min-width: 4.5em; text-align: center; font-variant-numeric: tabular-nums; font-size: 0.9rem; }
-.pv-mark { display: inline-flex; align-items: center; gap: 6px; min-height: 44px !important; }
+.pv-no { min-width: 4.5em; text-align: center; font-variant-numeric: tabular-nums; font-size: 0.9rem; direction: ltr; unicode-bidi: isolate; } /* »5 / 16« tudi v RTL */
+.pv button.pv-mark { display: inline-flex; align-items: center; gap: 6px; min-height: 44px !important; } /* button.small je sicer 38 px */
 .pv-mark[aria-pressed="true"], .pv-none [aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
 .pv-boxhint { margin: 0; padding: 6px 12px; background: var(--accent-soft); color: var(--text); font-size: 0.9rem; text-align: center; }
-.pv-scroll { flex: 1; overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; padding: 12px 12px max(24px, env(safe-area-inset-bottom)); }
+.pv-scroll { position: relative; flex: 1; overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; padding: 12px 12px max(24px, env(safe-area-inset-bottom)); }
 .pv-pages { display: flex; flex-direction: column; gap: 14px; max-width: 900px; margin: 0 auto; }
 .pv-page { position: relative; width: 100%; background: #fff; border-radius: 4px; box-shadow: var(--shadow); overflow: hidden; direction: ltr; }
 .pv-page canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 .pv-task { position: absolute; border: 2px solid transparent; border-radius: 6px; transition: border-color 0.15s, background-color 0.15s; }
 .pv-task:hover, .pv-task:focus-within { border-color: color-mix(in srgb, var(--accent) 60%, transparent); background: color-mix(in srgb, var(--accent) 6%, transparent); }
-.pv-help { position: absolute; top: 4px; right: 4px; display: inline-flex; align-items: center; gap: 6px; min-height: 40px !important; max-width: calc(100% - 8px); box-shadow: 0 2px 8px rgb(0 0 0 / 0.25); }
+.pv button.pv-help { position: absolute; top: 4px; right: 4px; display: inline-flex; align-items: center; gap: 6px; min-height: 40px !important; max-width: calc(100% - 8px); box-shadow: 0 2px 8px rgb(0 0 0 / 0.25); }
 .pv-help small { opacity: 0.85; font-weight: 600; }
 .pv-none { position: absolute; inset-inline: 8%; top: 8%; display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 12px; border-radius: var(--radius-sm); background: var(--surface); color: var(--text); border: 1px solid var(--border); text-align: center; }
 .pv-none p { margin: 0; font-size: 0.92rem; }
-.pv-none button { display: inline-flex; align-items: center; gap: 6px; min-height: 40px !important; }
+.pv .pv-none button { display: inline-flex; align-items: center; gap: 6px; min-height: 40px !important; }
 .pv-boxing .pv-page { touch-action: none; cursor: crosshair; }
 .pv-boxing .pv-task { pointer-events: none; }
 .pv-boxing .pv-task .pv-help, .pv-boxing .pv-none { display: none; }
 .pv-sel { position: absolute; border: 2px dashed var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); border-radius: 4px; }
 .pv-sel-acts { position: absolute; top: 100%; right: 0; margin-top: 6px; display: flex; gap: 6px; z-index: 1; }
-.pv-sel-acts .pv-help { position: static; }
-.pv-sel-acts .pv-ic { min-width: 40px; min-height: 40px; }
+.pv-sel-acts button.pv-help { position: static; }
+.pv-sel-acts button.pv-ic { min-width: 40px; min-height: 40px !important; }
 @media (max-width: 560px) {
   .pv-bar { flex-wrap: wrap; gap: 4px; padding-inline: 6px; }
   .pv-title { order: 0; flex-basis: calc(100% - 52px); }
   .pv-nav { order: 1; }
-  .pv-mark { order: 2; margin-inline-start: auto; }
+  .pv button.pv-mark { order: 2; margin-inline-start: auto; }
   .pv-scroll { padding-inline: 6px; }
   .pv-help small { display: none; }
-  .pv-task > .pv-help { top: auto; bottom: 4px; } /* telefon: gumb v prostoru za odgovor, ne čez besedilo naloge */
+  .pv-task > button.pv-help { top: auto; bottom: 4px; } /* telefon: gumb v prostoru za odgovor, ne čez besedilo naloge */
 }
 @media (prefers-reduced-motion: reduce) { .pv-task { transition: none; } }
