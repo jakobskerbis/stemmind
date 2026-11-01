@@ -7,6 +7,7 @@
 //   sirina     formula, tabela ali odstavek širši od kartice (vodoravni drsnik ali odrezano)
 //   tabela     vrstice z različnim številom celic, stolpec z različno poravnavo
 //   sredina    prikazna formula ($$…$$) ni na sredini kartice
+//   vrstica    formula sredi besedila razmakne vrstico (razmik med vrsticami ni enak)
 // Formula ali tabela, ki je tudi po pomanjšanju (public/sirina.js) širša od kartice, se pomika z bledim
 // robom: to je le opozorilo »drsnik« (ne šteje kot napaka), da se vidi, kje bi pomagal krajši zapis.
 // Uporaba: node scripts/preveri-videz-lekcij.cjs [--slike mapa] [--samo POT/tema …] [--json datoteka] [--vse]
@@ -139,6 +140,14 @@ function measure() {
   });
   root.querySelectorAll(".explanation p, .explanation li, .tb-section h2").forEach((e) => {
     if (e.scrollWidth > e.clientWidth + 2 && !e.querySelector(".katex-display")) add("sirina", e, `besedilo širše od kartice za ${e.scrollWidth - e.clientWidth} px`);
+  });
+  // Formula sredi besedila ne sme razmakniti vrstice (j 2026-11-01: enak razmik med vrsticami).
+  root.querySelectorAll(".explanation :is(p, li) .katex:not(.tb-zlozena, .tb-dolga)").forEach((k) => {
+    if (k.parentElement.closest(".katex-display, table, .katex")) return;
+    const cs = getComputedStyle(k);
+    const lh = parseFloat(getComputedStyle(k.parentElement.closest("p, li")).lineHeight);
+    const h = k.getBoundingClientRect().height + parseFloat(cs.marginTop) + parseFloat(cs.marginBottom);
+    if (cs.display === "inline-block" && Number.isFinite(lh) && h > lh + 1) add("vrstica", k, `formula razmakne vrstico (${Math.round(h)} px, vrstica ${Math.round(lh)} px)`);
   });
   root.querySelectorAll(".katex.tb-dolga").forEach((k) => {
     if (k.scrollWidth > k.clientWidth + 2) add("drsnik", k, `formula v besedilu širša od kartice za ${k.scrollWidth - k.clientWidth} px`);
