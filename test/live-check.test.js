@@ -38,7 +38,7 @@ function harness({ answers = [], fixes = [], reviews = [] } = {}) {
     return { c, sse, history: store.apiHistory(c.id), messages: store.listMessages(c.id) };
   };
   const kinds = () => store.db.prepare("SELECT kind, COUNT(*) AS n FROM usage GROUP BY kind").all().reduce((o, r) => ((o[r.kind] = r.n), o), {});
-  return { store, calls, reviewCalls, ask, student, kinds, close: () => server.close() };
+  return { store, calls, reviewCalls, ask, student, kinds, port: server.address().port, close: () => server.close() };
 }
 
 test("live check: a wrong calculation gets exactly one correction, streamed and stored", async () => {
@@ -256,4 +256,69 @@ test("live check: a corrector reply that is not a headed correction is not shown
   assert.equal(fixBlock("**OK**"), null);
   assert.equal(fixBlock("The answer is correct."), null);
   assert.match(fixBlock("Popravek: $x = 4$."), /\*\*Popravek:\*\* \$x = 4\$/);
+});
+
+test("verdict check: a wrong confirmation is never shown; the tutor answers again with the reviewer's finding", async () => {
+  const h = harness({
+    answers: ["Kaj misliš, ali je na Luni teža?", "Točno tako, na Luni ni teže. Kaj pa masa?", "Hm, ni čisto tako: na Luni teža je, le šestkrat manjša. Zakaj je manjša?"],
+    reviews: ["NAPAKA: the student's claim is wrong, weight on the Moon is about 1/6 of that on Earth; the tutor confirmed it."],
+  });
+  try {
+    const s = await h.student({ subject: "FIZ" });
+    await h.ask(s, "Kako je s težo na Luni?");
+    const conv = h.store.db.prepare("SELECT id FROM conversations ORDER BY id DESC LIMIT 1").get();
+    const r = await (async () => {
+      const sse = await (await fetch(`http://127.0.0.1:${h.port}/api/conversations/${conv.id}/messages`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: "na luni ni teže" }) })).text();
+      return { sse, messages: h.store.listMessages(conv.id) };
+    })();
+    assert.equal(h.reviewCalls.length, 1, "sodbo pregleda model");
+    assert.match(h.reviewCalls[0].system, /judged the student's last message/);
+    assert.match(h.reviewCalls[0].messages[0].content, /STUDENT'S MESSAGE:\nna luni ni teže[\s\S]*TUTOR'S REPLY:\nTočno tako/);
+    assert.equal(h.calls.length, 3, "prvi odgovor, drugi odgovor po pregledu (brez ločenega popravka)");
+    const note = h.calls[2].messages.at(-1).content.at(-1).text;
+    assert.match(note, /<preverjen_racun>[\s\S]*weight on the Moon[\s\S]*answer again/);
+    assert.doesNotMatch(r.sse, /Točno tako/, "napačna sodba ni prišla do učenca");
+    assert.match(r.sse, /šestkrat manjša/);
+    assert.match(r.messages.at(-1).display_text, /^Hm, ni čisto tako/);
+    assert.doesNotMatch(JSON.stringify(h.store.apiHistory(conv.id)), /preverjen_racun|Točno tako/);
+    const k = h.kinds();
+    assert.equal(k.preverjanje, 1);
+    assert.equal(k.popravek, 1);
+  } finally {
+    h.close();
+  }
+});
+
+test("verdict check: a correct judgement passes with one review; a question is streamed without review", async () => {
+  const h = harness({ answers: ["Koliko je 1/2 + 1/3?", "Ni čisto prav: imenovalca se ne seštevata. Kateri skupni imenovalec imata 2 in 3?", "Ulomek je del celote. Koliko je polovica pice?"], reviews: ["OK"] });
+  try {
+    const s = await h.student();
+    const first = await h.ask(s, "Ne znam seštevati ulomkov");
+    const post = async (text) => (await fetch(`http://127.0.0.1:${h.port}/api/conversations/${first.c.id}/messages`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text }) })).text();
+    const sse = await post("2/5");
+    assert.equal(h.reviewCalls.length, 1);
+    assert.equal(h.calls.length, 2, "sodba je pravilna: brez drugega odgovora");
+    assert.match(sse, /imenovalca se ne seštevata/);
+    const sse2 = await post("kaj je ulomek?");
+    assert.equal(h.reviewCalls.length, 1, "vprašanje ni trditev: brez pregleda");
+    assert.match(sse2, /del celote/);
+  } finally {
+    h.close();
+  }
+});
+
+test("verdict check: when the task from the first message is solvable, the code judges the student's value without the model", async () => {
+  const h = harness({ answers: ["Kaj bi naredil najprej?", "Preveri: $2 \\cdot 5 + 3 = 13$, ne $11$. Kje se je zalomilo?"] });
+  try {
+    const s = await h.student();
+    const first = await h.ask(s, "Reši enačbo 2x + 3 = 11");
+    const sse = await (await fetch(`http://127.0.0.1:${h.port}/api/conversations/${first.c.id}/messages`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: "x = 5" }) })).text();
+    assert.equal(h.reviewCalls.length, 0, "koda je sodila, model ni potreben");
+    const note = h.calls[1].messages.at(-1).content.at(-1).text;
+    assert.match(note, /the student's result x = 5 is WRONG; the exact result of the task is \$2x \+ 3 = 11\$ → \$x = 4\$/);
+    assert.match(sse, /Kje se je zalomilo/);
+    assert.doesNotMatch(sse, /preverjen_racun/);
+  } finally {
+    h.close();
+  }
 });

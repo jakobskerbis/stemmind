@@ -7,7 +7,7 @@ import path from "node:path";
 import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { buildSystemPrompt } from "./prompt.js";
-import { createStreamFilter, parseMeta, parseCards, stripMeta } from "./meta.js";
+import { createStreamFilter, parseMeta, parseCards, stripMeta, stripLeadPhrase } from "./meta.js";
 import { studentResults } from "./results.js";
 import { streamReply, readHandwriting, isMockMode, MODEL, MODEL_DEEP, MODEL_MID, REFUSAL_TEXT, errorText, apiErrorCode, modeParams } from "./claude.js";
 import { Usage, LIMITS, NOTES, windowHistory, recentHistory } from "./usage.js";
@@ -38,7 +38,7 @@ import { compressedStatic, compressedJson } from "./compress.js";
 import { mountFeedback, feedbackAiOn, feedbackPromptOn, isLocalRequest } from "./feedback.js";
 import { mountReports, chatOff, messageCode } from "./reports.js";
 import { verifyAnswer, codeCheck } from "./verify.js";
-import { liveCheckOn, presolve, withNote, codeFindings, needsReview, reviewAnswer, correction, insertFix } from "./live-check.js";
+import { liveCheckOn, presolve, withNote, codeFindings, needsReview, reviewAnswer, correction, insertFix, isClaim, claimNote, needsVerdictReview, reviewVerdict, verdictNote } from "./live-check.js";
 import { mountGraphs } from "./graphs.js";
 import { mountGames } from "./games.js";
 import { mountLab } from "./laboratorij.js";
@@ -281,6 +281,7 @@ export function createApp(store, opts = {}) {
   // funkcija (preizkusi): popravek gre prek streamFn, pregled prek opts.reviewCreateFn.
   const liveFixOn = () => !!opts.streamFn || !isMockMode();
   const liveReviewOn = () => !!opts.reviewCreateFn || !isMockMode();
+  const answerModelOf = (mode, deep) => (mode === "mid" ? MODEL_MID : deep ? MODEL_DEEP : MODEL);
   const settleLater = (promise, done) =>
     Promise.resolve(promise)
       .then((v) => done(!!v?.ok, v?.reason || ""), (e) => done(false, e?.message || "napaka"))
@@ -568,7 +569,18 @@ export function createApp(store, opts = {}) {
       if (note) send("delta", { text: note });
       // Naloga, ki jo reši naš preverjeni reševalnik: model dobi pravilen rezultat v skriti opombi.
       const pre = liveCheckOn() && !cached && !image && !win && !hinted ? presolve(text, { first: isFirst }) : null;
-      const history = deep && !routed.boosted ? recentHistory(store.apiHistory(conv.id)) : windowHistory(store.apiHistory(conv.id));
+      const fullHistory = store.apiHistory(conv.id);
+      const history = deep && !routed.boosted ? recentHistory(fullHistory) : windowHistory(fullHistory);
+      // Učenčev rezultat ali trditev: sodbo inštruktorja preveri koda (naloga iz prvega sporočila) ali model,
+      // preden učenec odgovor vidi (server/live-check.js, 4). Zato se tak odgovor ne pretaka sproti.
+      const prevTutor = fullHistory.filter((m) => m.role === "assistant").at(-1);
+      const prevTutorText = prevTutor ? stripMeta((Array.isArray(prevTutor.content) ? prevTutor.content : [{ text: prevTutor.content }]).map((b) => b.text || "").join("\n")) : "";
+      const claim = !pre && liveCheckOn() && !cached && !image && !win && !hinted && !isFirst && isClaim(text, prevTutorText);
+      const firstText = claim ? fullHistory.find((m) => m.role === "user") : null;
+      const firstPre = firstText ? presolve((Array.isArray(firstText.content) ? firstText.content : [{ text: firstText.content }]).map((b) => b.text || "").join("\n"), { first: true }) : null;
+      const codeVerdict = claim ? claimNote(text, firstPre) : null;
+      const notes = [pre?.note, codeVerdict].filter(Boolean).join("\n");
+      const held = []; // zadržani deli odgovora, dokler sodba ni preverjena
       const run = cached
         ? async ({ onText }) => {
             // Ime učenca je v predpomnilniku shranjeno kot {{IME}}.
@@ -579,12 +591,12 @@ export function createApp(store, opts = {}) {
             return { content: [{ type: "text", text: t }], text: t, stopReason: "end_turn", usage: null, model: "cache" };
           }
         : streamFn;
-      const result = await run({
+      const first = await run({
         system,
         // Opus dobi samo zadnje izmenjave; Haiku daljše okno (predpomnjeno). Nadgrajen običajen
         // odgovor (proračun) ohrani celo okno, saj nadaljuje pogovor.
         // Opomba gre samo v ta klic (zadnja poteza), ne v shranjeno zgodovino.
-        messages: pre ? withNote(history, pre.note) : history,
+        messages: notes ? withNote(history, notes) : history,
         deep,
         mode,
         tools: SETTINGS_TOOLS,
@@ -592,19 +604,54 @@ export function createApp(store, opts = {}) {
         signal: controller.signal,
         onText: (chunk) => {
           const out = filter.push(chunk);
-          if (out) send("delta", { text: out });
+          if (out) claim ? held.push(out) : send("delta", { text: out });
         },
       });
       if (controller.signal.aborted) throw new Error("aborted");
 
-      const { rest } = filter.end();
+      let result = first;
+      let { rest } = filter.end();
+      let verdictChecked = false;
+      let extraCost = 0;
+      if (claim && !codeVerdict && result.text && result.stopReason !== "refusal" && !result.toolCalls && !settingsTools.state.used && liveReviewOn() && needsVerdictReview({ answer: stripMeta(result.text), lite, spentToday: () => usage.kindToday("preverjanje") })) {
+        verdictChecked = true;
+        try {
+          const rv = await reviewVerdict({ context: prevTutorText, student: text, answer: stripMeta(result.text), createFn: opts.reviewCreateFn, usage, studentId: student.id });
+          extraCost += rv.cost;
+          if (rv.reason) {
+            // Napačna sodba: isti model odgovori še enkrat z ugotovitvijo preverjevalca v skriti opombi.
+            const again2 = createStreamFilter();
+            held.length = 0;
+            const r2 = await streamFn({
+              system,
+              messages: withNote(history, [notes, verdictNote(rv.reason)].filter(Boolean).join("\n")),
+              deep,
+              mode,
+              tools: SETTINGS_TOOLS,
+              onToolUse,
+              signal: controller.signal,
+              onText: (chunk) => {
+                const out = again2.push(chunk);
+                if (out) held.push(out);
+              },
+            });
+            if (controller.signal.aborted) throw new Error("aborted");
+            extraCost += usage.log(student.id, r2.model || answerModelOf(mode, deep), r2.usage, "popravek");
+            result = r2;
+            rest = again2.end().rest;
+          }
+        } catch (e) {
+          if (controller.signal.aborted) throw e;
+          console.warn(`[evklid] pregled sodbe ni uspel: ${e?.message || e}`);
+        }
+      }
+      for (const t of held) send("delta", { text: t });
       if (rest) send("delta", { text: rest });
 
       // Preverjanje odgovora (server/live-check.js): koda vedno, model samo, kjer je potrebno.
       // Ob napaki en kratek »Popravek:«, ki se pripne odgovoru (prikaz in zgodovina).
-      const answerModel = result.model || (mode === "mid" ? MODEL_MID : deep ? MODEL_DEEP : MODEL);
+      const answerModel = result.model || answerModelOf(mode, deep);
       let fix = "";
-      let extraCost = 0;
       if (liveCheckOn() && !cached && result.text && result.stopReason !== "refusal" && !result.toolCalls && !settingsTools.state.used) {
         const plain = stripMeta(result.text);
         const found = codeFindings(plain, pre);
@@ -613,6 +660,7 @@ export function createApp(store, opts = {}) {
         if (
           !issue &&
           !image && // pregledovalec slike naloge ne vidi
+          !verdictChecked && // sodbo je model že pregledal
           liveReviewOn() &&
           needsReview({ checked: found.checked, model: answerModel, lite, premium, risky, answerLength: plain.length, level: () => usage.budgetState().level, spentToday: () => usage.kindToday("preverjanje") })
         ) {
@@ -642,7 +690,7 @@ export function createApp(store, opts = {}) {
       // Fotografija, ki ni učno gradivo (obraz, oseba, osebni dokument …): inštruktor jo zavrne z flag=photo,
       // slika pa se takoj odstrani iz shranjenega sporočila (j, 2026-10-30).
       if (image && meta?.flag === "photo") store.setMessageContent(userMsgId, withoutImages(userContent, PHOTO_REJECTED_TEXT), 2);
-      let display = (note || "") + stripMeta(result.text) + fix;
+      let display = (note || "") + stripLeadPhrase(stripMeta(result.text)) + fix;
       // V zgodovino shranimo samo besedilo (brez blokov razmišljanja): manj žetonov
       // pri naslednjih klicih in nobenih težav ob krajšanju zgodovine.
       let content = [{ type: "text", text: (fix ? insertFix(result.text, fix) : result.text) || "…" }];
