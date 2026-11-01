@@ -104,10 +104,32 @@ function obnovi(k) {
   if (p) k.after(p); // ločilo nazaj v besedilo
   return zamenjaj(k, h);
 }
+// Ulomek sredi besedila v velikosti besedila (\dfrac → \frac), kot v tiskanem učbeniku: vrstica ostane enako
+// visoka in stavek cel (j 2026-11-01).
+export function besedilniTex(tex) {
+  const t = tex.replace(/\\dfrac(?![a-zA-Z])/g, "\\frac").replace(/\\dbinom(?![a-zA-Z])/g, "\\binom").replace(/\\displaystyle(?![a-zA-Z])/g, "\\textstyle");
+  return t === tex ? null : t;
+}
+
+// stopnja "t": ista formula v velikosti besedila (ostane v vrstici); 0: cela formula v svoji vrstici;
+// 1 in 2: zložena (zlozTex).
 function zlozi(k, stopnja) {
   const tex = (izvirnik.has(k) ? izvirniTex.get(k) : null) ?? k.querySelector("annotation")?.textContent;
-  let al = tex && globalThis.katex && zlozTex(tex, stopnja);
+  let al = tex && globalThis.katex && (stopnja === "t" ? besedilniTex(tex) : stopnja === 0 ? tex : zlozTex(tex, stopnja));
   if (!al) return null;
+  if (stopnja === "t") {
+    let html;
+    try {
+      html = globalThis.katex.renderToString(al, { throwOnError: true, strict: "ignore", trust: (c) => c.command === "\\htmlData" });
+    } catch {
+      return null;
+    }
+    const orig = izvirnik.get(k) ?? k.outerHTML;
+    const n = zamenjaj(k, html);
+    izvirnik.set(n, orig);
+    izvirniTex.set(n, tex);
+    return n;
+  }
   // Formula sredi besedila je zložena v svoji vrstici: pika ali vejica za njo gre na konec zadnje vrstice,
   // da ne ostane sama v novi vrstici.
   const inline = !k.parentElement?.closest(".katex-display");
@@ -115,7 +137,7 @@ function zlozi(k, stopnja) {
   const nx = k.nextSibling;
   const vzemi = inline && !p && nx?.nodeType === 3 && /^[.,;:!?]/.test(nx.data);
   if (vzemi) p = nx.data[0];
-  if (p) al = al.replace(/\\end\{aligned\}$/, `\\text{${p}}\\end{aligned}`);
+  if (p) al = stopnja === 0 ? `${al}\\text{${p}}` : al.replace(/\\end\{aligned\}$/, `\\text{${p}}\\end{aligned}`);
   let html;
   try {
     html = globalThis.katex.renderToString(al, { throwOnError: true, strict: "ignore", trust: (c) => c.command === "\\htmlData" });
@@ -134,9 +156,14 @@ function zlozi(k, stopnja) {
 
 // Formula, ki ne gre v širino w: malo pomanjšaj (do 90 %), sicer zloži pri enačajih; kar je še preširoko,
 // pomanjšaj do MIN. Vrne (morda novo) formulo.
-function prilagodiFormulo(k, w, meri) {
+// Formula sredi besedila, višja od `visoka` (ulomek, pisan z \dfrac), bi razmaknila vrstico besedila: najprej
+// jo izrišemo v velikosti besedila (\frac), le če je še vedno previsoka, dobi svojo vrstico (j 2026-11-01).
+function prilagodiFormulo(k, w, meri, visoka = Infinity) {
   k = obnovi(k);
   k.style.fontSize = "";
+  if (k.getBoundingClientRect().height > visoka) k = zlozi(k, "t") || k;
+  // Še vedno previsoka (npr. ulomek v ulomku): v svojo vrstico, razen v gumbu ali vprašanju z eno vrstico.
+  if (k.getBoundingClientRect().height > visoka && !k.closest(".tb-opt, .tb-q")) k = zlozi(k, 0) || k;
   const need = meri(k);
   if (need <= w + 1) return k;
   // Najprej le izjave v svoje vrstice, nato še enačaji; vsakič vzamemo prvo, ki gre v vrstico.
@@ -188,9 +215,16 @@ function vrstica(el) {
     // Formula se ne prelomi sredi izraza (textbook.css), zato šteje njena cela širina.
     // Zložena formula je blok z max-width 100 %, zato štejemo tudi njeno vsebino (scrollWidth).
     const sirina = (x) => Math.max(x.getBoundingClientRect().width, x.scrollWidth);
-    k = prilagodiFormulo(k, w, sirina);
+    k = prilagodiFormulo(k, w, sirina, visina(el) * VISOKA);
     if (sirina(k) > w + 1) k.classList.add("tb-dolga");
   }
+}
+
+// Formula, višja od toliko vrstic besedila, gre v svojo vrstico.
+export const VISOKA = 1.2; // z robom -0,15em v textbook.css taka formula še ne razmakne vrstice
+function visina(el) {
+  const lh = parseFloat(getComputedStyle(el).lineHeight);
+  return Number.isFinite(lh) ? lh : parseFloat(getComputedStyle(el).fontSize) * 1.6;
 }
 
 function prilagodi(el) {

@@ -77,3 +77,16 @@ test("a formula that does not fit is folded at its equals signs: left side on to
   assert.equal(zlozTex("x + y"), null);
   assert.equal(zlozTex("\\begin{aligned}a&=b\\end{aligned}"), null);
 });
+
+test("an inline formula never overlaps the lines around it and keeps line spacing even", async () => {
+  const css = pub("textbook.css");
+  // celota (inline-block): vedno razširi vrstico, nikoli ne prekrije sosednje; rahlo višja ne razmakne vrstice
+  assert.match(css, /\.katex:not\(\.katex-display > \.katex\) \{ display: inline-block; text-indent: 0; margin-block: -0\.15em; \}/);
+  // višja (ulomek \dfrac) se izriše v velikosti besedila; šele previsoka gre v svojo vrstico
+  const { besedilniTex } = await import("../public/sirina.js");
+  assert.equal(besedilniTex("\\dfrac{1}{2} + \\dbinom{n}{k}"), "\\frac{1}{2} + \\binom{n}{k}");
+  assert.equal(besedilniTex("\\frac12"), null);
+  const { VISOKA } = await import("../public/sirina.js");
+  assert.ok(VISOKA > 1 && VISOKA <= 1.3);
+  assert.match(pub("sirina.js"), /if \(k\.getBoundingClientRect\(\)\.height > visoka\) k = zlozi\(k, "t"\) \|\| k;/);
+});
