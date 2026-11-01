@@ -6,7 +6,7 @@ const CARD_RE = /<<\s*KARTICA\b([\s\S]*?)>>/g;
 // META brez oklepajev ali z enim samim (»META subject=MAT …«, »<META …>«, v oznakah kode): model se včasih
 // zmoti v zapisu; učenec vrstice ne sme videti (digitalni razred, 2026-11-01: vidna pri treh učencih).
 const META_LOOSE_RE = /^[ \t]*[`*_]*<{0,2}[ \t]*META\b[^\n]*\bsubject=[^\n]*$/gm;
-const MARKERS = ["<<META", "<<KARTICA", "<< META", "<< KARTICA", "META subject="];
+const MARKERS = ["<<META", "<<KARTICA", "<< META", "<< KARTICA", "<META", "META subject="];
 const MARKER_MAX = Math.max(...MARKERS.map((m) => m.length));
 
 import { ALL_SUBJECTS } from "./subjects.js";
