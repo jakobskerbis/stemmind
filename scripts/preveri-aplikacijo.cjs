@@ -752,6 +752,13 @@ async function examsView(p, label) {
   await expectVisible(p, "#view-topic #practice .task", "vaja šibke teme");
   await click(p, "#back-to-path", { wait: 300 });
   if ((await currentView(p)) !== "view-exams") throw new Error("»Nazaj« z vaje šibke teme ne vodi v NPZ in maturo");
+  // »Rešuj z inštruktorjem« pri poli: nov pogovor z vnaprej napisanim sporočilom (ne pošlje ga samo).
+  await click(p, "#exam-papers .pp-tutor", { wait: 500 });
+  if ((await currentView(p)) !== "view-chat") throw new Error("»Rešuj z inštruktorjem« ne odpre inštruktorja");
+  if (!(await p.inputValue("#input")).trim()) throw new Error("»Rešuj z inštruktorjem«: sporočilo ni pripravljeno");
+  await p.fill("#input", "");
+  await tab(p, "exams");
+  await expectVisible(p, '#exam-papers .pp-row', "pretekle pole po vrnitvi");
   // Izbira pol po korakih: krušne drobtine vrnejo korak, izbira ga zapre.
   await click(p, "#exam-papers .lp-crumb[data-pp-step=\"exam\"]", { wait: 200 });
   await expectVisible(p, "#exam-papers .lp-opt", "izbira izpita pri polah");

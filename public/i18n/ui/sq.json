@@ -2713,5 +2713,7 @@
   "lab.lockedText": "Eksperimentet interaktive, simulimet dhe kontrolli i menjëhershëm janë në dispozicion në paketën me pagesë dhe gjatë provës 7-ditore. Teksti i mësimit dhe PDF-ja janë falas.",
   "lab.packages": "Shiko paketat",
   "lab.empty": "Ende nuk ka eksperimente.",
-  "lab.error": "Laboratori nuk mund të ngarkohej."
+  "lab.error": "Laboratori nuk mund të ngarkohej.",
+  "pp.tutor": "Zgjidh me mësuesin",
+  "pp.tutorMsg": "Po zgjidh provimin e kaluar {paper}. Do të ta dërgoj ushtrimin (foto ose të shkruar). Më udhëhiq me sugjerime në stilin e këtij provimi dhe mos ma jep zgjidhjen para se ta provoj vetë. Në fund më thuaj cilën temë duhet të ushtroj më shumë."
 }

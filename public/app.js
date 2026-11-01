@@ -44,7 +44,7 @@ import { initFormulaInfo, annotateTex, setFormulaSubject } from "./formula-info.
 import { xpStatsHtml, xpItemsHtml, levelRowHtml, paintBadge, celebrateXp } from "./xp-fx.js";
 import { goalFieldsHtml, wireGoalFields, readGoalFields, goalLineHtml, goalName, countdown, hasGoal, reminderDue, dismissReminder, reminderCardHtml, fmtDate } from "./goal.js";
 import { validDate } from "./goal-data.js";
-import { loadPapers, mountPapers, examName as siExamName, SI_EXAMS } from "./exam-papers.js";
+import { loadPapers, mountPapers, paperLabel, examName as siExamName, SI_EXAMS } from "./exam-papers.js";
 
 const $ = (sel) => document.querySelector(sel);
 // Brez povezave odgovori vadnica iz shranjenega paketa nalog (public/offline.js).
@@ -2854,7 +2854,24 @@ async function showPapers(c) {
   if (!slot.isConnected) return;
   const s = state.student.settings;
   const level = /VR/.test(String(s.curriculum_level || "")) ? "VR" : "OR";
-  mountPapers(slot, papers, { track: s.educational_track, exam: c.exam, subject: c.subject, level }, { subjectName: (k) => SUBJECT_NAMES[k] || k });
+  mountPapers(slot, papers, { track: s.educational_track, exam: c.exam, subject: c.subject, level }, { subjectName: (k) => SUBJECT_NAMES[k] || k, onTutor: paperTutor });
+}
+// »Rešuj z inštruktorjem« pri pretekli poli: nov pogovor z vnaprej napisanim sporočilom (katera pola, namigi
+// namesto rešitve); učenec doda nalogo s fotografijo ali prepisom in pošlje sam. Pole RIC ne pošiljamo.
+async function paperTutor(entry, subjectName) {
+  if (!entry) return;
+  try {
+    const conv = await api(`/api/students/${state.student.id}/conversations`, { method: "POST", body: {} });
+    await loadConversations();
+    showView("chat");
+    await openConversation(conv.id);
+    const box = $("#input");
+    box.value = t("pp.tutorMsg", { paper: paperLabel(entry, subjectName) });
+    autoGrow();
+    box.focus();
+  } catch (err) {
+    toast(err.message);
+  }
 }
 
 document.addEventListener("click", async (e) => {

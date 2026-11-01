@@ -2761,5 +2761,7 @@
   "lab.lockedText": "Interaktivní pokusy, simulace a průběžná kontrola jsou dostupné v placeném balíčku a během 7denní zkušební doby. Text lekce a PDF jsou zdarma.",
   "lab.packages": "Zobrazit balíčky",
   "lab.empty": "Zatím žádné pokusy.",
-  "lab.error": "Laboratoř se nepodařilo načíst."
+  "lab.error": "Laboratoř se nepodařilo načíst.",
+  "pp.tutor": "Řeš s lektorem",
+  "pp.tutorMsg": "Řeším minulou zkouškovou písemku {paper}. Pošlu ti úlohu (fotku nebo přepis). Veď mě nápovědami ve stylu této zkoušky a neprozrazuj řešení, dokud to nezkusím. Na konci mi řekni, které téma mám ještě procvičit."
 }

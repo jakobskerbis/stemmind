@@ -2765,5 +2765,7 @@
   "lab.lockedText": "Interaktívne pokusy, simulácie a priebežná kontrola sú dostupné v platenom balíku a počas 7-dňovej skúšobnej doby. Text lekcie a PDF sú zadarmo.",
   "lab.packages": "Pozrieť balíky",
   "lab.empty": "Zatiaľ žiadne pokusy.",
-  "lab.error": "Laboratórium sa nepodarilo načítať."
+  "lab.error": "Laboratórium sa nepodarilo načítať.",
+  "pp.tutor": "Rieš s lektorom",
+  "pp.tutorMsg": "Riešim minulú skúškovú písomku {paper}. Pošlem ti úlohu (fotku alebo prepis). Veď ma nápovedami v štýle tejto skúšky a neprezrádzaj riešenie, kým to neskúsim. Na konci mi povedz, ktorú tému mám ešte precvičiť."
 }

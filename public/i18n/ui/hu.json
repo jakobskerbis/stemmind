@@ -2711,5 +2711,7 @@
   "lab.lockedText": "Az interaktív kísérletek, szimulációk és azonnali ellenőrzés a fizetős csomagban és a 7 napos próbaidő alatt érhetők el. A lecke szövege és a PDF ingyenes.",
   "lab.packages": "Csomagok megtekintése",
   "lab.empty": "Még nincsenek kísérletek.",
-  "lab.error": "A labort nem sikerült betölteni."
+  "lab.error": "A labort nem sikerült betölteni.",
+  "pp.tutor": "Megoldás a tanárral",
+  "pp.tutorMsg": "A korábbi feladatlapot oldom: {paper}. Elküldöm a feladatot (fotó vagy begépelve). Vezess tippekkel ennek a vizsgának a stílusában, és ne áruld el a megoldást, amíg magam nem próbáltam. A végén mondd meg, melyik témát gyakoroljam még."
 }

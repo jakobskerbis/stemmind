@@ -53,18 +53,26 @@ function autofill(v, papers, subjectName) {
   }
 }
 
-function rowHtml(e) {
+// Oznaka pole za besedilo inštruktorju: »Splošna matura – Matematika (osnovna raven), 2025, spomladanski rok«.
+export function paperLabel(e, subjectName = (s) => s) {
+  const level = e.level ? ` (${t(e.level === "VR" ? "lp.vr" : "lp.or")})` : "";
+  return `${examName(e.exam)} – ${subjectName(e.subject)}${level}, ${e.year}, ${termText(e)}`;
+}
+
+function rowHtml(e, i, tutor) {
   const files = e.files
     .map((f) => `<a class="btn-secondary small pp-file" href="${esc(f.url)}" target="_blank" rel="noopener noreferrer" title="${esc(t("pp.opens"))}">${icon("file-text")}<span>${esc(fileText(f, e))}</span>${icon("external-link")}</a>`)
     .join("");
   // Nalog RIC ne prepisujemo, uporabimo le zgradbo pole (structure). Naša pola v istem slogu (ours) z razlagami
   // pride pozneje (Opus s trojnim pregledom); do takrat »Naša pola v tem slogu je v pripravi«, povezava na ric.si ostane.
   const expl = e.ours ? "" : `<span class="pp-expl">${icon("notebook-pen")}${esc(t("pp.oursSoon"))}</span>`;
-  return `<li class="pp-row"><div class="pp-when"><b>${e.year}</b><span>${esc(termText(e))}</span></div><div class="pp-files">${files}</div>${expl}</li>`;
+  // »Rešuj z inštruktorjem«: pogovor z inštruktorjem, ki ve, katero polo učenec rešuje (nalogo pošlje s fotografijo ali prepisom).
+  const help = tutor ? `<button type="button" class="secondary small pp-tutor" data-pp-tutor="${i}">${icon("message-circle")}<span>${esc(t("pp.tutor"))}</span></button>` : "";
+  return `<li class="pp-row"><div class="pp-when"><b>${e.year}</b><span>${esc(termText(e))}</span></div><div class="pp-files">${files}${help}</div>${expl}</li>`;
 }
 
 // Namesti izbirnik v `box`. start: { track, exam, subject, level } (privzeto učenčeva raven).
-export function mountPapers(box, papers, start, { subjectName = (s) => s } = {}) {
+export function mountPapers(box, papers, start, { subjectName = (s) => s, onTutor = null } = {}) {
   const v = { ...start };
   // Neveljavna začetna izbira (npr. predmet, ki ga izpit nima) se izbriše od tam naprej.
   for (const key of ["track", "exam", "subject", "level"]) {
@@ -77,13 +85,14 @@ export function mountPapers(box, papers, start, { subjectName = (s) => s } = {})
   autofill(v, papers, subjectName);
   let open = steps(v, papers, subjectName).find((s) => !s[3])?.[0] || null;
   let all = false;
+  let shown = [];
 
   const render = () => {
     const list = steps(v, papers, subjectName);
     const done = list.filter((s) => s[3] && s[0] !== open);
     const current = list.find((s) => s[0] === open) || list.find((s) => !s[3]);
     const entries = current ? [] : papers.filter((p) => p.exam === v.exam && p.subject === v.subject && (!p.level || p.level === v.level));
-    const shown = all ? entries : entries.slice(0, SHOW);
+    shown = all ? entries : entries.slice(0, SHOW);
     box.innerHTML = `
       <div class="lp-crumbs pp-crumbs">${done
         .map(([k, , , label]) => `<button type="button" class="lp-crumb" data-pp-step="${k}" title="${esc(t("common.change"))}">${esc(label)}</button>`)
@@ -95,11 +104,13 @@ export function mountPapers(box, papers, start, { subjectName = (s) => s } = {})
           .map(([val, label, sub]) => `<button type="button" class="choice lp-opt ${val === v[current[0]] ? "on" : ""}" data-pp-key="${current[0]}" data-pp-val="${esc(val)}"><span>${esc(label)}</span>${sub ? `<small>${esc(sub)}</small>` : ""}</button>`)
           .join("")}</div>`
           : entries.length
-            ? `<ul class="pp-list">${shown.map(rowHtml).join("")}</ul>${entries.length > shown.length ? `<button type="button" class="text-btn pp-more" data-pp-more>${esc(t("pp.more", { n: entries.length - shown.length }))}</button>` : ""}`
+            ? `<ul class="pp-list">${shown.map((e, i) => rowHtml(e, i, !!onTutor)).join("")}</ul>${entries.length > shown.length ? `<button type="button" class="text-btn pp-more" data-pp-more>${esc(t("pp.more", { n: entries.length - shown.length }))}</button>` : ""}`
             : `<p class="muted">${esc(t("pp.empty"))}</p>`
       }`;
   };
   box.onclick = (e) => {
+    const tutor = e.target.closest("[data-pp-tutor]");
+    if (tutor && onTutor) return onTutor(shown[Number(tutor.dataset.ppTutor)], subjectName);
     const step = e.target.closest("[data-pp-step]");
     if (step) {
       open = step.dataset.ppStep;

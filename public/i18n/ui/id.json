@@ -2689,5 +2689,7 @@
   "lab.lockedText": "Percobaan interaktif, simulasi, dan pemeriksaan langsung tersedia dalam paket berbayar dan selama uji coba 7 hari. Teks pelajaran dan PDF gratis.",
   "lab.packages": "Lihat paket",
   "lab.empty": "Belum ada percobaan.",
-  "lab.error": "Laboratorium tidak dapat dimuat."
+  "lab.error": "Laboratorium tidak dapat dimuat.",
+  "pp.tutor": "Kerjakan dengan tutor",
+  "pp.tutorMsg": "Aku sedang mengerjakan soal ujian lalu {paper}. Aku akan mengirim soalnya (foto atau diketik). Bimbing aku dengan petunjuk sesuai gaya ujian ini dan jangan beri jawabannya sebelum aku mencoba sendiri. Di akhir, beri tahu topik mana yang perlu kulatih lagi."
 }
