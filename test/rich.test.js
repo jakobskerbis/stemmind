@@ -3,11 +3,18 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import { marked } from "marked";
 import katex from "katex";
-import { createRenderer, streamSafe, fixTables, isTableSeparator, centerNumberColumns } from "../public/rich.js";
+import { createRenderer, streamSafe, fixTables, isTableSeparator, centerNumberColumns, subHeadings } from "../public/rich.js";
 import { nextChunk } from "../public/pace.js";
 import { annotateTex } from "../public/formula-data.js";
 
 const { renderRich } = createRenderer({ marked, katex, sanitize: (h) => h });
+
+test("a numbered bold start of a paragraph becomes its own sub-heading; other bold text stays", () => {
+  assert.equal(subHeadings("<p><strong>1. Imaginarna enota.</strong> Vpeljemo $i$.</p>"), '<h3 class="sub-head">1. Imaginarna enota</h3><p>Vpeljemo $i$.</p>');
+  assert.equal(subHeadings("<p><strong>2. Konjugirano število</strong></p>"), '<h3 class="sub-head">2. Konjugirano število</h3>');
+  assert.equal(subHeadings("<p><strong>Opomba.</strong> Besedilo.</p>"), "<p><strong>Opomba.</strong> Besedilo.</p>");
+  assert.match(renderRich("**3. Absolutna vrednost.** Razdalja od $0$."), /^<h3 class="sub-head">3\. Absolutna vrednost<\/h3><p>Razdalja od /);
+});
 
 // Odgovor iz posnetka zaslona (j, 2026-10-29): tabela takoj pod besedilom, ulomki v celicah.
 const REPLY = [
