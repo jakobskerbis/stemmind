@@ -65,7 +65,10 @@
 [dir="rtl"] .textbook :is(.katex-display, .md-table-wrap).tb-drsnik:not(.tb-konec) { -webkit-mask-image: linear-gradient(to left, #000 calc(100% - 36px), transparent); mask-image: linear-gradient(to left, #000 calc(100% - 36px), transparent); }
 @media print { .textbook :is(.katex-display, .md-table-wrap) { -webkit-mask-image: none; mask-image: none; } }
 /* Formula v besedilu se nikoli ne prelomi v dve vrstici (j 2026-10-31: »(p + | q)√b«); preširoko ureja sirina.js. */
+/* Formula v besedilu je celota (inline-block), zato se nikoli ne prekriva s sosednjima vrsticama. Rahlo višja (koren,
+   potenca) z negativnim robom ne razmakne vrstice; višjo (ulomek) sirina.js postavi v svojo vrstico (j 2026-11-01). */
 .textbook .katex { white-space: nowrap; }
+.textbook :is(p, li, dd, blockquote, h2, h3, td, th) .katex:not(.katex-display > .katex) { display: inline-block; text-indent: 0; margin-block: -0.15em; }
 /* Zložena formula (sirina.js, j 2026-11-01): leva stran zgoraj, vsak »= …« spodaj. Sredi besedila je v svoji vrstici. */
 .textbook :is(p, li, dd, blockquote, h2, h3) .katex.tb-zlozena:not(.katex-display > .katex) { display: block; width: fit-content; max-width: 100%; margin: 6px 0; }
 .textbook .katex.tb-dolga { display: inline-block; max-width: 100%; overflow-x: auto; overflow-y: hidden; vertical-align: middle; padding: 2px 0 4px; }
