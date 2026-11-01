@@ -164,6 +164,8 @@ export async function openPaperViewer(file, { title, onHelp }) {
     { root: scroller, rootMargin: "150% 0px" },
   );
   pages.forEach((p) => observer.observe(p.el));
+  // Naslovnica in navodila nimajo nalog: začnemo pri prvi najdeni nalogi.
+  if (tasks.length) scroller.scrollTop = pages[tasks[0].regions[0].page].el.offsetTop - 8;
 
   // Številka strani in premik na prejšnjo/naslednjo.
   const pageAt = () => {

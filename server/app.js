@@ -239,6 +239,7 @@ export function createApp(store, opts = {}) {
     app.use(
       compressedStatic([
         ["/vendor/katex/", path.join(modules, "katex", "dist")],
+        ["/vendor/pdfjs/", path.join(modules, "pdfjs-dist")],
         ["/vendor/marked/", path.join(modules, "marked")],
         ["/vendor/dompurify/", path.join(modules, "dompurify", "dist")],
         ...FONTS.map(([dir, pkg]) => [`/vendor/${dir}/`, path.join(modules, "@fontsource-variable", pkg)]),
@@ -252,6 +253,8 @@ export function createApp(store, opts = {}) {
   // Preverjanje odgovorov tudi v brskalniku (vaje brez povezave); datoteka nima odvisnosti.
   app.get("/practice/check.js", (_req, res) => res.type("text/javascript").sendFile(path.join(here, "practice", "check.js")));
   app.use("/vendor/katex", express.static(path.join(modules, "katex", "dist")));
+  // pdf.js za prenešeno polo (public/paper-viewer.js): izris v brskalniku, pole ne gredo na strežnik.
+  app.use("/vendor/pdfjs", express.static(path.join(modules, "pdfjs-dist")));
   app.use("/vendor/marked", express.static(path.join(modules, "marked")));
   app.use("/vendor/dompurify", express.static(path.join(modules, "dompurify", "dist")));
   for (const [dir, pkg] of FONTS) app.use(`/vendor/${dir}`, express.static(path.join(modules, "@fontsource-variable", pkg)));
