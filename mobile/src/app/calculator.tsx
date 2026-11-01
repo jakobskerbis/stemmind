@@ -44,7 +44,7 @@ export default function Calculator() {
         onError={() => setFailed(true)}
         onHttpError={(e: { nativeEvent: { statusCode: number } }) => e.nativeEvent.statusCode >= 500 && setFailed(true)}
         onShouldStartLoadWithRequest={(req: { url: string }) => {
-          if (req.url.startsWith(API_URL) || !/^https?:/.test(req.url)) return true;
+          if (req.url === API_URL || req.url.startsWith(`${API_URL}/`) || !/^https?:/.test(req.url)) return true; // ne evklid.app.drugo
           WebBrowser.openBrowserAsync(req.url).catch(() => {});
           return false;
         }}
