@@ -340,7 +340,7 @@ export const SIM_TOPICS = {
   "KEM-OS-8/nekovine": [["periodni", "Kovine, polkovine in nekovine", { highlight: "vrste" }], ["razvrsti", "Lastnosti kovin in nekovin", { set: "kovine" }]],
   "KEM-OS-8/kisline-in-baze": [["ph", "Kisline, baze in pH"], ["lab-co2", "Laboratorij: soda bikarbona in kislina"]],
   "KEM-OS-8/ph-lestvica": ["ph", "pH lestvica"],
-  "KEM-OS-8/nevtralizacija-in-soli": ["titracija", "Nevtralizacija kisline z bazo", { mode: "os" }],
+  "KEM-OS-8/nevtralizacija-in-soli": [["titracija", "Nevtralizacija kisline z bazo", { mode: "os" }], ["lab-titracija", "Laboratorij: nevtralizacija s titracijo"]],
   // ---------------------------------------------------------------- KEM OŠ 9
   "KEM-OS-9/mnozina-snovi": ["mol", "Množina snovi in molska masa"],
   "KEM-OS-9/racunanje-z-mnozino-snovi": [["stehiometrija", "Mase snovi pri reakciji", { mode: "mase" }], ["lab-co2", "Laboratorij: koliko CO₂ uide iz bučke?"]],
@@ -417,8 +417,8 @@ export const SIM_TOPICS = {
   "KEM-SS-2/kemijsko-ravnotezje": ["ravnotezje", "Dinamično ravnotežje in Le Chatelierovo načelo"],
   "KEM-SS-2/kisline-in-baze": ["ph", "Kisline, baze in pH"],
   "KEM-SS-2/ph": ["ph", "pH lestvica"],
-  "KEM-SS-2/sibke-kisline-in-baze": ["disociacija", "Močne in šibke kisline"],
-  "KEM-SS-2/titracija": ["titracija", "Titracijska krivulja", { mode: "ss" }],
+  "KEM-SS-2/sibke-kisline-in-baze": [["disociacija", "Močne in šibke kisline"], ["lab-titracija", "Laboratorij: titracija ocetne kisline in izbira indikatorja"]],
+  "KEM-SS-2/titracija": [["titracija", "Titracijska krivulja", { mode: "ss" }], ["lab-titracija", "Laboratorij: titracija z bireto in indikatorjem"]],
   "KEM-SS-2/oksidacijska-stevila": ["oksidacijska", "Določanje oksidacijskih števil"],
   "KEM-SS-2/redoks-reakcije": ["reaktivnost", "Redoks: kovina v raztopini soli", { mode: "redoks" }],
   "KEM-SS-2/galvanski-cleni-in-elektroliza": ["galvanski", "Galvanski člen in elektroliza"],
@@ -547,6 +547,11 @@ export const LAB_INFO = {
     subject: "KEM",
     title: "Soda bikarbona in kislina",
     desc: "Na tehtnici zmešaj sodo bikarbono s kislino, spremljaj izgubo mase in z apnico dokaži, da nastaja ogljikov dioksid.",
+  },
+  "lab-titracija": {
+    subject: "KEM",
+    title: "Titracija kisline z NaOH",
+    desc: "Napolni bireto, odpipetiraj vzorec, izberi indikator, titriraj po kapljicah do končne točke in izračunaj neznano koncentracijo kisline.",
   },
 };
 export const labKey = (id, opts = {}) => (opts && Object.keys(opts).length ? `${id}:${JSON.stringify(opts)}` : id);
