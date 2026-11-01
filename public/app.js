@@ -46,6 +46,7 @@ import { xpStatsHtml, xpItemsHtml, levelRowHtml, paintBadge, celebrateXp } from 
 import { goalFieldsHtml, wireGoalFields, readGoalFields, goalLineHtml, goalName, countdown, hasGoal, reminderDue, dismissReminder, reminderCardHtml, fmtDate } from "./goal.js";
 import { validDate } from "./goal-data.js";
 import { loadPapers, mountPapers, paperLabel, examName as siExamName, SI_EXAMS } from "./exam-papers.js";
+import { openPaperViewer, closePaperViewer } from "./paper-viewer.js";
 import { initDrsniki } from "./drsniki.js";
 
 const $ = (sel) => document.querySelector(sel);
@@ -307,7 +308,7 @@ window.addEventListener("popstate", () => {
   overlayEntry = false;
   const keep = () => currentView !== "path" && history.pushState({ stm: 1, v: currentView }, "");
   // Odprt meni (klobuk ali profil) Nazaj le zapre, pogled ostane.
-  if (closeQuickStart() || closeProfileMenu()) return keep();
+  if (closePaperViewer() || closeQuickStart() || closeProfileMenu()) return keep();
   if (installSheetOpen()) {
     closeInstallSheet({ fromBack: true });
     return keep();
@@ -2878,21 +2879,45 @@ async function showPapers(c) {
   if (!slot.isConnected) return;
   const s = state.student.settings;
   const level = /VR/.test(String(s.curriculum_level || "")) ? "VR" : "OR";
-  mountPapers(slot, papers, { track: s.educational_track, exam: c.exam, subject: c.subject, level }, { subjectName: (k) => SUBJECT_NAMES[k] || k, onTutor: paperTutor });
+  mountPapers(slot, papers, { track: s.educational_track, exam: c.exam, subject: c.subject, level }, {
+    subjectName: (k) => SUBJECT_NAMES[k] || k,
+    onTutor: paperTutor,
+    onLocal: (entry, file, subjectName) => openPaperViewer(file, { title: paperLabel(entry, subjectName), onHelp: (task) => paperTask(entry, subjectName, task) }),
+  });
 }
 // »Rešuj z inštruktorjem« pri pretekli poli: nov pogovor z vnaprej napisanim sporočilom (katera pola, namigi
 // namesto rešitve); učenec doda nalogo s fotografijo ali prepisom in pošlje sam. Pole RIC ne pošiljamo.
 async function paperTutor(entry, subjectName) {
   if (!entry) return;
   try {
-    const conv = await api(`/api/students/${state.student.id}/conversations`, { method: "POST", body: {} });
-    await loadConversations();
-    showView("chat");
-    await openConversation(conv.id);
+    await newTutorChat();
     const box = $("#input");
     box.value = t("pp.tutorMsg", { paper: paperLabel(entry, subjectName) });
     autoGrow();
     box.focus();
+  } catch (err) {
+    toast(err.message);
+  }
+}
+async function newTutorChat() {
+  const conv = await api(`/api/students/${state.student.id}/conversations`, { method: "POST", body: {} });
+  await loadConversations();
+  showView("chat");
+  await openConversation(conv.id);
+}
+// »Pomoč pri tej nalogi« v prenešeni poli (public/paper-viewer.js): nov pogovor, v enem sporočilu izrez naloge
+// (slika kot pri fotografiji) in besedilo iz pole. Pošlje se samo ta naloga, ker jo je učenec izbral.
+async function paperTask(entry, subjectName, task) {
+  if (!entry || !task?.image) return;
+  try {
+    await newTutorChat();
+    state.image = task.image;
+    $("#image-preview img").src = task.image.url;
+    $("#image-preview").hidden = false;
+    const paper = paperLabel(entry, subjectName);
+    const head = task.label ? t("pp.taskMsg", { paper, n: task.label }) : t("pp.boxMsg", { paper, page: task.page });
+    const text = String(task.text || "").slice(0, 1500).trim();
+    await send(text ? `${head}\n\n${t("pp.taskText")}\n${text}` : head);
   } catch (err) {
     toast(err.message);
   }
