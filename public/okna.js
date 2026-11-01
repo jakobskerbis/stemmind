@@ -664,7 +664,8 @@ export function initOkna(opts) {
   document.body.append(layer);
   const tabs = $(".topbar .tabs");
   makeRowSortable(tabs, "tabs", { item: ".tab", out: tabOut });
-  makeRowSortable($("#tabbar"), "tabbar", { item: ".tab" });
+  // Četrto mesto spodnje vrstice menja pogled (Laboratorij, NPZ/matura); id mesta ostane »competition«, kot v shranjenih redih.
+  makeRowSortable($("#tabbar"), "tabbar", { item: ".tab", idOf: (el) => (el.id === "competition-tab-m" ? "competition" : el.dataset.view) });
   // Spodnji list stoji nad spodnjo vrstico zavihkov, da navigacija ostane uporabna (okna.css, --tabbar-h).
   const tabbar = $("#tabbar");
   if (tabbar && "ResizeObserver" in window) new ResizeObserver(syncTabbarH).observe(tabbar);
