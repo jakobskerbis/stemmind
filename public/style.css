@@ -394,6 +394,8 @@ html[data-tutor-ic] .msg.assistant::after {
 .msg.assistant ol, .msg.assistant ul { padding-inline-start: 1.3em; margin: 0.45em 0; }
 .msg.assistant pre { background: var(--surface-2); padding: 10px; border-radius: 10px; overflow-x: auto; }
 .msg .katex-display { overflow-x: auto; overflow-y: hidden; padding: 4px 0 6px; }
+/* Formula je vedno LTR (ui.css): v RTL okvirju bi se njen preširoki desni del odrezal brez možnosti pomika (in brez oznake drsne vrstice). */
+[dir="rtl"] .katex-display { direction: ltr; }
 .msg .katex-display:has(.mfrac [data-fx]) { padding-top: 9px; margin-top: calc(1em - 5px); }
 .msg .photo-note { display: flex; align-items: center; gap: 6px; font-size: 0.85em; opacity: 0.9; margin-bottom: 4px; }
 .msg.error { border-color: var(--danger); color: var(--danger); background: var(--danger-bg); }
@@ -750,7 +752,7 @@ label.check input { width: 18px; height: 18px; accent-color: var(--accent); }
   .sidebar.open { display: block; position: absolute; inset: 0; z-index: 5; padding-top: 72px; border-inline-end: 0; }
   .messages { padding: 16px 12px; }
   .msg { max-width: 100%; }
-  .msg.assistant { margin-inline-start: 40px; }
+  .msg.assistant { margin-inline-start: 40px; max-width: calc(100% - 40px); } /* sicer široka tabela ali formula potisne oblaček 40 px čez rob (in z njim bledi rob ter drsnik) */
   .chat-head { padding: 8px 12px; }
   .composer > .hint { display: none; }
   .ai-note { margin-top: 4px; font-size: 0.7rem; }

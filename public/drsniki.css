@@ -10,8 +10,8 @@
 .drs.drs-k { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - var(--drs-rob)), transparent); mask-image: linear-gradient(to right, #000 calc(100% - var(--drs-rob)), transparent); }
 .drs.drs-z { -webkit-mask-image: linear-gradient(to left, #000 calc(100% - var(--drs-rob)), transparent); mask-image: linear-gradient(to left, #000 calc(100% - var(--drs-rob)), transparent); }
 .drs.drs-z.drs-k { -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--drs-rob), #000 calc(100% - var(--drs-rob)), transparent); mask-image: linear-gradient(to right, transparent, #000 var(--drs-rob), #000 calc(100% - var(--drs-rob)), transparent); }
-[dir="rtl"] .drs.drs-k:not(.drs-z) { -webkit-mask-image: linear-gradient(to left, #000 calc(100% - var(--drs-rob)), transparent); mask-image: linear-gradient(to left, #000 calc(100% - var(--drs-rob)), transparent); }
-[dir="rtl"] .drs.drs-z:not(.drs-k) { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - var(--drs-rob)), transparent); mask-image: linear-gradient(to right, #000 calc(100% - var(--drs-rob)), transparent); }
+.drs.drs-rtl.drs-k:not(.drs-z) { -webkit-mask-image: linear-gradient(to left, #000 calc(100% - var(--drs-rob)), transparent); mask-image: linear-gradient(to left, #000 calc(100% - var(--drs-rob)), transparent); }
+.drs.drs-rtl.drs-z:not(.drs-k) { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - var(--drs-rob)), transparent); mask-image: linear-gradient(to right, #000 calc(100% - var(--drs-rob)), transparent); }
 
 @media print { .drs { -webkit-mask-image: none !important; mask-image: none !important; } }
 
@@ -26,4 +26,8 @@
     background-size: calc(var(--drs-d, 0.5) * 100%) 3px, 100% 3px;
     background-position: var(--drs-x, 0%) 100%, 0 100%;
   }
+  /* Tabela ali žetoni segajo do spodnjega roba okvirja in bi črto prekrili: prostor zanjo je vedno (brez skoka ob »drs«). */
+  .md-table-wrap { padding-bottom: 6px; margin-bottom: 4px; }
+  .tk-ctx { padding-bottom: 6px; }
+  .chip-row { padding-bottom: 7px; }
 }

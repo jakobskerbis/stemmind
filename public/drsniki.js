@@ -43,6 +43,8 @@ export function oznaci(el) {
   el.classList.toggle("drs", vec);
   el.classList.toggle("drs-z", vec && at > 1);
   el.classList.toggle("drs-k", vec && at < max - 1);
+  // Smer šteje element sam (».sc-preview« je LTR tudi na arabski strani), ne <html dir>.
+  el.classList.toggle("drs-rtl", vec && cs.direction === "rtl");
   // Položaj in dolžina črte pod vrstico na telefonu (drsniki.css); v RTL se začetek šteje z desne.
   if (vec) {
     const p = Math.min(1, at / max);
@@ -58,13 +60,21 @@ function pokukaj(el) {
   io.unobserve(el);
   if (!el.classList.contains("drs") || premik(el) > 1) return;
   const smer = getComputedStyle(el).direction === "rtl" ? -1 : 1;
-  el.scrollBy({ left: smer * 28, behavior: "smooth" });
-  setTimeout(() => el.isConnected && el.scrollTo({ left: 0, behavior: "smooth" }), 450);
+  const cilj = Math.min(28, el.scrollWidth - el.clientWidth);
+  // Če se je učenec medtem sam dotaknil vrstice, je ne vračamo (sicer bi mu jo izpulili izpod prsta).
+  let dotik = false;
+  const ustavi = () => (dotik = true);
+  for (const t of ["pointerdown", "touchstart", "wheel"]) el.addEventListener(t, ustavi, { once: true, passive: true });
+  el.scrollBy({ left: smer * cilj, behavior: "smooth" });
+  setTimeout(() => {
+    for (const t of ["pointerdown", "touchstart", "wheel"]) el.removeEventListener(t, ustavi);
+    if (el.isConnected && !dotik && Math.abs(premik(el) - cilj) <= 2) el.scrollTo({ left: 0, behavior: "smooth" });
+  }, 450);
 }
 
 function preglej() {
   caka = false;
-  sledeni.forEach((el) => el.isConnected || (ro.unobserve(el), sledeni.delete(el)));
+  sledeni.forEach((el) => el.isConnected || (ro.unobserve(el), io?.unobserve(el), sledeni.delete(el)));
   document.querySelectorAll(SEL).forEach((el) => {
     if (NI && el.matches(NI)) return;
     if (!sledeni.has(el)) {
@@ -90,7 +100,10 @@ export function initDrsniki() {
   }
   document.addEventListener("scroll", (e) => sledeni.has(e.target) && oznaci(e.target), { capture: true, passive: true });
   // »style«: sirina.js formulo pomanjša z velikostjo pisave, kar spremeni širino vsebine, ne pa okvirja.
-  new MutationObserver(kmalu).observe(document.body, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ["style", "hidden", "open"] });
+  // Lastnih zapisov --drs-d/--drs-x (ob vsakem pomiku) ne štejemo, sicer bi vsak pomik pregledal vso stran.
+  const brez = (s) => (s || "").replace(/--drs-[dx]:[^;]*;?\s*/g, "").trim();
+  const nase = (m) => m.type === "attributes" && m.attributeName === "style" && sledeni.has(m.target) && brez(m.oldValue) === brez(m.target.getAttribute("style"));
+  new MutationObserver((ms) => ms.every(nase) || kmalu()).observe(document.body, { subtree: true, childList: true, characterData: true, attributes: true, attributeOldValue: true, attributeFilter: ["style", "hidden", "open"] });
   document.fonts?.ready?.then(kmalu);
   kmalu();
 }
