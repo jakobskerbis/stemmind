@@ -30,14 +30,16 @@ export function closePaperViewer() {
   return true;
 }
 
-// file: izbrani PDF; title: oznaka pole; onHelp({ label, page, text, image }) odpre inštruktorja.
-export async function openPaperViewer(file, { title, onHelp }) {
+// file: izbrani PDF; title: oznaka pole; onHelp({ label, page, text, image }) odpre inštruktorja; onClose: zaprl jo je
+// učenec (gumb, Esc, Nazaj), ne »Pomoč pri tej nalogi«; page: stran (od 1), ki se pokaže ob odprtju.
+export async function openPaperViewer(file, { title, onHelp, onClose, page: startPage = 0 }) {
   closePaperViewer();
   const back = document.activeElement;
   const el = document.createElement("div");
   el.className = "pv";
   el.setAttribute("role", "dialog");
   el.setAttribute("aria-modal", "true");
+  el.tabIndex = -1; // klik na stran ohrani fokus v pregledovalniku (Esc)
   el.setAttribute("aria-label", title);
   el.innerHTML = `<header class="pv-bar">
       <button type="button" class="ghost pv-ic" data-pv-close aria-label="${esc(t("pp.viewerClose"))}" title="${esc(t("pp.viewerClose"))}">${icon("x")}</button>
@@ -62,9 +64,10 @@ export async function openPaperViewer(file, { title, onHelp }) {
   let sel = null; // ročni okvir { page, x0, y0, x1, y1 } v enotah PDF
   const state = { closed: false };
 
-  const close = () => {
+  const close = (forHelp) => {
     if (state.closed) return;
     state.closed = true;
+    if (!forHelp) onClose?.();
     current = null;
     observer?.disconnect();
     for (const p of pages) p.task?.cancel?.();
@@ -75,6 +78,7 @@ export async function openPaperViewer(file, { title, onHelp }) {
   };
   current = { close };
   $("[data-pv-close]").focus();
+  $("[data-pv-close]").onclick = () => close(); // že med nalaganjem in ob napaki
 
   el.addEventListener("keydown", (e) => {
     if (e.key !== "Escape") return;
@@ -94,7 +98,7 @@ export async function openPaperViewer(file, { title, onHelp }) {
       const page = await doc.getPage(n);
       const vp = page.getViewport({ scale: 1 });
       const tc = await page.getTextContent();
-      if (state.closed) return;
+      if (state.closed) return doc.destroy();
       pages.push({ page, width: vp.width, height: vp.height, items: tc.items });
     }
   } catch (err) {
@@ -165,7 +169,9 @@ export async function openPaperViewer(file, { title, onHelp }) {
   );
   pages.forEach((p) => observer.observe(p.el));
   // Naslovnica in navodila nimajo nalog: začnemo pri prvi najdeni nalogi.
-  if (tasks.length) scroller.scrollTop = pages[tasks[0].regions[0].page].el.offsetTop - 8;
+  // Ponovno odprta pola (po pomoči pri nalogi) se odpre pri zadnji nalogi.
+  const start = startPage ? startPage - 1 : tasks.length ? tasks[0].regions[0].page : -1;
+  if (pages[start]) scroller.scrollTop = pages[start].el.offsetTop - 8;
 
   // Številka strani in premik na prejšnjo/naslednjo.
   const pageAt = () => {
@@ -220,7 +226,7 @@ export async function openPaperViewer(file, { title, onHelp }) {
     status(t("pp.preparing"));
     try {
       const image = await crop(regions);
-      close();
+      close(true);
       onHelp({ ...payload, image });
     } catch (err) {
       btn.disabled = false;
@@ -279,7 +285,6 @@ export async function openPaperViewer(file, { title, onHelp }) {
   scroller.addEventListener("pointercancel", endDrag);
 
   el.addEventListener("click", (e) => {
-    if (e.target.closest("[data-pv-close]")) return close();
     const step = e.target.closest("[data-pv-step]");
     if (step) {
       const i = Math.max(0, Math.min(pages.length - 1, pageAt() + Number(step.dataset.pvStep)));

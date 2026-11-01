@@ -74,7 +74,7 @@ function rowHtml(e, i, tutor, local) {
 }
 
 // Namesti izbirnik v `box`. start: { track, exam, subject, level } (privzeto učenčeva raven).
-export function mountPapers(box, papers, start, { subjectName = (s) => s, onTutor = null, onLocal = null } = {}) {
+export function mountPapers(box, papers, start, { subjectName = (s) => s, onTutor = null, onLocal = null, onReopen = null } = {}) {
   const v = { ...start };
   // Neveljavna začetna izbira (npr. predmet, ki ga izpit nima) se izbriše od tam naprej.
   for (const key of ["track", "exam", "subject", "level"]) {
@@ -118,6 +118,9 @@ export function mountPapers(box, papers, start, { subjectName = (s) => s, onTuto
     onLocal(shown[Number(input.dataset.ppLocal)], file, subjectName);
   };
   box.onclick = (e) => {
+    // Pola, ki je po »Pomoč pri tej nalogi« še v pomnilniku, se odpre znova brez izbire datoteke.
+    const local = e.target.closest(".pp-local");
+    if (local && onReopen?.(shown[Number(local.querySelector("[data-pp-local]").dataset.ppLocal)], subjectName)) return e.preventDefault();
     const tutor = e.target.closest("[data-pp-tutor]");
     if (tutor && onTutor) return onTutor(shown[Number(tutor.dataset.ppTutor)], subjectName);
     const step = e.target.closest("[data-pp-step]");

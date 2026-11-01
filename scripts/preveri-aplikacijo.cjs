@@ -784,6 +784,12 @@ async function examsView(p, label) {
   await screen(p, `prenesena-pola-pomoc-${label}`);
   await tab(p, "exams");
   await expectVisible(p, '#exam-papers .pp-row', "pretekle pole po pomoči pri nalogi");
+  // Pola ostane v pomnilniku: »Odpri prenešeno polo« jo po pomoči odpre znova brez izbire datoteke; Esc jo pozabi.
+  await p.locator("#exam-papers .pp-local").first().click();
+  await expectVisible(p, ".pv .pv-task .pv-help", "ponovno odprta pola po pomoči", 15000);
+  await p.keyboard.press("Escape");
+  await p.waitForTimeout(200);
+  if (await p.locator(".pv").count()) throw new Error("Esc ne zapre ponovno odprte pole");
   // Ista pola na telefonski širini (360 px): brez vodoravnega drsenja, gumb za pomoč viden.
   const size = p.viewportSize();
   await p.setViewportSize({ width: 360, height: 740 });

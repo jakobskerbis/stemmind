@@ -525,6 +525,7 @@ async function selectStudent(id) {
     return selectStudent(open.id);
   }
   state.student = target;
+  keptPaper = null;
   // Jezik je del profila: ob menjavi učenca se vmesnik preklopi v njegov jezik (stran se naloži znova).
   const want = state.student.settings.language;
   if (want && want !== currentLang()) {
@@ -2882,7 +2883,13 @@ async function showPapers(c) {
   mountPapers(slot, papers, { track: s.educational_track, exam: c.exam, subject: c.subject, level }, {
     subjectName: (k) => SUBJECT_NAMES[k] || k,
     onTutor: paperTutor,
-    onLocal: (entry, file, subjectName) => openPaperViewer(file, { title: paperLabel(entry, subjectName), onHelp: (task) => paperTask(entry, subjectName, task) }),
+    onLocal: (entry, file, subjectName) => openLocalPaper(entry, file, subjectName),
+    onReopen: (entry, subjectName) => {
+      const k = keptPaper;
+      if (!k || k.sid !== state.student.id || k.key !== paperLabel(entry, subjectName)) return false;
+      openLocalPaper(entry, k.file, subjectName, k.page);
+      return true;
+    },
   });
 }
 // »Rešuj z inštruktorjem« pri pretekli poli: nov pogovor z vnaprej napisanim sporočilom (katera pola, namigi
@@ -2898,6 +2905,22 @@ async function paperTutor(entry, subjectName) {
   } catch (err) {
     toast(err.message);
   }
+}
+// Prenešena pola ostane v pomnilniku (ta seja, ta učenec): po »Pomoč pri tej nalogi« jo »Odpri prenešeno polo« pri isti
+// poli odpre znova pri isti strani, brez ponovne izbire datoteke. Zapiranje pole ali menjava profila jo pozabi.
+let keptPaper = null;
+function openLocalPaper(entry, file, subjectName, page = 0) {
+  const key = paperLabel(entry, subjectName);
+  const sid = state.student.id;
+  openPaperViewer(file, {
+    title: key,
+    page,
+    onClose: () => (keptPaper = null),
+    onHelp: (task) => {
+      keptPaper = { sid, key, file, page: task.page };
+      paperTask(entry, subjectName, task);
+    },
+  });
 }
 async function newTutorChat() {
   const conv = await api(`/api/students/${state.student.id}/conversations`, { method: "POST", body: {} });
