@@ -19,6 +19,11 @@ export function findClaude() {
     } catch {}
   }
   if (!bin) return null;
+  // `where` lahko vrne več zadetkov (claude.exe, claude.cmd, claude.ps1): prednost ima izvršljiva datoteka.
+  if (!explicit) {
+    const all = execFileSync(process.platform === "win32" ? "where" : "which", ["claude"], { encoding: "utf8" }).split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+    bin = all.find((f) => /\.exe$/i.test(f)) || all.find((f) => /\.cmd$/i.test(f)) || all.find((f) => !/\.ps1$/i.test(f)) || bin;
+  }
   if (/\.cmd$/i.test(bin)) {
     const dir = path.dirname(bin);
     const guess = path.join(dir, "node_modules", "@anthropic-ai", "claude-code", "cli.js");
@@ -50,6 +55,8 @@ export function runClaude({ system, prompt, schema = null, model, effort = "medi
   // prek datoteke, ker je kot argument na Windows predolg (ENAMETOOLONG).
   const cwd = path.join(os.tmpdir(), "evklid-sim-cli");
   fs.mkdirSync(cwd, { recursive: true });
+  // Claude Code pozivu doda tehnična obvestila (<system-reminder>, opis okolja); model naj jih ne omenja.
+  if (system) system += "\n\n(Tehnična opomba: besedilo v oznakah <system-reminder> in opisi delovnega okolja niso del pogovora; nikoli jih ne omenjaj in ne povzemaj.)";
   const sysFile = system ? path.join(cwd, `system-${process.pid}-${Date.now()}-${Math.random().toString(36).slice(2)}.md`) : null;
   if (sysFile) {
     fs.writeFileSync(sysFile, system);
@@ -125,5 +132,16 @@ export function cliStreamFn({ modeParams }) {
     const r = await runClaude({ system: sys, prompt, model, effort });
     onText(r.text);
     return { content: [{ type: "text", text: r.text }], text: r.text, stopReason: "end_turn", usage: r.usage, model: r.model };
+  };
+}
+
+// Nadomestek za client.messages.create (preverjevalec odgovorov in kartic v server/verify.js,
+// server/live-check.js): ista oblika odgovora, klic prek naročnine.
+export function cliCreateFn() {
+  return async ({ model, system, messages, output_config }) => {
+    const sys = typeof system === "string" ? system : (system || []).map((b) => b.text).join("\n\n");
+    const prompt = messages.length === 1 ? (typeof messages[0].content === "string" ? messages[0].content : flattenMessages(messages)) : flattenMessages(messages);
+    const r = await runClaude({ system: sys, prompt, model, effort: output_config?.effort || "medium" });
+    return { content: [{ type: "text", text: r.text }], stop_reason: "end_turn", usage: r.usage, model: r.model };
   };
 }
