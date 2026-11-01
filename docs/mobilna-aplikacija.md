@@ -13,6 +13,10 @@ in isti račun kot splet, napredek je skupen.
   enkrat in podeli XP.
 - **Lekcije** po korakih (kratke kartice z vprašanji »Preveri se« vmes, `public/lesson-steps.js`) ali vse
   naenkrat, »Razloži drugače«, formule in tabele kot na spletu.
+- **Razloži**: v lekciji označi besedilo in v meniju izbora tapni »Razloži«; odpre se pogovor z inštruktorjem z
+  istim sporočilom kot na spletu (`public/textbook.js`). Na Androidu je v meniju še »Kopiraj«.
+- **Kalkulator** med vajo (gumb ob Namigu): spletni kalkulator s strani `/kalkulator` (znanstveni, grafični,
+  orodja, PSE; pri kemiji se odpre PSE) v WebView, brez prijave in brez »Moji grafi«.
 - **Učbenik** s kazalom in iskanjem.
 - **Inštruktor**: klepet, odgovor prihaja sproti, fotografija naloge (kamera ali galerija),
   »Razloži podrobneje«, predlog spremembe šole in letnika.
@@ -28,6 +32,42 @@ in isti račun kot splet, napredek je skupen.
   neposredni prenos plačilo na spletu (Stripe).
 - Svetla in temna tema, 33 jezikov vmesnika (isti prevodi kot splet), iPad, dostopnost (VoiceOver,
   TalkBack).
+
+## Razlike med spletom in aplikacijo
+
+Pravilo (docs/oblikovanje.md, j 1. 11. 2026): kar zna splet, zna tudi aplikacija. Spodaj je, česa aplikacija
+še nima. Velikost: S do pol dneva, M en do dva dni, L več dni. »WebView« pomeni samostojno spletno stran brez
+prijave ali s sejo aplikacije, kot `/kalkulator` (`server/mobile/calculator.js`): hitro in vedno enako kot
+splet; »naravno« pomeni zaslon v React Native (boljši občutek, več dela). Nove naravne odvisnosti zahtevajo
+novo gradnjo APK (posodobitev OTA jih ne prinese).
+
+| Na spletu | Kaj je | Velikost | Predlog | Stanje |
+|---|---|---|---|---|
+| Videz sloga Čist | barve, robovi, pisava Instrument Sans, zavihki v istem redu | S | naravno (`theme.ts`, `font()`) | ✓ narejeno (besedilo v WebView, npr. formule v lekciji, je še v sistemski pisavi) |
+| Razloži ob izboru | označeno besedilo lekcije → inštruktor | S | naravno (meni izbora WebView) | ✓ narejeno |
+| Kalkulator | znanstveni, grafični, orodja, PSE (`public/graph/`) | M | WebView `/kalkulator` | ✓ narejeno med vajo; manjka še gumb v lekciji in klepetu |
+| Formule | zbirka formul (način Formule kalkulatorja) | S | dodati način `formulas` na `/kalkulator` (potrebuje `rich.js`, marked) | ✗ |
+| Moji grafi | shranjeni grafi na strežniku | S | `/kalkulator` s sejo aplikacije (žeton v glavi ali enkratna povezava kot `app-link.js`) | ✗ |
+| Zaslonska tipkovnica | matematične plasti, simboli, enote (`public/tipkovnica*.js`) | L | naravno, iz istih podatkov (`tipkovnica-data.js`); v WebView strani že deluje | ✗ |
+| Laboratorij | poskusi in meritve (`public/laboratorij.js`) | L | WebView samostojne strani | ✗ |
+| Simulacije | interaktivni poskusi v lekcijah (`public/sim/`) | L | WebView `/simulacija/<id>` v lekciji (zdaj se poskus v aplikaciji ne pokaže) | ✗ |
+| Igre | matematične igre (`public/games/`) | L | WebView | ✗ |
+| Tekmovanja | priprava na tekmovanja (`#view-competition`) | M | WebView, pozneje naravno | ✗ |
+| NPZ in matura | preizkusi s časom (`#view-exams`) | M | naravno, kot vaje | ✗ |
+| Kartice | ponavljanje s karticami (`flashcards.js`) | M | naravno | ✗ |
+| Napredek | statistika in grafi po temah (`#view-progress`) | M | naravno, grafi v WebView | ✗ |
+| Lige | tedenska lestvica (`leagues.js`) | S | naravno | ✗ |
+| Urnik | načrt učenja do cilja (`schedule.js`) | M | naravno | ✗ |
+| Zbirke | zbirke, odklepanje, kozmetika (`zbirke-view.js`) | M | WebView | ✗ |
+| Kotiček | novice in zanimivosti (`corner.js`) | M | WebView | ✗ |
+| Mnenja | povratne informacije (`feedback.js`) | S | naravno (obrazec) | ✗ |
+| Okna | več oken hkrati (`okna.js`) | L | samo iPad (Split View); na telefonu ne | ✗ (namerno na telefonu) |
+| Nastavitve | slogi (Igriv, Temen, zgodovinski), lastne barve, jezik, tempo, tipkovnica, glas; aplikacija ima raven, opomnike, vibracijo | M | naravno; slogi kot dodatne palete v `theme.ts` | delno |
+| Račun staršev | otroci, plačila, darila, šole (`account.js`) | M | odpri spletno stran prijavljeno (`app-link.js` v obratni smeri) | delno (naročnina, izbris) |
+| Skrbnik | upravljanje (APK, uporabniki) | S | samo splet | ✗ (namerno) |
+| Skeniraj: po korakih | reševalnik po korakih (`public/scan/`); aplikacija pošlje fotografijo inštruktorju | M | WebView strani skeniranja ali naravni zaslon korakov | delno |
+| Govor | mikrofon v klepetu (`speech.js`) | M | naravna odvisnost (prepoznava govora) → nova gradnja APK | ✗ |
+| Učbenik za tisk | PDF učbenika (`/ucbenik`) | S | odpri v brskalniku (`WebBrowser`) | ✗ |
 
 ## Dve različici
 
