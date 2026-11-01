@@ -2,6 +2,7 @@
 // kalkulatorja v app.js (calcTool, setCalcMode), brez prijave. »Moji grafi« potrebujejo račun, zato jih ni.
 import { t, locale, currentLang, applyI18n } from "./i18n.js";
 import { icon, hydrateIcons } from "./icons.js";
+import { initDrsniki } from "./drsniki.js";
 
 const MODES = ["sci", "graph", "tools", "pse"];
 const q = new URLSearchParams(location.search);
@@ -55,6 +56,7 @@ async function setMode(m) {
 applyI18n();
 document.title = t("nav.graph");
 hydrateIcons();
+initDrsniki();
 document.querySelector(".calc-modes").addEventListener("click", (e) => {
   const b = e.target.closest("[data-calc-mode]");
   if (b) setMode(b.dataset.calcMode);

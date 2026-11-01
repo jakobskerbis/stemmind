@@ -60,10 +60,6 @@
 .tb-draft { background: color-mix(in srgb, #e0a100 14%, transparent); border-radius: 10px; padding: 8px 12px; font-size: 0.9rem; }
 .tb-section .explanation { line-height: 1.65; }
 .tb-section .katex-display { overflow-x: auto; overflow-y: hidden; padding: 4px 0 6px; } /* 6px: osvetlitev klikljive oznake v imenovalcu ni odrezana */
-/* Široke formule in tabele (public/sirina.js): kar ostane preširoko po pomanjšanju, se pomika, desni rob zbledi. */
-.textbook :is(.katex-display, .md-table-wrap).tb-drsnik:not(.tb-konec) { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 36px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 36px), transparent); }
-[dir="rtl"] .textbook :is(.katex-display, .md-table-wrap).tb-drsnik:not(.tb-konec) { -webkit-mask-image: linear-gradient(to left, #000 calc(100% - 36px), transparent); mask-image: linear-gradient(to left, #000 calc(100% - 36px), transparent); }
-@media print { .textbook :is(.katex-display, .md-table-wrap) { -webkit-mask-image: none; mask-image: none; } }
 /* Formula v besedilu se nikoli ne prelomi v dve vrstici (j 2026-10-31: »(p + | q)√b«); preširoko ureja sirina.js. */
 /* Formula v besedilu je celota (inline-block), zato se nikoli ne prekriva s sosednjima vrsticama. Rahlo višja (koren,
    potenca) z negativnim robom ne razmakne vrstice; višjo (ulomek) sirina.js postavi v svojo vrstico (j 2026-11-01). */
