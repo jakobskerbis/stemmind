@@ -55,7 +55,7 @@ V drugem tednu dodamo šesti dan s temperaturo $26\,°\mathrm{C}$. Kolikšna je 
 Urejeni podatki so $6$, $22$, $23$, $24$, $25$, $26$. Na sredini sta $23$ in $24$, zato je mediana $\dfrac{23 + 24}{2} = 23{,}5\,°\mathrm{C}$.
 :::
 
-**4. Najpogostejši podatek.** Poglej tabelo z vremenom. Ali lahko izračunaš povprečje vremena? Ne: »sončno« in »deževno« nista števili. Lahko pa povemo, kaj se je zgodilo največkrat: sončno vreme. Podatek z največjo frekvenco imenujemo **modus**. Modus je edina srednja vrednost, ki deluje tudi za podatke, ki niso števila.
+**4. Najpogostejši podatek.** Poglej tabelo z vremenom. Ali lahko izračunaš povprečje vremena? Ne: »sončno« in »deževno« nista števili. Lahko pa povemo, kaj se je zgodilo največkrat: sončno vreme. Podatek z največjo frekvenco imenujemo **modus**. Modus je edina srednja vrednost, ki deluje tudi za podatke, ki niso števila in jih ne moremo urediti po velikosti (vreme, smer vetra).
 
 Podatki imajo lahko tudi več modusov, če imata dva podatka enako največjo frekvenco.
 
@@ -181,7 +181,7 @@ Mediana: $\dfrac{-1 + 0}{2} = -0{,}5\,°\mathrm{C}$. Povprečje: $\dfrac{-5}{6} 
 - Prikazi: stolpčni (primerjava), krožni (deleži, kot $= f_r \cdot 360°$), črtni (spreminjanje s časom).
 - Povprečje $\bar{x} = \dfrac{\text{vsota}}{n}$; pri tabeli vsak podatek pomnožimo s frekvenco.
 - Mediana je srednji podatek urejenih podatkov; pri sodem $n$ sredina obeh srednjih.
-- Modus je najpogostejši podatek; edini deluje tudi za podatke, ki niso števila.
+- Modus je najpogostejši podatek; edini deluje tudi za podatke, ki niso števila in jih ne moremo urediti.
 - Izstopajoč podatek močno premakne povprečje, mediane skoraj ne.
 
 ## Drugače: Korak za korakom s številkami
@@ -252,7 +252,7 @@ Na koncu je dedku narisala črtni diagram. Na njem je bil padec v sredo viden na
 - Mediano smeri vetra.
 ~ Smeri neba ne moremo urediti od najmanjše do največje, zato mediana nima pomena.
 + Modus: najpogosteje je pihal zahodnik.
-> Za podatke, ki niso števila, je smiseln le modus, podatek z največjo frekvenco: zahod ($16$-krat).
+> Za podatke, ki niso števila in jih ne moremo urediti, je smiseln le modus, podatek z največjo frekvenco: zahod ($16$-krat).
 
 :::simboli
 \bar{x} | aritmetična sredina (povprečje) | \bar{x} = \frac{\text{vsota podatkov}}{n}

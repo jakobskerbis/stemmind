@@ -33,7 +33,7 @@ $$\mathrm{C}_n\mathrm{H}_{2n+2}$$
 
 Vsa imena se končajo na **-an**. Začetek imena pove število atomov C: met- ($1$), et- ($2$), prop- ($3$), but- ($4$), pent- ($5$), heks- ($6$), hept- ($7$), okt- ($8$), non- ($9$), dek- ($10$). Ker nosi vsak C toliko vodikov, kolikor jih sploh lahko, so alkani **nasičeni** ogljikovodiki.
 
-Vrelišče raste z dolžino verige. Pri sobni temperaturi so alkani z $1$ do $4$ atomi C plini, približno do $16$ atomov C tekočine, daljši pa trdne snovi, na primer parafin v sveči.
+Vrelišče raste z dolžino verige. Pri sobni temperaturi so nerazvejani alkani z $1$ do $4$ atomi C plini, približno do $16$ atomov C tekočine, daljši pa trdne snovi, na primer parafin v sveči.
 
 **3. Dvojna in trojna vez.** Zdaj primerjaj ogljikovodike z eno dvojno vezjo $\mathrm{C{=}C}$ ali eno trojno vezjo $\mathrm{C{\equiv}C}$:
 
@@ -58,7 +58,7 @@ Alken: $n = 6$, $2n = 12$, torej $\mathrm{C_6H_{12}}$ (heksen). Alkin: $n = 5$, 
 
 V simulaciji spodaj (»Alkani, alkeni in alkini«) izberi skupino alkeni in $4$ atome C. Položaj premakni z $1$ na $2$. Opazuj, kaj se zgodi z imenom in kaj s formulo.
 
-**5. Rešitev uganke: izomeri.** Iz $4$ atomov C in $10$ atomov H lahko sestaviš **dve** molekuli. Pri prvi so vsi C v vrsti. Pri drugi je en C pripet na sredino verige treh (trgovsko ime te snovi je izobutan):
+**5. Rešitev uganke: izomeri.** Iz $4$ atomov C in $10$ atomov H lahko sestaviš **dve** molekuli. Pri prvi so vsi C v vrsti. Pri drugi je en C pripet na sredino verige treh (običajno ime te snovi je izobutan):
 
 | ime | racionalna formula | vrelišče |
 |---|---|---|

@@ -48,12 +48,21 @@ export function splitSection(md, kind) {
     if (cur.length) chunks.push(cur.join("\n\n"));
     cur = [];
   };
-  for (const b of mdBlocks(md)) {
+  // Oštevilčena točka (»**9. Absolutna vrednost.** …«) ostane cela na enem koraku (j, 1. 11. 2026):
+  // kadar razdelek ima take točke, ga delimo le pred novo točko ali naslovom.
+  const blocks = mdBlocks(md);
+  const point = (b) => /^\s*\*\*\d+\.\s/.test(b);
+  const numbered = kind !== "examples" && blocks.some(point);
+  let think = false;
+  for (const b of blocks) {
     const heading = /^###\s/.test(b.trimStart());
+    const long = cur.length && len() >= MIN && len() + b.length > LONG;
     if (heading && cur.length) flush();
-    else if (kind !== "examples" && cur.length && len() >= MIN && len() + b.length > LONG && !/^\s*[|>-]/.test(b)) flush();
+    else if (numbered) { if (point(b) && cur.length && (think || long)) flush(); }
+    else if (kind !== "examples" && long && !/^\s*[|>-]/.test(b)) flush();
+    if (!cur.length) think = false;
     cur.push(b);
-    if (b.includes('class="tb-think"') && kind !== "examples") flush();
+    if (b.includes('class="tb-think"') && kind !== "examples") { if (numbered) think = true; else flush(); }
   }
   flush();
   return chunks;

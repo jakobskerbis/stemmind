@@ -9,7 +9,7 @@ Sošolec Žan je prepričan: »Mojster Jure poploščiči kopalnico v $6$ urah, 
 
 Nekaj tu ne gre skupaj. Po Žanovem računu bi vajenec mojstra le oviral, saj Jure sam konča že v $6$ urah. Dva delavca pa vendar naredita več kot eden. Do konca lekcije bomo Žanu natančno povedali, koliko časa bosta potrebovala in kje je zgrešil.
 
-Enaka past se skriva v nalogah o povprečni hitrosti, o srečevanju in o mešanju malte ali barve. Vedno je vprašanje isto: katere količine smemo sešteti in katerih ne. Na tekmovanjih se te naloge pojavijo skoraj v vsakem krogu.
+Enaka past se skriva v nalogah o povprečni hitrosti, o srečevanju in o mešanju malte ali barve. Vedno je vprašanje isto: katere količine smemo sešteti in katerih ne. Na tekmovanjih se te naloge pogosto pojavijo.
 
 ## Razlaga
 
@@ -174,7 +174,7 @@ Nekega jutra mojster Jure in vajenec prideta v hišo, kjer naj poploščičita k
 
 Popoldne vajenec s kombijem odpelje ostanke na deponijo. Tja vozi hitro, nazaj v gneči počasi. Opazi, da mu počasni del vzame več ur. Zato povprečna hitrost ni na sredini, ampak bližje počasni.
 
-Zvečer meša malto. Ena vreča ima malo cementa, druga veliko, a druge je trikrat več. Mešanica se zato »nagne« proti močnejši vreči. Vajenec si zapiše v zvezek: *seštevaj delo, pot, čas in kilograme, nikoli ur skupnega dela, hitrosti ali odstotkov.*
+Zvečer meša malto. Ena vreča ima malo cementa, druga veliko, a druge je trikrat več. Mešanica se zato »nagne« proti močnejši vreči. Vajenec si zapiše v zvezek: *seštevaj delo, pot, čas in kilograme, nikoli ur skupnega dela, hitrosti na delih poti ali odstotkov.*
 
 ## Preveri se
 

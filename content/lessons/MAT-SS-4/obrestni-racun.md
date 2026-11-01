@@ -192,7 +192,7 @@ V prvem letu sta obe stopnici enaki. Prostor med črto in krivuljo so obresti od
 ## Drugače: Bolj natančno
 
 **Zakaj je obrestno vsaj tolikšno kot navadno.** Naj bo $x = \frac{p}{100} > 0$. Trdimo: $(1 + x)^n \ge 1 + nx$ za vsak naravni $n$ (Bernoullijeva neenakost). Dokaz z indukcijo: za $n = 1$ velja enakost. Če velja za $n$, je $(1 + x)^{n+1} = (1 + x)^n (1 + x) \ge (1 + nx)(1 + x)$. Desna stran je $(1 + nx)(1 + x) = 1 + (n+1)x + nx^2$, kar je $\ge 1 + (n+1)x$.
-Člen $nx^2$ so ravno »obresti od obresti«. Ker je pozitiven, je neenakost za $n \ge 2$ stroga.
+Člen $nx^2$ so »obresti od obresti«: obresti, ki jih v $(n+1)$-tem letu prinesejo dotlej zbrane navadne obresti $nx$. Ker je pozitiven, je neenakost za $n \ge 2$ stroga.
 
 **Pripis večkrat na leto.** Banka lahko obresti pripisuje mesečno. Takrat uporabi **relativno obrestno mero** $\frac{p}{12}$ na mesec in $12n$ pripisov v $n$ letih: $G = G_0 \left(1 + \frac{p}{1200}\right)^{12n}$. Za $1000\,\text{€}$ pri $6\,\%$ v enem letu dobiš približno $1061{,}68\,\text{€}$ namesto $1060\,\text{€}$. Pogostejši pripis pomeni malo več.
 
