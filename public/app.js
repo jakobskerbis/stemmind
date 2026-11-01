@@ -16,7 +16,7 @@ import { initProfileMenu, refreshProfileButton, closeProfileMenu } from "./profi
 import { initQuickStart, closeQuickStart } from "./quick-start.js";
 import { openPrintable, stopReading } from "./gradiva.js";
 import { initSubjectSwitch } from "./subject-switch.js";
-import { initTextbook, showTextbook, openLesson, textbookBack } from "./textbook.js";
+import { initTextbook, showTextbook, openLesson, textbookBack, openTextbookLower } from "./textbook.js";
 import { loadLeague } from "./leagues.js";
 import { PACES, DEFAULT_PACE, createPacer } from "./pace.js";
 import { createRenderer, streamSafe } from "./rich.js";
@@ -1759,7 +1759,7 @@ async function goNew({ skipHint = false } = {}) {
   }
   if (!m?.newTopic) {
     showView("path");
-    toast(t("path.allDoneToast"), "trophy");
+    toast(t(isUni(state.student.settings) ? "path.allDoneToast" : "path.allDoneSchool"), "trophy");
     return;
   }
   const pretest = await openTopic(m.newTopic.id);
@@ -1830,22 +1830,31 @@ document.querySelectorAll("#modebar [data-mode]").forEach((b) =>
 );
 
 async function loadPath(key = state.pathKey) {
-  const q = key ? `?key=${encodeURIComponent(key)}` : "";
+  // Šola (OŠ/SŠ): učna pot je vedno za razred/letnik iz profila; nižje razrede ima Učbenik (j, 1. 11.).
+  // Fakulteta: izbira med predmeti študijskega programa ostane.
+  const uni = isUni(state.student.settings);
+  const q = uni && key ? `?key=${encodeURIComponent(key)}` : "";
   const p = await api(`/api/students/${state.student.id}/path${q}`);
   const content = $("#path-content");
-  // izbira poti: vse poti predmeta oziroma vsi predmeti študijskega programa po letnikih
-  const uni = isUni(state.student.settings);
   if (uni) await loadPrograms(api);
   const sys = state.student.settings.school_system || "SI";
   const paths = await api(uni ? `/api/paths?program=${encodeURIComponent(state.student.settings.study_program)}` : `/api/paths?subject=${state.student.settings.subject}&system=${encodeURIComponent(sys)}`);
-  const opt = (x) => `<option value="${x.key}" ${x.key === p.key ? "selected" : ""}>${escapeHtml(x.label.replace(/ \((?:UL|UM|UP|UNG) [A-Z]+\)$/, ""))}${x.key === p.defaultKey ? t(uni ? "path.mySubject" : "path.myLevel") : ""}</option>`;
+  const pathName = (x) => escapeHtml(x.label.replace(/ \((?:UL|UM|UP|UNG) [A-Z]+\)$/, ""));
+  const opt = (x) => `<option value="${x.key}" ${x.key === p.key ? "selected" : ""}>${pathName(x)}${uni && x.key === p.defaultKey ? t("path.mySubject") : ""}</option>`;
+  const own = uni ? null : paths.find((x) => x.key === p.key);
   $("#path-select").innerHTML = uni
     ? [1, 2, 3, 4, null]
         .map((y) => paths.filter((x) => x.year === y))
         .filter((list) => list.length)
         .map((list) => `<optgroup label="${list[0].year ? t("path.year", { n: list[0].year }) : t("path.electives")}">${list.map(opt).join("")}</optgroup>`)
         .join("")
-    : paths.map(opt).join("");
+    : own
+      ? opt(own)
+      : "";
+  $(".path-head").classList.toggle("fixed", !uni);
+  $("#path-level").textContent = own ? own.label : p.label || "";
+  // Povezava na Učbenik, kadar so pred to potjo nižji razredi/letniki istega predmeta.
+  $("#path-lower").hidden = uni || !own || paths.indexOf(own) < 1;
   if (!p.key) {
     content.innerHTML = `<p class="muted">${escapeHtml(p.message)}</p>`;
     return;
@@ -1927,6 +1936,10 @@ async function loadPath(key = state.pathKey) {
 }
 
 $("#path-select").addEventListener("change", (e) => loadPath(e.target.value));
+$("#path-lower").addEventListener("click", () => {
+  openTextbookLower();
+  showView("textbook");
+});
 document.addEventListener("click", (e) => {
   const open = e.target.closest("[data-open]");
   if (open && !open.disabled) {
