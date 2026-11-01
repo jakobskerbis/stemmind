@@ -377,11 +377,16 @@ document.addEventListener("click", (e) => {
   }
 });
 
-// Formula v rešenem primeru je skrita za gumbom, da učenec najprej poskusi sam.
+// Formula in rešitev v rešenem primeru sta skriti za gumbom, da učenec najprej poskusi sam.
 function wireFormulas(root) {
   root.querySelectorAll("details.tb-formula").forEach((d) =>
     d.addEventListener("toggle", () => {
       d.querySelector("summary").textContent = d.open ? "Skrij formulo" : "Pokaži formulo";
+    }),
+  );
+  root.querySelectorAll("details.tb-solution").forEach((d) =>
+    d.addEventListener("toggle", () => {
+      d.querySelector("summary").textContent = d.open ? "Skrij rešitev" : "Pokaži rešitev";
     }),
   );
 }

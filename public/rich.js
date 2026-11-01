@@ -49,10 +49,19 @@ export function createRenderer({ marked = lib("marked"), katex = lib("katex"), s
       );
       return `<div class="md-table-wrap"><table class="md-table">${inner}</table></div>`;
     });
+    html = subHeadings(html);
     return html.replace(/@@MATH(\d+)@@/g, (m, i) => (math[i] ? renderMath(math[i].tex, math[i].display) : m));
   }
 
   return { renderMath, renderRich };
+}
+
+// Oštevilčen podnaslov na začetku odstavka (»**1. Imaginarna enota.** Vpeljemo …«) postane svoj
+// naslov nad odstavkom, da se loči od besedila (lekcije, razlage; enako na spletu in v aplikaciji).
+export function subHeadings(html) {
+  return html.replace(/<p><strong>(\d{1,2}\.\s[^<]{1,80}?)\.?<\/strong>\s*(?:<br>\s*)?([\s\S]*?)<\/p>/g, (_, title, rest) =>
+    `<h3 class="sub-head">${title}</h3>${rest.trim() ? `<p>${rest}</p>` : ""}`,
+  );
 }
 
 // ---------- tabele ----------
