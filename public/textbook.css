@@ -620,6 +620,57 @@ a.ref-row:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px;
 .lab button.small, .lab .demo-reset { min-height: 40px !important; }
 .demo.lab .demo-seg .seg-btn, .lab select, .lab .demo-check { min-height: 40px; }
 .lab .demo-slider input[type="range"] { height: 40px; }
+/* titracija (lab-titracija): koraki v okvirjih, vnos odčitka, dotik vsaj 44 px */
+.demo.demo-lab-titracija :is(button, select, .seg-btn, .demo-check, .layer-chip) { min-height: 44px !important; }
+.demo-lab-titracija { min-width: 0; max-width: 100%; container: labtit / inline-size; }
+/* Risba in koraki (.lab-tit-top): na širokem (Laboratorij na računalniku) risba levo in pripeta, koraki desno,
+   da med titracijo vidiš erlenmajerico in bireto. Pripetje velja le znotraj .lab-tit-top, zato ne prekrije tabele pod njim. */
+.lab-tit-top { display: flex; flex-wrap: wrap; align-items: flex-start; column-gap: 24px; }
+.lab-tit-top > * { flex: 1 1 100%; min-width: 0; }
+/* .lab-bench ima overflow-x: auto (drsni vsebnik), ki bi pripetje izklopil; clip vsebino enako obreže brez drsnega vsebnika. */
+.lab-bench:has(> .demo-lab-titracija) { overflow-x: clip; }
+@container labtit (min-width: 800px) {
+  .lab-tit-top > .demo-stage { flex: 0 0 380px; position: sticky; top: 8px; }
+  .lab-tit-top > .demo-controls { flex: 1 1 0; margin-top: 0; }
+}
+.lab-tit-grp .demo-slider { max-width: 30rem; }
+.lab-tit-hint { margin: 0; font-size: 0.9rem; color: var(--muted); line-height: 1.45; }
+.lab-tit-now { display: flex; align-items: center; gap: 10px; }
+.lab-tit-now .lab-status { margin: 0; }
+.lab-tit-swatch { flex: none; width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--muted); }
+@media (max-width: 480px) { .demo-lab-titracija .lab-table { font-size: 0.82rem; } .demo-lab-titracija .lab-table :is(th, td) { padding: 6px 5px; } }
+.demo-lab-titracija .lab-table-wrap { max-width: 100%; contain: inline-size; }
+.demo-lab-titracija .lab-table th { white-space: normal; }
+.lab-tit-grp { border: 1px solid var(--border); border-radius: 12px; padding: 6px 12px 12px; margin: 0; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.lab-tit-grp legend { font-weight: 800; padding: 0 4px; }
+.lab-tit-grp .demo-seg { align-self: flex-start; }
+.lab-tit-field { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+.lab-tit-in { width: 9em; min-height: 44px; padding: 6px 10px; border-radius: 10px; border: 1.5px solid var(--border); background: var(--surface); color: var(--text); font: inherit; font-variant-numeric: tabular-nums; }
+.lab-tit-in:focus-visible { outline: 3px solid var(--accent); outline-offset: 1px; }
+.lab-tit-sum { font-size: 0.92rem; margin: 6px 0; }
+.lab-tit-calc { margin: 8px 0; display: flex; flex-direction: column; gap: 8px; }
+.lab-tit-calc p { margin: 0; font-size: 0.9rem; }
+.demo-svg .lab-tit-bench { stroke: var(--muted); stroke-width: 2; }
+.demo-svg .lab-tit-rod { fill: #8d96a3; }
+.demo-svg .lab-tit-clamp { fill: #5f6773; }
+.demo-svg .lab-tit-tile { fill: #fff; stroke: #b9c2cf; stroke-width: 1; }
+.demo-svg .lab-tit-cock { fill: #3b82c4; }
+.demo-svg .lab-tit-none { fill: none; }
+.demo-svg .lab-tit-air { fill: #fff; stroke: #6b8db0; stroke-width: 1; }
+.demo-svg .lab-tit-electrode { fill: #e3e7ec; stroke: var(--muted); stroke-width: 1; }
+.demo-svg .lab-tit-bulb { fill: #cfd8e3; stroke: var(--muted); stroke-width: 1; }
+.demo-svg .lab-tit-ring { stroke: var(--text); stroke-width: 1.4; }
+.demo-svg .lab-tit-win { fill: var(--surface); stroke: var(--border); stroke-width: 1.5; }
+.demo-svg .lab-tit-menisk { fill: none; stroke: #2f6690; stroke-width: 2; }
+.demo-svg .lab-tit-gr { stroke: var(--text); stroke-width: 1.2; }
+.demo-svg .lab-tit-gr.big { stroke-width: 2; }
+.demo-svg .lab-tit-num { fill: var(--text); font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.demo-svg .lab-tit-eye { fill: #fff; stroke: #1f2933; stroke-width: 1.2; }
+.demo-svg .lab-tit-pupil { fill: #1f2933; } /* oko je vedno belo, zenica temna tudi v temnem načinu */
+.demo-svg .lab-tit-sight { stroke: var(--muted); stroke-width: 1.2; stroke-dasharray: 4 3; }
+.demo-svg .lab-tit-stream { stroke: #8fbfe3; stroke-width: 2.2; }
+.demo-svg .lab-tit-drop { fill: #bfe0f7; stroke: #5d8db5; stroke-width: 0.8; }
+.demo-svg .lab-tit-sol { stroke: #8aa3bb; stroke-width: 0.7; }
 
 
 /* kratek video iz simulacije (public/gradiva.js) */
