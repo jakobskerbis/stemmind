@@ -1,5 +1,6 @@
-// Spodnja vrstica z zavihki: sistemska (iOS Liquid Glass, Android Material), kot v spletni aplikaciji
-// na telefonu: Učna pot, Učbenik, Skeniraj, Inštruktor, Jaz.
+// Spodnja vrstica z zavihki: sistemska (iOS Liquid Glass, Android Material), v istem vrstnem redu in z
+// enakimi ikonami kot spletna aplikacija na telefonu (public/index.html #tabbar): Učna pot, Učbenik,
+// Inštruktor, nato Skeniraj na mestu spletnega Laboratorija (ga aplikacija še nima), Jaz.
 import React from "react";
 import { NativeTabs } from "expo-router/native-tabs";
 import { t, useLanguage } from "@/lib/i18n";
@@ -11,23 +12,23 @@ export default function TabLayout() {
   return (
     <NativeTabs tintColor={th.accent}>
       <NativeTabs.Trigger name="index">
-        <NativeTabs.Trigger.Icon sf={{ default: "map", selected: "map.fill" }} md="route" />
+        <NativeTabs.Trigger.Icon sf={{ default: "map", selected: "map.fill" }} md="map" />
         <NativeTabs.Trigger.Label>{t("nav.path")}</NativeTabs.Trigger.Label>
       </NativeTabs.Trigger>
       <NativeTabs.Trigger name="textbook">
         <NativeTabs.Trigger.Icon sf={{ default: "book", selected: "book.fill" }} md="menu_book" />
         <NativeTabs.Trigger.Label>{t("nav.textbook")}</NativeTabs.Trigger.Label>
       </NativeTabs.Trigger>
+      <NativeTabs.Trigger name="tutor">
+        <NativeTabs.Trigger.Icon sf={{ default: "message", selected: "message.fill" }} md="chat" />
+        <NativeTabs.Trigger.Label>{t("nav.chat")}</NativeTabs.Trigger.Label>
+      </NativeTabs.Trigger>
       <NativeTabs.Trigger name="scan">
         <NativeTabs.Trigger.Icon sf={{ default: "camera.viewfinder", selected: "camera.viewfinder" }} md="document_scanner" />
         <NativeTabs.Trigger.Label>{t("mob.scan")}</NativeTabs.Trigger.Label>
       </NativeTabs.Trigger>
-      <NativeTabs.Trigger name="tutor">
-        <NativeTabs.Trigger.Icon sf={{ default: "bubble.left.and.bubble.right", selected: "bubble.left.and.bubble.right.fill" }} md="forum" />
-        <NativeTabs.Trigger.Label>{t("nav.chat")}</NativeTabs.Trigger.Label>
-      </NativeTabs.Trigger>
       <NativeTabs.Trigger name="me">
-        <NativeTabs.Trigger.Icon sf={{ default: "person.crop.circle", selected: "person.crop.circle.fill" }} md="account_circle" />
+        <NativeTabs.Trigger.Icon sf={{ default: "person", selected: "person.fill" }} md="person" />
         <NativeTabs.Trigger.Label>{t("nav.me")}</NativeTabs.Trigger.Label>
       </NativeTabs.Trigger>
     </NativeTabs>

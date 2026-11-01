@@ -6,9 +6,10 @@ import { Stack, router } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import * as Notifications from "expo-notifications";
 import { StatusBar } from "expo-status-bar";
+import { useFonts } from "expo-font";
 import { SessionProvider, useSession } from "@/lib/session";
 import { t, useLanguage } from "@/lib/i18n";
-import { useTheme } from "@/lib/theme";
+import { font, fonts, setFontsReady, useTheme } from "@/lib/theme";
 import { watchPurchases } from "@/lib/billing";
 import { useAppUpdates } from "@/lib/updates";
 import { api, setTakenHandler } from "@/lib/api";
@@ -21,10 +22,14 @@ function Root() {
   useLanguage();
   // Nova različica: ob prijavi (in po nekaj urah v ozadju) ponudi posodobitev na en klik (src/lib/updates.ts).
   const [updating, cancelUpdate] = useAppUpdates(ready && signedIn);
+  // Pisava spletnega sloga Čist (Instrument Sans); ob napaki ostane sistemska.
+  const [fontsLoaded, fontError] = useFonts(fonts);
+  const fontsDone = fontsLoaded || !!fontError;
+  if (fontsDone) setFontsReady(fontsLoaded);
 
   useEffect(() => {
-    if (ready) SplashScreen.hideAsync().catch(() => {});
-  }, [ready]);
+    if (ready && fontsDone) SplashScreen.hideAsync().catch(() => {});
+  }, [ready, fontsDone]);
 
   // Nakupi v trgovini, ki niso prišli prek gumba (prekinjeni, potrjeni pozneje), se zapišejo ob zagonu.
   useEffect(() => (signedIn ? watchPurchases(() => refresh().catch(() => {})) : undefined), [signedIn, refresh]);
@@ -62,11 +67,11 @@ function Root() {
     return () => sub.remove();
   }, [signedIn, student]);
 
-  if (!ready) return null;
+  if (!ready || !fontsDone) return null;
   // Kam gre zaščiten zaslon, ki ga ni mogoče odpreti. Brez tega Expo Router izbere prvi prosti zaslon
   // po abecedi: ob prvem zagonu se je odprlo »Pozabljeno geslo« namesto prijave.
   const home = !signedIn ? "/sign-in" : !student ? "/profiles" : "/";
-  const header = { headerTintColor: th.accent, headerStyle: { backgroundColor: th.bg }, headerTitleStyle: { color: th.text }, contentStyle: { backgroundColor: th.bg }, headerBackButtonDisplayMode: "minimal" as const };
+  const header = { headerTintColor: th.accent, headerStyle: { backgroundColor: th.bg }, headerTitleStyle: { color: th.text, ...(font(700) as { fontFamily?: string; fontWeight?: "700" }) }, contentStyle: { backgroundColor: th.bg }, headerBackButtonDisplayMode: "minimal" as const };
   return (
     <>
       <StatusBar style="auto" />

@@ -257,7 +257,7 @@ export default function Practice() {
         <Card tone="gold">
           {steps.map((s, i) => (
             <View key={i} style={{ gap: 4 }}>
-              <Text style={{ color: th.gold, fontWeight: "800" }}>{t("task.hintStep", { n: i + 1, total: hintTotal })}</Text>
+              <Text style={{ color: th.warm, fontWeight: "800" }}>{t("task.hintStep", { n: i + 1, total: hintTotal })}</Text>
               <RichText text={stepMd(s)} size={16} />
             </View>
           ))}
@@ -404,7 +404,7 @@ function Feedback({ r, task }: { r: Result; task: Task }) {
       {r.levelDown ? <Body muted small>{t("task.easier")}</Body> : null}
       {r.hint && !r.solution ? (
         <Card tone="gold">
-          <Text style={{ color: th.gold, fontWeight: "800" }}>{t("task.hint")}</Text>
+          <Text style={{ color: th.warm, fontWeight: "800" }}>{t("task.hint")}</Text>
           <RichText text={r.hint} size={16} />
         </Card>
       ) : null}

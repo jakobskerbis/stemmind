@@ -3,7 +3,7 @@ import React from "react";
 import { ScrollView, Text, View } from "react-native";
 import { Chip } from "./ui";
 import { t } from "@/lib/i18n";
-import { useTheme } from "@/lib/theme";
+import { font, useTheme } from "@/lib/theme";
 
 export type Level = { educational_track: string; curriculum_level: string; subject: string };
 
@@ -14,7 +14,7 @@ export const levelValue = (track: string, n: number) => (track === "SREDNJA_SOLA
 export function LevelPicker({ value, onChange }: { value: Level; onChange: (l: Level) => void }) {
   const th = useTheme();
   const track = value.educational_track === "SREDNJA_SOLA" ? "SREDNJA_SOLA" : "OSNOVNA_SOLA";
-  const label = (s: string) => <Text style={{ color: th.muted, fontSize: 14, fontWeight: "600" }}>{s}</Text>;
+  const label = (s: string) => <Text style={{ color: th.muted, fontSize: 14, ...font(600) }}>{s}</Text>;
   const row = (children: React.ReactNode) => (
     <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 8 }}>
       {children}

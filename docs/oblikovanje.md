@@ -35,6 +35,8 @@ Trije slogi iz osnutka »Evklid UI« (2026-10-29) in zgodovinski slogi (Antični
 
 Pravila za Čist veljajo v `style.css` (`:root`), Igriv, Temen in zgodovinski slogi v `ui.css` (»Slogi«, `:root[data-era]`). Pisave so v `node_modules/@fontsource-variable/*` (strežnik streže vsak tak paket iz `package.json` pod `/vendor/<ime>/`) in se prenesejo le, ko jih slog uporablja; v lahkem načinu ostane sistemska pisava. Inštruktor slog spremeni z nastavitvijo naprave `style`.
 
+Aplikacija (`mobile/src/lib/theme.ts`) ima barve in robove sloga Čist (svetlo in temno) prepisane iz `style.css`; pisava Instrument Sans je v `mobile/assets/fonts/` kot statične TTF (400, 600, 700, izrezane iz spremenljive pisave paketa `@fontsource-variable/instrument-sans`, ker Android ne bere woff2), besedilo dobi debelino s `font(700)` namesto `fontWeight`. Kdor spremeni barve Čist, jih spremeni na obeh mestih.
+
 Temni način je razred `.dark` na `<html>`, ne `@media (prefers-color-scheme)`: pravila za temni način piši kot `.dark .moj-razred { … }`. Razred nastavi `public/theme.js` (Nastavitve → Videz: Svetlo / Temno / Samodejno).
 
 Lastne barve: uporabnik v Nastavitve → Videz izbere poudarek in barve ozadja, oken, menijev in pisave (ali »Naključne barve«). `theme.js` iz njih izračuna vse spremenljivke zgoraj in poskrbi za kontrast (besedilo vsaj 7:1, sivo besedilo in poudarki 4.5:1). Zato:

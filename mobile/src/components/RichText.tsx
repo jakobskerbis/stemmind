@@ -7,7 +7,7 @@ import { Text, useWindowDimensions, View } from "react-native";
 import { WebView } from "react-native-webview";
 import * as WebBrowser from "expo-web-browser";
 import { docHtml, isPlain, MEASURE_JS, toHtml } from "@/lib/rich";
-import { useTheme } from "@/lib/theme";
+import { font, useTheme } from "@/lib/theme";
 
 type Props = { text: string; html?: string; ai?: boolean; streaming?: boolean; size?: number; center?: boolean; minHeight?: number };
 
@@ -35,7 +35,7 @@ function RichTextImpl({ text, html: rawHtml, ai = false, streaming = false, size
   }, [body]);
 
   if (plain) {
-    return <Text style={{ color: th.text, fontSize: size, lineHeight: size * 1.5, textAlign: center ? "center" : undefined }} selectable>{text.trim()}</Text>;
+    return <Text style={{ color: th.text, fontSize: size, lineHeight: size * 1.5, textAlign: center ? "center" : undefined, ...font() }} selectable>{text.trim()}</Text>;
   }
   return (
     <View style={{ height, minHeight }}>

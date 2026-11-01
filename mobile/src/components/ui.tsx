@@ -4,7 +4,7 @@ import { ActivityIndicator, Keyboard, I18nManager, Platform, Pressable, ScrollVi
 import { SymbolView, type AndroidSymbol } from "expo-symbols";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import type { SFSymbol } from "sf-symbols-typescript";
-import { radius, useTheme } from "@/lib/theme";
+import { font, radius, useTheme } from "@/lib/theme";
 import { tap } from "@/lib/haptics";
 
 export type IconName = { ios: SFSymbol; android: AndroidSymbol };
@@ -58,7 +58,7 @@ export function TabScreen({ title, right, children, ...rest }: ScrollViewProps &
   return (
     <Screen {...rest} contentContainerStyle={{ paddingTop: Platform.OS === "android" ? insets.top + 12 : 12 }}>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 4 }}>
-        <Text style={{ color: th.text, fontSize: 32, fontWeight: "800", flexShrink: 1 }} accessibilityRole="header" numberOfLines={1}>
+        <Text style={{ color: th.text, fontSize: 32, ...font(700), flexShrink: 1 }} accessibilityRole="header" numberOfLines={1}>
           {title}
         </Text>
         {right}
@@ -76,12 +76,12 @@ export function Card({ children, style, tone }: { children: React.ReactNode; sty
 
 export function Title({ children, size = 22 }: { children: React.ReactNode; size?: number }) {
   const th = useTheme();
-  return <Text style={{ color: th.text, fontSize: size, fontWeight: "700" }} accessibilityRole="header">{children}</Text>;
+  return <Text style={{ color: th.text, fontSize: size, ...font(700) }} accessibilityRole="header">{children}</Text>;
 }
 
 export function Body({ children, muted, small, style, center }: { children: React.ReactNode; muted?: boolean; small?: boolean; center?: boolean; style?: object }) {
   const th = useTheme();
-  return <Text style={[{ color: muted ? th.muted : th.text, fontSize: small ? 14 : 16, lineHeight: small ? 20 : 23, textAlign: center ? "center" : undefined }, style]}>{children}</Text>;
+  return <Text style={[{ color: muted ? th.muted : th.text, ...font(), fontSize: small ? 14 : 16, lineHeight: small ? 20 : 23, textAlign: center ? "center" : undefined }, style]}>{children}</Text>;
 }
 
 type ButtonProps = { title: string; onPress?: () => void; kind?: "primary" | "secondary" | "ghost" | "danger"; icon?: IconName; loading?: boolean; disabled?: boolean; style?: StyleProp<ViewStyle> };
@@ -117,7 +117,7 @@ export function Button({ title, onPress, kind = "primary", icon, loading, disabl
       ]}
     >
       {loading ? <ActivityIndicator color={fg} /> : icon ? <Icon name={icon} size={18} color={fg} /> : null}
-      <Text style={{ color: fg, fontSize: 17, fontWeight: "700" }}>{title}</Text>
+      <Text style={{ color: fg, fontSize: 17, ...font(700) }}>{title}</Text>
     </Pressable>
   );
 }
@@ -126,14 +126,14 @@ export function Field({ label, error, ...props }: TextInputProps & { label: stri
   const th = useTheme();
   return (
     <View style={{ gap: 6 }}>
-      <Text style={{ color: th.muted, fontSize: 14, fontWeight: "600" }}>{label}</Text>
+      <Text style={{ color: th.muted, fontSize: 14, ...font(600) }}>{label}</Text>
       <TextInput
         placeholderTextColor={th.muted}
-        style={{ minHeight: 50, borderRadius: radius.button, borderWidth: 1.5, borderColor: error ? th.danger : th.border, backgroundColor: th.surface, color: th.text, paddingHorizontal: 14, fontSize: 17 }}
+        style={{ minHeight: 50, borderRadius: radius.button, borderWidth: 1.5, borderColor: error ? th.danger : th.border, backgroundColor: th.surface, color: th.text, paddingHorizontal: 14, fontSize: 17, ...font() }}
         accessibilityLabel={label}
         {...props}
       />
-      {error ? <Text style={{ color: th.danger, fontSize: 14 }}>{error}</Text> : null}
+      {error ? <Text style={{ color: th.danger, fontSize: 14, ...font() }}>{error}</Text> : null}
     </View>
   );
 }
@@ -152,8 +152,8 @@ export function Row({ title, subtitle, icon, onPress, right, danger }: { title: 
         </View>
       ) : null}
       <View style={{ flex: 1 }}>
-        <Text style={{ color: danger ? th.danger : th.text, fontSize: 16, fontWeight: "600" }}>{title}</Text>
-        {subtitle ? <Text style={{ color: th.muted, fontSize: 14, marginTop: 2 }}>{subtitle}</Text> : null}
+        <Text style={{ color: danger ? th.danger : th.text, fontSize: 16, ...font(600) }}>{title}</Text>
+        {subtitle ? <Text style={{ color: th.muted, fontSize: 14, marginTop: 2, ...font() }}>{subtitle}</Text> : null}
       </View>
       {right ?? (onPress ? <Icon name={{ ios: "chevron.right", android: "chevron_right" }} size={14} color={th.muted} /> : null)}
     </Pressable>
@@ -166,7 +166,7 @@ export function Banner({ text, tone = "accent", icon }: { text: string; tone?: "
   return (
     <Card tone={tone} style={{ flexDirection: "row", alignItems: "center", padding: 12 }}>
       {icon ? <Icon name={icon} size={18} color={fg} /> : null}
-      <Text style={{ color: th.text, flex: 1, fontSize: 15, lineHeight: 21 }}>{text}</Text>
+      <Text style={{ color: th.text, flex: 1, fontSize: 15, lineHeight: 21, ...font() }}>{text}</Text>
     </Card>
   );
 }
@@ -209,7 +209,7 @@ export function Chip({ label, active, onPress }: { label: string; active?: boole
       onPress={onPress}
       style={{ minHeight: 44, justifyContent: "center", paddingHorizontal: 14, paddingVertical: 8, borderRadius: radius.pill, backgroundColor: active ? th.accent : th.surface, borderWidth: 1, borderColor: active ? th.accent : th.border }}
     >
-      <Text style={{ color: active ? th.accentText : th.text, fontWeight: "600" }}>{label}</Text>
+      <Text style={{ color: active ? th.accentText : th.text, ...font(600) }}>{label}</Text>
     </Pressable>
   );
 }
